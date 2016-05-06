@@ -1,0 +1,96 @@
+<#import "common/common.html" as common />
+<@common.html title="公告新增" menucode="0103">
+<div class="right">	
+<div class="search_box">
+	<form id="addForm" action="${request.contextPath}/archive/doAdd" class="form-horizontal" method="post">
+		<ul>
+        	<li>
+            	<font>标题：</font>
+                <input class="input_txt" type="text" name="title" style="width: 200px"/>
+            </li>
+            <li>
+            	<font>审批人：</font>
+                <div class="select_bg">
+                	<input type="hidden" class="input_txt" name="approvalUserId" value="id"/>
+                    <div class="select_title"><font>请选择</font><i></i></div>
+                    <div class="select_list">
+	                    <#if userList ??>
+	                		<#list userList as user>
+	                		<a href="javascript:;" onclick="selectItemType(${user.id})">${user.userName}</a>
+	        	        	</#list>
+	                	</#if>
+                    </div>
+                </div>
+            </li>
+            <li>
+            	<font>公文内容：</font>
+                <textarea rows="4" cols="50" name="content"></textarea>
+            </li>
+            <li>
+            	<div class="search_btn">
+                	<a href="javascript:;" onclick="ajaxAdd();">
+                    	保存
+                    </a>
+                </div>
+            </li>
+           	<li>
+            	<div class="search_btn">
+                	<a href="javascript:;" onclick="add();">
+                    	发布
+                    </a>
+                </div>
+            </li>
+            <li>
+            	<div class="search_btn">
+                	<a href="javascript:history.go(-1);">
+                    	提交
+                    </a>
+                </div>
+            </li>
+        </ul>
+	</form>
+</div>
+</div>
+<script type="text/javascript">
+	function add(){
+		$("#addForm").submit();
+	}
+	function selectItemType(value){
+		$("input[name='approvalUserId']").val(value);
+	}
+	function ajaxAdd(){
+		var ajaxCallUrl = $("#addForm").attr("action");
+		$.ajax({
+			cache: true,
+			type: "POST",
+			url:ajaxCallUrl,
+			data:$('#addForm').serialize(),
+			async: false,
+		    error: function(request) {
+		        swal("添加失败！", "" ,"error");
+		    },
+		    success: function(data) {
+		    	if(data.msg){
+		    		swal(data.msg, "" ,"error");
+		    	}else{
+		    		swal({   
+		    			title: "添加成功！",   
+						text: "",   
+						type: "success",   
+						showCancelButton: true,   
+						confirmButtonText: "确定",   
+						closeOnConfirm: false,
+						showCancelButton: false
+					}, 
+					function(isConfirm){
+						if (isConfirm){
+							window.location.href = "${request.contextPath}/archive/archiveList";
+						}
+					});
+		    	}
+		    }
+		});
+	}
+	
+</script>
+</@common.html>

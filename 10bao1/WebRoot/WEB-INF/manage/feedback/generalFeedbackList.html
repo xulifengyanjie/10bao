@@ -1,0 +1,114 @@
+<#import "common/common.html" as common /> <@common.html title="本报总体反馈">
+<script type="text/javascript" language="javascript" src="${request.contextPath}/static/main/js/ECharts/echarts.js"></script>
+<div class="weibo_display" id="weibo_display">
+	<div class="weibo_item">
+		<div class="search_box">
+			<ul>
+				<li>
+				    <font>期数:</font>
+					<div class="select_bg">
+						<div class="select_title" name="status">
+							<font>请选择</font><i></i>
+						</div>
+						<div class="select_list">
+							<a href="javascript:;">本期</a>
+							<a href="javascript:;">2015年13期</a>
+							<a href="javascript:;">2015年12期</a>
+						</div>
+					</div>
+				</li>
+				
+				<li>
+				    <font>部门:</font>
+					 <div class="select_bg">
+                        <div class="select_title"><font>请选择</font><i></i></div>
+                        <div class="select_list">
+                        	<a href="javascript:;">经济部</a>
+                            <a href="javascript:;">社会部</a>
+                            <a href="javascript:;">文化部</a>
+                            <a href="javascript:;">时政部</a>
+ 
+                        </div>
+                    </div>
+				</li>
+				 <li>
+                	<div class="search_btn">
+                    	<a href="javascript:;" onclick="analysis();">
+                        	分析
+                        </a>
+                    </div>
+                </li>
+			</ul>
+		</div>
+	</div>
+
+</div>
+<div class="index_content">
+   <div class="clear"></div>
+        <div class="index_title">
+        	<i></i>
+        </div>
+  <div class="index_chart_box">
+        	<div id="individualTopics" style="height:470px; border:1px; solid #ccc; padding:10px;"></div>
+        </div>	
+</div>
+<script>
+    function analysis(){
+    	/**饼状图
+		*/
+		var monChangeChart1;
+		require.config({paths : {echarts : '${request.contextPath}/static/main/js/ECharts'}});	
+		require(['echarts','echarts/chart/pie'],function(ec){
+			//初始化echarts图表
+			monChangeChart1 = ec.init(document.getElementById('individualTopics'));
+			//定义图表option
+			var option = option = {  
+	                        title : {  
+			                    text: '本报当期总体反馈倾向性 ',  
+			                    x:'center'  
+            },  
+            tooltip : {  
+                trigger: 'item',  
+                formatter: "{a} <br/>{b} : {c} ({d}%)"  
+            },  
+            legend: {  
+                orient : 'vertical',  
+                x : 'left',  
+                data:['正面','负面']  
+            },  
+            toolbox: {  
+                show : true,  
+                feature : {  
+                    mark : {show: true},  
+                    dataView : {show: true, readOnly: false},  
+                    restore : {show: true},  
+                    saveAsImage : {show: true}  
+                }  
+            },  
+            calculable : true,  
+            series : [  
+                {  
+                    type:'pie',  
+                    radius : '55%',  
+                    center: ['50%', '60%'],  
+                    data:[  
+                        {value:335, name:'正面'},  
+                        {value:310, name:'负面'},  
+
+                    ]  
+                }  
+            ]  
+        };  
+		                    
+			monChangeChart1.setOption(option);
+			/* myChart.hideLoading(); */
+			/* getChartData(); */
+		});
+    }
+
+    $(function(){
+    	analysis();
+    });
+
+</script>
+</@common.html>

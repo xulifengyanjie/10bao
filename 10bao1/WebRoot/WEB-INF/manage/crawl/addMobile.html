@@ -1,0 +1,79 @@
+<#import "common/common.html" as common />
+<@common.html title="移动客户端新增">
+<div class="right">	
+	<form id="addForm" action="${request.contextPath}/dataCollection/doAdd"  method="post">
+	    
+	    <div class="search_box">
+        	<ul>
+            	<li>
+                	<font>移动客户端名称</font>
+                    <input type="text" class="input_txt" name="collectionsource"/>
+                     <input type="hidden" name="type" value="mobile"/>
+                </li>
+               <li>
+                	<font>网页链接</font>
+                    <input type="text" class="input_txt" name="link"/>
+                </li>
+                <li>
+                	<font>抓取层数</font>
+                    <input type="text" class="input_txt" name="collectionlayer"/>
+                </li>
+                <li>
+                    <font>抓取时段</font>
+                    <input type="text" class="input_txt" name="collecttime"/>
+                </li>
+                 <li>
+                    <font>抓取频率</font>
+                    <input type="text" class="input_txt" name="collectacquisition"/>
+                </li>
+                <li>
+                	<div class="search_btn">
+                    	<a href="javascript:;" onclick="ajaxAdd();">
+                        	提交
+                        </a>
+                    </div>
+                </li>
+        
+            </ul>
+            <div class="clear"></div>
+        </div>
+        
+	</form>
+</div>
+<script type="text/javascript">
+
+	function ajaxAdd(){
+		var ajaxCallUrl = $("#addForm").attr("action");
+		$.ajax({
+			cache: true,
+			type: "POST",
+			url:ajaxCallUrl,
+			data:$('#addForm').serialize(),
+			async: false,
+		    error: function(request) {
+		        swal("添加移动客户端失败！", "" ,"error");
+		    },
+		    success: function(data) {
+		    	if(data.msg){
+		    		swal(data.msg, "" ,"error");
+		    	}else{
+		    		swal({   
+		    			title: "添加移动客户端成功！",   
+						text: "",   
+						type: "success",   
+						showCancelButton: true,   
+						confirmButtonText: "确定",   
+						closeOnConfirm: false,
+						showCancelButton: false
+					}, 
+					function(isConfirm){
+						if (isConfirm){
+							window.location.href = "${request.contextPath}/dataCollection/mobileDataList";
+						}
+					});
+		    	}
+		    }
+		});
+	}
+</script>
+</@common.html>

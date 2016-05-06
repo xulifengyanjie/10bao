@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.twsm.newstopic.dao.WeixinMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.twsm.newstopic.model.Weixin" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="NEWS_NUM" property="newsNum" jdbcType="VARCHAR" />
+    <result column="WEIGHT" property="weight" jdbcType="VARCHAR" />
+    <result column="SUPPORT_COUNT" property="supportCount" jdbcType="VARCHAR" />
+    <result column="HITS_COUNT" property="hitsCount" jdbcType="VARCHAR" />
+    <result column="PUBLISH_TIME" property="publishTime" jdbcType="VARCHAR" />
+    <result column="TRANSMIT_COUNT" property="transmitCount" jdbcType="VARCHAR" />
+    <result column="COMMENTS_COUNT" property="commentsCount" jdbcType="VARCHAR" />
+    <result column="SMALL_TYPE" property="smallType" jdbcType="VARCHAR" />
+    <result column="COLLECT_SOURCE" property="collectSource" jdbcType="VARCHAR" />
+    <result column="NEWS_SOURCE" property="newsSource" jdbcType="VARCHAR" />
+    <result column="NEWS_LINK" property="newsLink" jdbcType="VARCHAR" />
+    <result column="AUTHOR" property="author" jdbcType="VARCHAR" />
+    <result column="TITLE" property="title" jdbcType="VARCHAR" />
+    <result column="COLLECT_TIME" property="collectTime" jdbcType="VARCHAR" />
+    <result column="SUB_TYPE" property="subType" jdbcType="VARCHAR" />
+    <result column="BIG_TYPE" property="bigType" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID,NEWS_NUM, WEIGHT, SUPPORT_COUNT, HITS_COUNT, PUBLISH_TIME, TRANSMIT_COUNT, COMMENTS_COUNT, 
+    SMALL_TYPE, COLLECT_SOURCE, NEWS_SOURCE, NEWS_LINK, AUTHOR, TITLE, COLLECT_TIME, 
+    SUB_TYPE, BIG_TYPE
+  </sql>
+   <sql id="whereCondition">
+  	  <if test="id != null" >
+        AND WEIXIN.ID= #{id,jdbcType=INTEGER}
+      </if>
+      <if test="newsNum != null" >
+        AND WEIXIN.NEWS_NUM= #{newsNum,jdbcType=INTEGER}
+      </if>
+      <if test="weight != null" >
+        AND WEIXIN.WEIGHT= #{weight,jdbcType=VARCHAR}
+      </if>
+      <if test="supportCount != null" >
+        AND WEIXIN.SUPPORT_COUNT= #{supportCount,jdbcType=VARCHAR}
+      </if>
+      <if test="hitsCount != null" >
+        AND WEIXIN.HITS_COUNT= #{hitsCount,jdbcType=VARCHAR}
+      </if>
+      <if test="publishTime != null" >
+        AND WEIXIN.PUBLISH_TIME= #{publishTime,jdbcType=VARCHAR}
+      </if>
+      <if test="transmitCount != null" >
+        AND WEIXIN.TRANSMIT_COUNT= #{transmitCount,jdbcType=VARCHAR}
+      </if>
+      <if test="commentsCount != null" >
+        AND WEIXIN.COMMENTS_COUNT= #{commentsCount,jdbcType=VARCHAR}
+      </if>
+      <if test="smallType != null" >
+        AND WEIXIN.SMALL_TYPE= #{smallType,jdbcType=VARCHAR}
+      </if>
+      <if test="collectSource != null" >
+        AND WEIXIN.COLLECT_SOURCE= #{collectSource,jdbcType=VARCHAR}
+      </if>
+      <if test="newsSource != null" >
+        AND WEIXIN.NEWS_SOURCE= #{newsSource,jdbcType=VARCHAR}
+      </if>
+      <if test="newsLink != null" >
+        AND WEIXIN.NEWS_LINK= #{newsLink,jdbcType=VARCHAR}
+      </if>
+      <if test="author != null" >
+        AND WEIXIN.AUTHOR= #{author,jdbcType=VARCHAR}
+      </if>
+      <if test="title != null" >
+        AND WEIXIN.TITLE= #{title,jdbcType=VARCHAR}
+      </if>
+      <if test="collectTime != null" >
+        AND WEIXIN.COLLECT_TIME= #{collectTime,jdbcType=VARCHAR}
+      </if>
+      <if test="subType != null" >
+        AND WEIXIN.SUB_TYPE= #{subType,jdbcType=VARCHAR}
+      </if>
+      <if test="bigType != null" >
+        AND WEIXIN.BIG_TYPE= #{bigType,jdbcType=VARCHAR}
+      </if>
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from WEIXIN
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from WEIXIN
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.com.twsm.newstopic.model.Weixin" >
+    insert into WEIXIN (ID, WEIGHT, SUPPORT_COUNT, 
+      HITS_COUNT, PUBLISH_TIME, TRANSMIT_COUNT, 
+      COMMENTS_COUNT, SMALL_TYPE, COLLECT_SOURCE, 
+      NEWS_SOURCE, NEWS_LINK, AUTHOR, 
+      TITLE, COLLECT_TIME, SUB_TYPE, 
+      BIG_TYPE, NEWS_NUM)
+    values (#{id,jdbcType=INTEGER}, #{weight,jdbcType=VARCHAR}, #{supportCount,jdbcType=VARCHAR}, 
+      #{hitsCount,jdbcType=VARCHAR}, #{publishTime,jdbcType=VARCHAR}, #{transmitCount,jdbcType=VARCHAR}, 
+      #{commentsCount,jdbcType=VARCHAR}, #{smallType,jdbcType=VARCHAR}, #{collectSource,jdbcType=VARCHAR}, 
+      #{newsSource,jdbcType=VARCHAR}, #{newsLink,jdbcType=VARCHAR}, #{author,jdbcType=VARCHAR}, 
+      #{title,jdbcType=VARCHAR}, #{collectTime,jdbcType=VARCHAR}, #{subType,jdbcType=VARCHAR}, 
+      #{bigType,jdbcType=VARCHAR}, #{newsNum,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.com.twsm.newstopic.model.Weixin" >
+    insert into WEIXIN
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="weight != null" >
+        WEIGHT,
+      </if>
+      <if test="supportCount != null" >
+        SUPPORT_COUNT,
+      </if>
+      <if test="hitsCount != null" >
+        HITS_COUNT,
+      </if>
+      <if test="publishTime != null" >
+        PUBLISH_TIME,
+      </if>
+      <if test="transmitCount != null" >
+        TRANSMIT_COUNT,
+      </if>
+      <if test="commentsCount != null" >
+        COMMENTS_COUNT,
+      </if>
+      <if test="smallType != null" >
+        SMALL_TYPE,
+      </if>
+      <if test="collectSource != null" >
+        COLLECT_SOURCE,
+      </if>
+      <if test="newsSource != null" >
+        NEWS_SOURCE,
+      </if>
+      <if test="newsLink != null" >
+        NEWS_LINK,
+      </if>
+      <if test="author != null" >
+        AUTHOR,
+      </if>
+      <if test="title != null" >
+        TITLE,
+      </if>
+      <if test="collectTime != null" >
+        COLLECT_TIME,
+      </if>
+      <if test="subType != null" >
+        SUB_TYPE,
+      </if>
+      <if test="bigType != null" >
+        BIG_TYPE,
+      </if>
+      <if test="newsNum != null" >
+        NEWS_NUM,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="weight != null" >
+        #{weight,jdbcType=VARCHAR},
+      </if>
+      <if test="supportCount != null" >
+        #{supportCount,jdbcType=VARCHAR},
+      </if>
+      <if test="hitsCount != null" >
+        #{hitsCount,jdbcType=VARCHAR},
+      </if>
+      <if test="publishTime != null" >
+        #{publishTime,jdbcType=VARCHAR},
+      </if>
+      <if test="transmitCount != null" >
+        #{transmitCount,jdbcType=VARCHAR},
+      </if>
+      <if test="commentsCount != null" >
+        #{commentsCount,jdbcType=VARCHAR},
+      </if>
+      <if test="smallType != null" >
+        #{smallType,jdbcType=VARCHAR},
+      </if>
+      <if test="collectSource != null" >
+        #{collectSource,jdbcType=VARCHAR},
+      </if>
+      <if test="newsSource != null" >
+        #{newsSource,jdbcType=VARCHAR},
+      </if>
+      <if test="newsLink != null" >
+        #{newsLink,jdbcType=VARCHAR},
+      </if>
+      <if test="author != null" >
+        #{author,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="collectTime != null" >
+        #{collectTime,jdbcType=VARCHAR},
+      </if>
+      <if test="subType != null" >
+        #{subType,jdbcType=VARCHAR},
+      </if>
+      <if test="bigType != null" >
+        #{bigType,jdbcType=VARCHAR},
+      </if>
+      <if test="newsNum != null" >
+        #{newsNum,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.com.twsm.newstopic.model.Weixin" >
+    update WEIXIN
+    <set >
+      <if test="weight != null" >
+        WEIGHT = #{weight,jdbcType=VARCHAR},
+      </if>
+      <if test="supportCount != null" >
+        SUPPORT_COUNT = #{supportCount,jdbcType=VARCHAR},
+      </if>
+      <if test="hitsCount != null" >
+        HITS_COUNT = #{hitsCount,jdbcType=VARCHAR},
+      </if>
+      <if test="publishTime != null" >
+        PUBLISH_TIME = #{publishTime,jdbcType=VARCHAR},
+      </if>
+      <if test="transmitCount != null" >
+        TRANSMIT_COUNT = #{transmitCount,jdbcType=VARCHAR},
+      </if>
+      <if test="commentsCount != null" >
+        COMMENTS_COUNT = #{commentsCount,jdbcType=VARCHAR},
+      </if>
+      <if test="smallType != null" >
+        SMALL_TYPE = #{smallType,jdbcType=VARCHAR},
+      </if>
+      <if test="collectSource != null" >
+        COLLECT_SOURCE = #{collectSource,jdbcType=VARCHAR},
+      </if>
+      <if test="newsSource != null" >
+        NEWS_SOURCE = #{newsSource,jdbcType=VARCHAR},
+      </if>
+      <if test="newsLink != null" >
+        NEWS_LINK = #{newsLink,jdbcType=VARCHAR},
+      </if>
+      <if test="author != null" >
+        AUTHOR = #{author,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        TITLE = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="collectTime != null" >
+        COLLECT_TIME = #{collectTime,jdbcType=VARCHAR},
+      </if>
+      <if test="subType != null" >
+        SUB_TYPE = #{subType,jdbcType=VARCHAR},
+      </if>
+      <if test="bigType != null" >
+        BIG_TYPE = #{bigType,jdbcType=VARCHAR},
+      </if>
+      <if test="newsNum != null" >
+        NEWS_NUM = #{newsNum,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.com.twsm.newstopic.model.Weixin" >
+    update WEIXIN
+    set WEIGHT = #{weight,jdbcType=VARCHAR},
+      SUPPORT_COUNT = #{supportCount,jdbcType=VARCHAR},
+      HITS_COUNT = #{hitsCount,jdbcType=VARCHAR},
+      PUBLISH_TIME = #{publishTime,jdbcType=VARCHAR},
+      TRANSMIT_COUNT = #{transmitCount,jdbcType=VARCHAR},
+      COMMENTS_COUNT = #{commentsCount,jdbcType=VARCHAR},
+      SMALL_TYPE = #{smallType,jdbcType=VARCHAR},
+      COLLECT_SOURCE = #{collectSource,jdbcType=VARCHAR},
+      NEWS_SOURCE = #{newsSource,jdbcType=VARCHAR},
+      NEWS_LINK = #{newsLink,jdbcType=VARCHAR},
+      AUTHOR = #{author,jdbcType=VARCHAR},
+      TITLE = #{title,jdbcType=VARCHAR},
+      COLLECT_TIME = #{collectTime,jdbcType=VARCHAR},
+      SUB_TYPE = #{subType,jdbcType=VARCHAR},
+      BIG_TYPE = #{bigType,jdbcType=VARCHAR},
+      NEWS_NUM = #{newsNum,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+   
+  <insert id="insertBatch" parameterType="List">
+    insert into WEIXIN (WEIGHT, SUPPORT_COUNT, 
+      HITS_COUNT, PUBLISH_TIME, TRANSMIT_COUNT, 
+      COMMENTS_COUNT, SMALL_TYPE, COLLECT_SOURCE, 
+      NEWS_SOURCE, NEWS_LINK, AUTHOR, 
+      TITLE, COLLECT_TIME, SUB_TYPE, 
+      BIG_TYPE,NEWS_NUM)
+    values 
+    <foreach collection="list" item="item" separator="," index="index">
+  	 (#{item.weight,jdbcType=VARCHAR}, #{item.supportCount,jdbcType=VARCHAR}, 
+      #{item.hitsCount,jdbcType=VARCHAR}, #{item.publishTime,jdbcType=VARCHAR}, #{item.transmitCount,jdbcType=VARCHAR}, 
+      #{item.commentsCount,jdbcType=VARCHAR}, #{item.smallType,jdbcType=VARCHAR}, #{item.collectSource,jdbcType=VARCHAR}, 
+      #{item.newsSource,jdbcType=VARCHAR}, #{item.newsLink,jdbcType=VARCHAR}, #{item.author,jdbcType=VARCHAR}, 
+      #{item.title,jdbcType=VARCHAR}, #{item.collectTime,jdbcType=VARCHAR}, #{item.subType,jdbcType=VARCHAR}, 
+      #{item.bigType,jdbcType=VARCHAR},#{item.newsNum,jdbcType=VARCHAR})
+     </foreach>
+  </insert>
+  
+   <select id="getByWhere" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select 
+    <include refid="Base_Column_List" />
+    from WEIXIN
+    where 1=1 <include refid="whereCondition" />
+  </select>
+  
+   <select id="getByNewsNum" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from WEIXIN
+    where NEWS_NUM= #{newsNum,jdbcType=INTEGER}
+  </select>
+ <select id="getByNewsNums" resultMap="BaseResultMap" parameterType="List" >
+     select  
+	 <include refid="Base_Column_List" />  
+	 from WEIXIN where NEWS_NUM in  
+	 <foreach item="item" index="index" collection="list" open="(" separator="," close=")">  
+	  #{item.newsNum}  
+ 	 </foreach> 
+  </select>
+</mapper>

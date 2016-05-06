@@ -1,0 +1,114 @@
+<#import "common/common.html" as common />
+<@common.html title="微博">
+<script type="text/javascript" language="javascript" src="${request.contextPath}/static/my97DatePicker/WdatePicker.js"></script>
+<div class="weibo">
+    	<div class="weibo_content">
+        	<div class="weibo_tab_bg">
+            	<div class="weibo_tab">
+                	<span onclick="weiboHotList();">热门微博列表</span>
+                    <span class="cur"  onclick="weiboResultList();">热门微博分析</span>
+                </div>	
+            </div>
+            <div class="weibo_display">
+                <div class="weibo_item">
+                	<form id="queryForm" action="${request.contextPath}/weibo/analysis" method="post">
+                	<div class="search_box">
+                        <ul>
+                            <li>
+                                <font>开始时间</font>
+                                <input type="text" name="startTime" class="input_txt" onfocus="WdatePicker({skin:'twoer'})"/>
+                            </li>
+                            <li>
+                                <font>结束时间</font>
+                                <input type="text" name="endTime" class="input_txt" onfocus="WdatePicker({skin:'twoer'})"/>
+                            </li>
+                            <li>
+                                <font>关键词</font>
+                                <input type="text" name="text" class="input_txt" />
+                            </li>
+                           <li>
+                                <div class="search_btn">
+                                    <a href="javascript:;" onclick="query();">
+                                        搜索<i></i>
+                                    </a>
+                                </div>
+                            </li>
+                        </ul>
+                        <div class="clear"></div>
+                    </div>
+                    </form>
+                    <div class="right_border">
+                        <div class="right_title_bg">
+                            <div class="right_title">查询列表</div>
+                            <div class="weibo_export_btn">
+                            	<a href="javascript:;">导出Excel</a>
+                            </div>
+                        </div>
+                        <div class="clear"></div>
+                        <table>
+                            <tr>
+                                <th class="b10">排名</th>
+                                <th class="b10">指数</th>
+                                <th class="b50">博文内容</th>
+                                <th class="b10">相关博文</th>
+                                <th class="b10">博主地域分析</th>
+                                <th class="b10">溯源</th>
+                            </tr>
+                            <#if page && page.list>
+			                	<#list newsList as weibo>
+					                <tr>
+					                    <td class="b10">${weibo.sort}</td>
+					                    <td class="b10">${weibo.weight}</td>
+					                    <td class="b50"><a href="${weibo.link}" target="_blank">${weibo.text}</a></td>
+					                    <td class="b10"><a href="javascript:;">1000</a></td>
+					                    <td class="b10"><a href="javascript:;">查看</a></td>
+                                		<td class="b10"><a href="javascript:;">查看</a></td>
+			                		</tr>
+				                </#list>
+			                </#if>
+                        </table>
+                        <div class="clear"></div>
+                           <#if page>
+				             <div class="page_box">
+				            	<div class="pagging">
+				                    <#if page.hasPreviousPage>
+									      <a href="?pageNum=${page.prePage}&date=${date}&timestamp=${timestamp}&searchWord=${searchWord}" style=" margin-right:27px;">&lt;上页</a>
+								    </#if>
+								    <#list page.navigatepageNums as num>
+								    	<#if num == page.pageNum>
+								    		<a href="javascript:void(0)" class="cur">${num}</a>
+								    	<#else>
+								    		<a href="?pageNum=${num}&date=${date}&timestamp=${timestamp}&searchWord=${searchWord}">${num}</a>
+								    	</#if>
+								    </#list>
+								    <#if page.hasNextPage>
+									    <a href="?pageNum=${page.nextPage}&date=${date}&timestamp=${timestamp}&searchWord=${searchWord}" style="margin-left:27px;">下页&gt;</a>
+								    </#if>
+				                    <span>跳转</span>
+				                    <input type="text" class="input_page" />
+				                    <span class="span2">页</span>
+				                </div>
+				            </div>
+				          </#if>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+<script>
+	function showPage(pageNum){
+		$("#queryForm").attr("action","${request.contextPath}/weibo/analysis?pageNum="+pageNum);
+		query();
+	}
+	function query(){
+		$("#queryForm").submit();
+	}
+	function weiboHotList(){
+		window.location.href = "${request.contextPath}/weibo/list";
+	}
+	function weiboResultList(){
+		window.location.href = "${request.contextPath}/weibo/analysis";
+	}
+</script>
+</@common.html>

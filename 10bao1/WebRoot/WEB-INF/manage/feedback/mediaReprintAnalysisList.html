@@ -1,0 +1,121 @@
+<#import "common/common.html" as common /> <@common.html title="媒体转载分析">
+<script type="text/javascript" language="javascript" src="${request.contextPath}/static/main/js/ECharts/echarts.js"></script>
+<script type="text/javascript" language="javascript" src="${request.contextPath}/static/my97DatePicker/WdatePicker.js"></script>	
+  <div class="weibo_item">
+                     
+                	<div class="search_box">
+  			<form id="queryForm" action="${request.contextPath}/user/list" method="post">
+        	<ul>
+            	<li>
+                	<font>关键词</font>
+                    <input type="text" class="input_txt" name="userName" value="${item.userName}"/>
+                </li>
+                <li>
+                	<font>部门</font>
+                    <div class="select_bg">
+                    	<input type="hidden" class="input_txt" name="roleIds"/>
+                        <div class="select_title"><font>请选择</font><i></i></div>
+                        <div class="select_list">
+                        	<a href="javascript:;">经济部</a>
+                            <a href="javascript:;">社会部</a>
+                            <a href="javascript:;">文化部</a>
+                            <a href="javascript:;">时政部</a>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                	<div class="search_btn">
+                    	<a href="javascript:;" onclick="query();">
+                        	搜索<i></i>
+                        </a>
+                    </div>
+                </li>
+            </ul>
+            </form>
+            <div class="clear"></div>
+        </div>
+                    <div class="right_border">
+                        <div class="clear"></div>
+                        <table>
+                            <tr>
+                                <th class="b10" id="xuhao">排序</th>
+                             	<th class="b10" id="xuhao">新闻标题</th>
+                                <th class="b10" id="attentionName">印行期数</th>
+                                <th class="b10" id="attentionName">转载量</th>
+                            </tr>
+                            <!--  
+                            <#if page && page.list>
+			                	<#list page.list as promotion>
+			                	     <#if promotion.type == "事件关注">
+
+					                <tr id="promotion_${promotion.id}_top">
+					                    <td class="b10">${promotion_index + 1}</td>
+					                    <td class="b10"><a href="${request.contextPath}/promotion/newsList?type=${promotion.keyWord}">${promotion.keyWord}</a></td>
+			                		</tr>
+									 </#if>
+				                </#list>
+                            </#if>
+                            -->	
+                                      <tr >
+					                    <td class="b10">1</td>
+					                    <td class="b10"><a href="http://news.qq.com/a/20160503/056421.htm" target="_blank">习近平同老挝国家主席本扬举行会谈</a></td>
+					                    <td class="b10">总1234期</td>
+					                    <td class="b10">展开(2)</td>
+			                		</tr>
+			                		
+			                		 <tr >
+					                    <td class="b10">2</td>
+					                    <td class="b10"><a href="http://news.qq.com/a/20160504/017254.htm" target="_blank">魏则西案涉事医院停诊 武警部队称绝不姑息</a></td>
+					                    <td class="b10">总1234期</td>
+					                    <td class="b10">展开(2)</td>
+			                		</tr>
+			                		 <tr >
+					                    <td class="b10">3</td>
+					                    <td class="b10"><a href="http://news.qq.com/a/20160504/023252.htm" target="_blank">广东保姆杀害雇主案宣判 何天带获死刑立即执行</a></td>
+					                    <td class="b10">总1234期</td>
+					                    <td class="b10">展开(2)</td>
+			                		</tr>
+			                		 <tr >
+					                    <td class="b10">4</td>
+					                    <td class="b10"><a href="http://news.qq.com/a/20160504/004223.htm" target="_blank">媒体称薄熙来用赃款所购海外别墅仍未追回</a></td>
+					                    <td class="b10">总1234期</td>
+					                    <td class="b10">展开(2)</td>
+			                		</tr>
+			                		 <tr >
+					                    <td class="b10">5</td>
+					                    <td class="b10"><a href="http://news.qq.com/a/20160504/014914.htm" target="_blank">浙江40多个少年深夜群殴 15岁少年被6人砸死</a></td>
+					                    <td class="b10">总1234期</td>
+					                    <td class="b10">展开(2)</td>
+			                		</tr>
+			                		 <tr >
+					                    <td class="b10">6</td>
+					                    <td class="b10"><a href="http://news.qq.com/a/20160504/004699.htm" target="_blank">中国游客在马来西亚失联 马海事机构否认遭绑架</a></td>
+					                    <td class="b10">总1234期</td>
+					                    <td class="b10">展开(2)</td>
+			                		</tr>
+			                		
+                        </table>
+                        <div class="clear"></div>
+                        <#if page>
+			             <div class="page_box">
+			            	<div class="pagging">
+			                    <#if page.hasPreviousPage>
+								      <a href="?pageNum=${page.prePage}&date=${date}&timestamp=${timestamp}&searchWord=${searchWord}" style=" margin-right:27px;">&lt;上页</a>
+							    </#if>
+							    <#list page.navigatepageNums as num>
+							    	<#if num == page.pageNum>
+							    		<a href="javascript:void(0)" class="cur">${num}</a>
+							    	<#else>
+							    		<a href="?pageNum=${num}&date=${date}&timestamp=${timestamp}&searchWord=${searchWord}">${num}</a>
+							    	</#if>
+							    </#list>
+							    <#if page.hasNextPage>
+								    <a href="?pageNum=${page.nextPage}&date=${date}&timestamp=${timestamp}&searchWord=${searchWord}" style="margin-left:27px;">下页&gt;</a>
+							    </#if>
+			                    <span>跳转</span>
+			                    <input type="text" class="input_page" />
+			                    <span class="span2">页</span>
+			                </div>
+			            </div>
+			            </#if>
+</@common.html>

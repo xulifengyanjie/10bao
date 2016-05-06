@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.twsm.newstopic.dao.DepartmentMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.twsm.newstopic.model.Department" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="DEPARTMENT_CODE" property="departmentCode" jdbcType="VARCHAR" />
+    <result column="DEPARTMENT_NAME" property="departmentName" jdbcType="VARCHAR" />
+    <result column="PARENT_ID" property="parentId" jdbcType="INTEGER" />
+    <result column="DEPARTMENT_NUM" property="departmentNum" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, DEPARTMENT_CODE, DEPARTMENT_NAME, PARENT_ID, DEPARTMENT_NUM
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from department
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from department
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.com.twsm.newstopic.model.Department" >
+    insert into department (ID, DEPARTMENT_CODE, DEPARTMENT_NAME, 
+      PARENT_ID, DEPARTMENT_NUM)
+    values (#{id,jdbcType=INTEGER}, #{departmentCode,jdbcType=VARCHAR}, #{departmentName,jdbcType=VARCHAR}, 
+      #{parentId,jdbcType=INTEGER}, #{departmentNum,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.com.twsm.newstopic.model.Department" >
+    insert into department
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="departmentCode != null" >
+        DEPARTMENT_CODE,
+      </if>
+      <if test="departmentName != null" >
+        DEPARTMENT_NAME,
+      </if>
+      <if test="parentId != null" >
+        PARENT_ID,
+      </if>
+      <if test="departmentNum != null" >
+        DEPARTMENT_NUM,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="departmentCode != null" >
+        #{departmentCode,jdbcType=VARCHAR},
+      </if>
+      <if test="departmentName != null" >
+        #{departmentName,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null" >
+        #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test="departmentNum != null" >
+        #{departmentNum,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.com.twsm.newstopic.model.Department" >
+    update department
+    <set >
+      <if test="departmentCode != null" >
+        DEPARTMENT_CODE = #{departmentCode,jdbcType=VARCHAR},
+      </if>
+      <if test="departmentName != null" >
+        DEPARTMENT_NAME = #{departmentName,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null" >
+        PARENT_ID = #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test="departmentNum != null" >
+        DEPARTMENT_NUM = #{departmentNum,jdbcType=INTEGER},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.com.twsm.newstopic.model.Department" >
+    update department
+    set DEPARTMENT_CODE = #{departmentCode,jdbcType=VARCHAR},
+      DEPARTMENT_NAME = #{departmentName,jdbcType=VARCHAR},
+      PARENT_ID = #{parentId,jdbcType=INTEGER},
+      DEPARTMENT_NUM = #{departmentNum,jdbcType=INTEGER}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <sql id="whereCondition">
+      <if test="department_num != null" >
+        AND department.DEPARTMENT_NUM = #{department_num,jdbcType=INTEGER}
+      </if>
+      <if test="departmentName != null" >
+        AND department.DEPARTMENT_NAME like CONCAT('%','${departmentName}','%' )
+      </if>
+  </sql>
+  
+  <select id="getByWhere" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select 
+    <include refid="Base_Column_List" />
+    from department
+    where 1=1 <include refid="whereCondition" />
+  </select>
+  
+  <delete id="deleteByIds" parameterType="java.util.List" >
+    delete from department
+    where ID in
+    <foreach collection="list" item ="item" open="(" separator="," close=")">
+    	#{item}
+    </foreach>
+  </delete>
+</mapper>

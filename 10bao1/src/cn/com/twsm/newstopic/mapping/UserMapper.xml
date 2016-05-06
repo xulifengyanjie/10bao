@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.twsm.newstopic.dao.UserMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.twsm.newstopic.model.User" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
+    <result column="LOGIN_NAME" property="loginName" jdbcType="VARCHAR" />
+    <result column="PASSWORD" property="password" jdbcType="VARCHAR" />
+    <result column="SEX" property="sex" jdbcType="VARCHAR" />
+    <result column="AGE" property="age" jdbcType="INTEGER" />
+    <result column="ADDRESS" property="address" jdbcType="VARCHAR" />
+    <result column="PHONE" property="phone" jdbcType="VARCHAR" />
+    <result column="MAIL" property="mail" jdbcType="VARCHAR" />
+    <result column="DEPARTMENT_ID" jdbcType="INTEGER" property="departmentId" />
+  </resultMap>
+  
+  <resultMap id="userRoleResultMap" type="cn.com.twsm.newstopic.model.User" extends="BaseResultMap">
+    <collection property="roles" ofType="cn.com.twsm.newstopic.model.Role">
+    	<id column="ROLE_ID" property="id" jdbcType="INTEGER" />
+	    <result column="ROLE_NAME" property="roleName" jdbcType="VARCHAR" />
+	    <result column="ROLE_DESCRIPTION" property="roleDescription" jdbcType="VARCHAR" />
+    </collection>
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    ID, USER_NAME, LOGIN_NAME, PASSWORD, SEX, AGE, ADDRESS, PHONE, MAIL,DEPARTMENT_ID
+  </sql>
+  <sql id="whereCondition">
+  	  <if test="id != null" >
+        AND user.ID = #{id,jdbcType=INTEGER}
+      </if>
+      <if test="userName != null" >
+        AND user.USER_NAME like CONCAT('%','${userName}','%')
+      </if>
+      <if test="loginName != null" >
+        AND user.LOGIN_NAME like CONCAT('%','${loginName}','%')
+      </if>
+      <if test="password != null" >
+        AND user.PASSWORD = #{password,jdbcType=VARCHAR}
+      </if>
+      <if test="departmentId != null" >
+        AND user.DEPARTMENT_ID = #{departmentId,jdbcType=VARCHAR}
+      </if>
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from user
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.com.twsm.newstopic.model.User" >
+    <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+
+		SELECT LAST_INSERT_ID() AS id
+
+	</selectKey>
+    insert into user (ID, LOGIN_NAME, PASSWORD, 
+      USER_NAME, SEX, AGE, 
+      ADDRESS, PHONE, MAIL, 
+      DEPARTMENT_ID)
+    values (#{id,jdbcType=INTEGER}, #{loginName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{userName,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, #{age,jdbcType=INTEGER}, 
+      #{address,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{mail,jdbcType=VARCHAR}, 
+      #{departmentId,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.com.twsm.newstopic.model.User" >
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="loginName != null" >
+        LOGIN_NAME,
+      </if>
+      <if test="password != null" >
+        PASSWORD,
+      </if>
+      <if test="userName != null" >
+        USER_NAME,
+      </if>
+      <if test="sex != null" >
+        SEX,
+      </if>
+      <if test="age != null" >
+        AGE,
+      </if>
+      <if test="address != null" >
+        ADDRESS,
+      </if>
+      <if test="phone != null" >
+        PHONE,
+      </if>
+      <if test="mail != null" >
+        MAIL,
+      </if>
+      <if test="departmentId != null" >
+        DEPARTMENT_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="loginName != null" >
+        #{loginName,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="age != null" >
+        #{age,jdbcType=INTEGER},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="mail != null" >
+        #{mail,jdbcType=VARCHAR},
+      </if>
+      <if test="departmentId != null" >
+        #{departmentId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.com.twsm.newstopic.model.User" >
+    update user
+    <set >
+      <if test="loginName != null" >
+        LOGIN_NAME = #{loginName,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        PASSWORD = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        USER_NAME = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        SEX = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="age != null" >
+        AGE = #{age,jdbcType=INTEGER},
+      </if>
+      <if test="address != null" >
+        ADDRESS = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        PHONE = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="mail != null" >
+        MAIL = #{mail,jdbcType=VARCHAR},
+      </if>
+      <if test="departmentId != null" >
+        DEPARTMENT_ID = #{departmentId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.com.twsm.newstopic.model.User" >
+    update user
+    set LOGIN_NAME = #{loginName,jdbcType=VARCHAR},
+      PASSWORD = #{password,jdbcType=VARCHAR},
+      USER_NAME = #{userName,jdbcType=VARCHAR},
+      SEX = #{sex,jdbcType=VARCHAR},
+      AGE = #{age,jdbcType=INTEGER},
+      ADDRESS = #{address,jdbcType=VARCHAR},
+      PHONE = #{phone,jdbcType=VARCHAR},
+      MAIL = #{mail,jdbcType=VARCHAR},
+      DEPARTMENT_ID = #{departmentId,jdbcType=INTEGER}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="getByWhere" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where 1=1 <include refid="whereCondition" />
+  </select>
+  
+   <select id="getByLoginName" resultMap="userRoleResultMap" parameterType="java.lang.String" >
+    SELECT
+	u.USER_NAME,
+	u.ID,
+	u.LOGIN_NAME,
+	u.`PASSWORD`,
+	u.SEX,
+	u.AGE,
+	u.ADDRESS,
+	u.PHONE,
+	u.MAIL,
+	u.DEPARTMENT_ID,
+	r.ID AS ROLE_ID,
+	r.ROLE_NAME,
+	r.ROLE_DESCRIPTION
+	FROM
+		`user` as u
+	LEFT JOIN user_role_relation as urr ON urr.USER_ID = u.ID
+	LEFT JOIN role as r ON urr.ROLE_ID = r.ID
+	where u.LOGIN_NAME = #{loginName,jdbcType=INTEGER}
+    
+  </select>
+  
+  <select id="getByLoginNameAndPwd" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where LOGIN_NAME = #{0} AND PASSWORD = #{1}
+  </select>
+  
+  <delete id="deleteByIds" parameterType="java.util.List" >
+    delete from user
+    where ID in
+    <foreach collection="list" item ="item" open="(" separator="," close=")">
+    	#{item}
+    </foreach>
+  </delete>
+</mapper>

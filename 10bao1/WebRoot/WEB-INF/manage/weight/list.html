@@ -1,0 +1,189 @@
+<#import "common/common.html" as common />
+<@common.html title="权重管理">
+	
+    <div class="weibo_tab_bg">
+    	<div class="weibo_tab">
+    		<form id="queryForm" action="${request.contextPath}/weight/list" method="post">
+    			<input type="hidden" class="input_txt" name="itemType" value="news"/>
+    		</form>
+            <span id="_news" <#if item.itemType == 'news' || item.itemType == ''>class="cur"</#if> onclick="query('news');">新闻热度</span>
+            <span id="_weibo" <#if item.itemType == 'weibo'>class="cur"</#if> onclick="query('weibo');">微博热度</span>
+            <span id="_weixin" <#if item.itemType == 'weixin'>class="cur"</#if> onclick="query('weixin');">微信热度</span>
+            <span id="_bbs" <#if item.itemType == 'bbs'>class="cur"</#if> onclick="query('bbs');">论坛热度</span>
+            <span id="_feedback" <#if item.itemType == 'feedback'>class="cur"</#if> onclick="query('feedback');">总体反馈</span>
+            <span id="_power" <#if item.itemType == 'power'>class="cur"</#if> onclick="query('power');">报社影响力</span>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="clear"></div>
+    <div class="right">
+        <div class="right_border">
+        	<div class="right_title_bg">
+            	<div class="right_title">查询列表</div>
+                <div class="right_btn_bg">
+                	<a href="${request.contextPath}/weight/add">添加</a>&nbsp;|&nbsp;
+                	<a href="javascrip:void(0);" onclick="dels();">删除</a>
+                </div>
+            </div>
+            <div class="clear"></div>
+            <table>
+            	<tr>
+            		<th class="b5"><input type="checkbox"  id="checkAll" /></th>
+                	<th>序号</th>
+                    <th>权重项</th>
+                    <th>权重值</th>
+                    <th>权重类型</th>
+                    <th>操作</th>
+                </tr>
+                <#if page && page.list>
+                	<#list page.list as weight>
+		                <tr>
+		                	<td class="b5">
+                    			<input type="checkbox"  name="checkbox" id="${weight.id}"/>
+                    		</td>
+		                    <td class="b10">${weight.id}</td>
+		                    <td class="b10">${weight.itemName}</td>
+		                    <td class="b10">${weight.itemValue}</td>
+		                    <#if weight.itemType == ''>
+                    			<td class="b10"></td>
+	                    	</#if>
+		                    <#if weight.itemType == 'news'>
+                    			<td class="b10">新闻热度</td>
+	                    	</#if>
+	                    	<#if weight.itemType == 'weibo'>
+	                    		<td class="b10">微博热度</td>
+	                    	</#if>
+	                    	<#if weight.itemType == 'weixin'>
+	                    		<td class="b10">微信热度</td>
+	                    	</#if>
+	                    	<#if weight.itemType == 'bbs'>
+	                    		<td class="b10">论坛热度</td>
+	                    	</#if>
+	                    	<#if weight.itemType == 'feedback'>
+	                    		<td class="b10">总体反馈</td>
+	                    	</#if>
+	                    	<#if weight.itemType == 'power'>
+	                    		<td class="b10">报社影响力</td>
+	                    	</#if>
+		                    <td class="b10">
+		                    	<a href="${request.contextPath}/weight/edit/${weight.id}">修改</a>
+		                    </td>
+                		</tr>
+	                </#list>
+                </#if>	
+            </table>
+            <div class="clear"></div>
+            <#if page>
+             <div class="page_box">
+            	<div class="pagging">
+            		<#if page.total &gt; 0>
+	                    <#if page.hasPreviousPage>
+						      <a href="?pageNum=${page.prePage}" style=" margin-right:27px;">&lt;上页</a>
+					    </#if>
+					    <#list page.navigatepageNums as num>
+					    	<#if num == page.pageNum>
+					    		<a href="javascript:void(0)" class="cur">${num}</a>
+					    	<#else>
+					    		<a href="?pageNum=${num}">${num}</a>
+					    	</#if>
+					    </#list>
+					    <#if page.hasNextPage>
+						    <a href="?pageNum=${page.nextPage}" style="margin-left:27px;">下页&gt;</a>
+					    </#if>
+	                    <span>跳转</span>
+	                    <input type="text" class="input_page" />
+	                    <span class="span2">页</span>
+                    </#if>
+                </div>
+            </div>
+            </#if>
+        </div>
+</div>
+<script type="text/javascript">
+/* 	function dels(){
+		var ids = [];
+		$('input[name="checkbox"]:checked').each(function() {
+			ids.push(parseInt($(this).attr("id")));
+		});
+		if(ids.length == 0){
+			alert("请选择删除的记录");
+		}
+		var url = "${request.contextPath}/weight/dels";
+		$.ajax({
+			type:"POST" ,
+			url:url,
+			cache: false,
+			data : {ids:ids},
+			dataType:"json",
+			success: function(result){
+				window.location.href = "${request.contextPath}/weight/list";
+			}
+		});
+	} */
+	
+	function query(itemType){
+		$("input[name='itemType']").val(itemType);
+		$(".map_tab_title").children("span").removeClass("cur");
+		$("_"+itemType).addClass("cur");
+		$("#queryForm").submit();
+	}
+	
+		function dels(){
+		var ids = [];
+		$('input[name="checkbox"]:checked').each(function() {
+			ids.push(parseInt($(this).attr("id")));
+		});
+		if(ids.length == 0){
+			swal("请选择删除的记录!")
+		}else{
+			swal({   title: "确定要删除角色吗?",   
+				text: "",   
+				type: "warning",   
+				showCancelButton: true,   
+				confirmButtonColor: "#DD6B55",   
+				confirmButtonText: "确定",   
+				cancelButtonText: "取消",   
+				closeOnConfirm: false   
+			}, 
+			function(isConfirm){
+				if (isConfirm){
+					deleteOper(ids);
+				}
+			});
+		}
+		return false;
+	}
+	function deleteOper(ids){
+		var url = "${request.contextPath}/weight/dels";
+		$.ajax({
+			type:"POST" ,
+			url:url,
+			cache: false,
+			data : {ids:ids},
+			dataType:"json",
+			error: function(request) {
+		        swal("权重配置删除失败！", "" ,"error");
+		    },
+			success: function(data){
+				if(data.msg){
+		    		swal(data.msg, "" ,"error");
+		    	}else{
+		    		swal({   title: "权重配置删除成功！",   
+						text: "",   
+						type: "success",   
+						showCancelButton: true,   
+						confirmButtonText: "确定",   
+						closeOnConfirm: false,
+						showCancelButton: false
+					}, 
+					function(isConfirm){
+						if (isConfirm){
+							window.location.href = "${request.contextPath}/weight/list";
+						}
+					});
+		    	}
+			}
+		});
+	}
+</script>
+</@common.html>

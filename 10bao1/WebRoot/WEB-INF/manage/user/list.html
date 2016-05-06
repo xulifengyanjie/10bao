@@ -1,0 +1,185 @@
+<#import "common/common.html" as common />
+<@common.html title="用户管理">
+  <div class="right">
+  		<div class="search_box">
+  			<form id="queryForm" action="${request.contextPath}/user/list" method="post">
+        	<ul>
+            	<li>
+                	<font>姓名</font>
+                    <input type="text" class="input_txt" name="userName" value="${item.userName}"/>
+                </li>
+                <li>
+                	<font>账号</font>
+                    <input type="text" class="input_txt" name="loginName" value="${item.loginName}"/>
+                </li>
+                <li>
+                	<font>系统角色</font>
+                    <div class="select_bg">
+                    	<input type="hidden" class="input_txt" name="roleIds"/>
+                        <div class="select_title"><font>--请选择--</font><i></i></div>
+                        <div class="select_list">
+                        	<a href="javascript:;" onclick="selectRole(0)">--全部--</a>
+                        	<#if roleList>
+                        		<#list roleList as role>
+                        			<a href="javascript:;" onclick="selectRole(${role.id})">${role.roleName}</a>
+                        		</#list>
+                            </#if>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                	<div class="search_btn">
+                    	<a href="javascript:;" onclick="query();">
+                        	搜索<i></i>
+                        </a>
+                    </div>
+                </li>
+            </ul>
+            </form>
+            <div class="clear"></div>
+        </div>
+        <div class="right_border">
+        	<div class="right_title_bg">
+            	<div class="right_title">查询列表</div>
+                <div class="right_btn_bg">
+                	<a href="${request.contextPath}/user/add">添加</a>&nbsp;|&nbsp;
+                	<a href ="javascript:void(0)" onclick="dels();">删除</a>
+                </div>
+            </div>
+            <div class="clear"></div>
+            <table>
+            	<tr>
+            		<th class="b5"><input type="checkbox"  id="checkAll" /></th>
+                	<th class="b10">序号</th>
+                    <th class="b10">姓名</th>
+                    <th class="b10">性别</th>
+                    <th class="b20">账号</th>
+                    <th class="b20">邮箱</th>
+                    <th class="b20">电话</th>
+                    <th class="b10">操作</th>
+                </tr>
+                <#if page && page.list>
+                	<#list page.list as user>
+		                <tr>
+		                	<td class="b5">
+                    			<input type="checkbox"  name="checkbox" id="${user.id}"/>
+                    		</td>
+		                    <td class="b10">${user.id}</td>
+		                    <td class="b10">${user.userName}</td>
+		                    <td class="b10">
+		                    <#if user.sex!=null&&user.sex=='1'>男</#if>
+		                    <#if user.sex!=null&&user.sex=='0'>女</#if>
+		                    </td>
+		                    <td class="b20">${user.loginName}</td>
+		                    <td class="b20">${user.mail}</td>
+		                    <td class="b20">${user.phone}</td>
+		                    <td class="b10">
+		                    	<a href="${request.contextPath}/user/edit/${user.id}">修改</a>
+		                    </td>
+                		</tr>
+	                </#list>
+                </#if>	
+            </table>
+            <div class="clear"></div>
+            <#if page && page.total &gt; 0>
+             <div class="page_box">
+            	<div class="pagging">
+            		<#if page.total &gt; 0>
+	                    <#if page.hasPreviousPage>
+						      <a href="javascript:void(0)" onclick="showPage(${page.prePage});" style=" margin-right:27px;">&lt;上页</a>
+					    </#if>
+					    <#list page.navigatepageNums as num>
+					    	<#if num == page.pageNum>
+					    		<a href="javascript:void(0)" class="cur">${num}</a>
+					    	<#else>
+					    		<a href="javascript:void(0)" onclick="showPage(${num});">${num}</a>
+					    	</#if>
+					    </#list>
+					    <#if page.hasNextPage>
+						    <a href="javascript:void(0)" onclick="showPage(${page.nextPage});" style="margin-left:27px;">下页&gt;</a>
+					    </#if>
+	                    <span>跳转</span>
+	                    <input type="text" class="input_page" />
+	                    <span class="span2">页</span>
+                    </#if>
+                </div>
+            </div>
+            </#if>
+        </div>
+</div>
+
+<script type="text/javascript">
+	function showPage(pageNum){
+		$("#queryForm").attr("action","${request.contextPath}/department/list?pageNum="+pageNum);
+		query();
+	}
+	function query(){
+		$("#queryForm").submit();
+	}
+	function selectRole(id){
+		if(id == 0){
+			$("input[name='roleIds']").val("");
+		}else{
+			$("input[name='roleIds']").val(id);
+		}
+	}
+	
+	function dels(){
+		var ids = [];
+		$('input[name="checkbox"]:checked').each(function() {
+			ids.push(parseInt($(this).attr("id")));
+		});
+		if(ids.length == 0){
+			swal("请选择删除的记录!")
+		}else{
+			swal({   title: "确定要删除用户吗?",   
+				text: "",   
+				type: "warning",   
+				showCancelButton: true,   
+				confirmButtonColor: "#DD6B55",   
+				confirmButtonText: "确定",   
+				cancelButtonText: "取消",   
+				closeOnConfirm: false   
+			}, 
+			function(isConfirm){
+				if (isConfirm){
+					deleteOper(ids);
+				}
+			});
+		}
+		return false;
+	}
+	function deleteOper(ids){
+		var url = "${request.contextPath}/user/dels";
+		$.ajax({
+			type:"POST" ,
+			url:url,
+			cache: false,
+			data : {ids:ids},
+			dataType:"json",
+			error: function(request) {
+		        swal("用户删除失败！", "" ,"error");
+		    },
+			success: function(data){
+				if(data.msg){
+		    		swal(data.msg, "" ,"error");
+		    	}else{
+		    		swal({   title: "用户删除成功！",   
+						text: "",   
+						type: "success",   
+						showCancelButton: true,   
+						confirmButtonText: "确定",   
+						closeOnConfirm: false,
+						showCancelButton: false
+					}, 
+					function(isConfirm){
+						if (isConfirm){
+							window.location.href = "${request.contextPath}/user/list";
+						}
+					});
+		    	}
+			}
+		});
+	}
+</script>
+</@common.html>

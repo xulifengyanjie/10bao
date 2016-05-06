@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.twsm.newstopic.dao.MobAppNewsMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.twsm.newstopic.model.MobAppNews" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="NEWS_ID" property="newsId" jdbcType="VARCHAR" />
+    <result column="TITLE" property="title" jdbcType="VARCHAR" />
+    <result column="PUB_TIME" property="pubTime" jdbcType="VARCHAR" />
+    <result column="SURL" property="surl" jdbcType="VARCHAR" />
+    <result column="SOURCE" property="source" jdbcType="VARCHAR" />
+    <result column="APP_NAME" property="appName" jdbcType="VARCHAR" />
+    <result column="COLUMN_NAME" property="columnName" jdbcType="VARCHAR" />
+    <result column="IMGSRC" property="imgsrc" jdbcType="VARCHAR" />
+    <result column="ADD_TIME" property="addTime" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="cn.com.twsm.newstopic.model.MobAppNews" extends="BaseResultMap" >
+    <result column="NEWS_TEXT" property="newsText" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, NEWS_ID, TITLE, NEWS_TEXT,PUB_TIME, SURL, SOURCE, APP_NAME, COLUMN_NAME, IMGSRC, ADD_TIME
+  </sql>
+  <sql id="Blob_Column_List" >
+    NEWS_TEXT
+  </sql>
+  <sql id="whereCondition">
+      <if test="id != null" >
+        AND ID = #{id,jdbcType=INTEGER}
+      </if>
+      <if test="appName != null" >
+        AND app_name = #{appName,jdbcType=VARCHAR}
+      </if>
+      <if test="column != null" >
+        AND column_name = #{column,jdbcType=VARCHAR}
+      </if>
+       <if test="startTime != null" >
+        AND add_time &gt;#{startTime,jdbcType=VARCHAR}
+      </if>
+        <if test="endTime != null" >
+        AND add_time &lt;#{endTime,jdbcType=VARCHAR}
+      </if>
+       <if test="keyWord != null" >
+        AND title like '%${keyWord}%'
+      </if>
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from mobapp_news
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from mobapp_news
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.com.twsm.newstopic.model.MobAppNews" >
+    insert into mobapp_news (ID, NEWS_ID, TITLE, 
+      PUB_TIME, SURL, SOURCE, 
+      APP_NAME, COLUMN_NAME, IMGSRC, 
+      ADD_TIME, NEWS_TEXT)
+    values (#{id,jdbcType=INTEGER}, #{newsId,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, 
+      #{pubTime,jdbcType=VARCHAR}, #{surl,jdbcType=VARCHAR}, #{source,jdbcType=VARCHAR}, 
+      #{appName,jdbcType=VARCHAR}, #{columnName,jdbcType=VARCHAR}, #{imgsrc,jdbcType=VARCHAR}, 
+      #{addTime,jdbcType=VARCHAR}, #{newsText,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.com.twsm.newstopic.model.MobAppNews" >
+    insert into mobapp_news
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="newsId != null" >
+        NEWS_ID,
+      </if>
+      <if test="title != null" >
+        TITLE,
+      </if>
+      <if test="pubTime != null" >
+        PUB_TIME,
+      </if>
+      <if test="surl != null" >
+        SURL,
+      </if>
+      <if test="source != null" >
+        SOURCE,
+      </if>
+      <if test="appName != null" >
+        APP_NAME,
+      </if>
+      <if test="columnName != null" >
+        COLUMN_NAME,
+      </if>
+      <if test="imgsrc != null" >
+        IMGSRC,
+      </if>
+      <if test="addTime != null" >
+        ADD_TIME,
+      </if>
+      <if test="newsText != null" >
+        NEWS_TEXT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="newsId != null" >
+        #{newsId,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="pubTime != null" >
+        #{pubTime,jdbcType=VARCHAR},
+      </if>
+      <if test="surl != null" >
+        #{surl,jdbcType=VARCHAR},
+      </if>
+      <if test="source != null" >
+        #{source,jdbcType=VARCHAR},
+      </if>
+      <if test="appName != null" >
+        #{appName,jdbcType=VARCHAR},
+      </if>
+      <if test="columnName != null" >
+        #{columnName,jdbcType=VARCHAR},
+      </if>
+      <if test="imgsrc != null" >
+        #{imgsrc,jdbcType=VARCHAR},
+      </if>
+      <if test="addTime != null" >
+        #{addTime,jdbcType=VARCHAR},
+      </if>
+      <if test="newsText != null" >
+        #{newsText,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.com.twsm.newstopic.model.MobAppNews" >
+    update mobapp_news
+    <set >
+      <if test="newsId != null" >
+        NEWS_ID = #{newsId,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        TITLE = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="pubTime != null" >
+        PUB_TIME = #{pubTime,jdbcType=VARCHAR},
+      </if>
+      <if test="surl != null" >
+        SURL = #{surl,jdbcType=VARCHAR},
+      </if>
+      <if test="source != null" >
+        SOURCE = #{source,jdbcType=VARCHAR},
+      </if>
+      <if test="appName != null" >
+        APP_NAME = #{appName,jdbcType=VARCHAR},
+      </if>
+      <if test="columnName != null" >
+        COLUMN_NAME = #{columnName,jdbcType=VARCHAR},
+      </if>
+      <if test="imgsrc != null" >
+        IMGSRC = #{imgsrc,jdbcType=VARCHAR},
+      </if>
+      <if test="addTime != null" >
+        ADD_TIME = #{addTime,jdbcType=VARCHAR},
+      </if>
+      <if test="newsText != null" >
+        NEWS_TEXT = #{newsText,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="cn.com.twsm.newstopic.model.MobAppNews" >
+    update mobapp_news
+    set NEWS_ID = #{newsId,jdbcType=VARCHAR},
+      TITLE = #{title,jdbcType=VARCHAR},
+      PUB_TIME = #{pubTime,jdbcType=VARCHAR},
+      SURL = #{surl,jdbcType=VARCHAR},
+      SOURCE = #{source,jdbcType=VARCHAR},
+      APP_NAME = #{appName,jdbcType=VARCHAR},
+      COLUMN_NAME = #{columnName,jdbcType=VARCHAR},
+      IMGSRC = #{imgsrc,jdbcType=VARCHAR},
+      ADD_TIME = #{addTime,jdbcType=VARCHAR},
+      NEWS_TEXT = #{newsText,jdbcType=LONGVARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.com.twsm.newstopic.model.MobAppNews" >
+    update mobapp_news
+    set NEWS_ID = #{newsId,jdbcType=VARCHAR},
+      TITLE = #{title,jdbcType=VARCHAR},
+      PUB_TIME = #{pubTime,jdbcType=VARCHAR},
+      SURL = #{surl,jdbcType=VARCHAR},
+      SOURCE = #{source,jdbcType=VARCHAR},
+      APP_NAME = #{appName,jdbcType=VARCHAR},
+      COLUMN_NAME = #{columnName,jdbcType=VARCHAR},
+      IMGSRC = #{imgsrc,jdbcType=VARCHAR},
+      ADD_TIME = #{addTime,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <select id="getByWhere" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select 
+    <include refid="Base_Column_List" />
+    from mobapp_news
+    where 1=1 <include refid="whereCondition" />
+    order by add_time desc
+  </select>
+  <select id="getHotByWhere" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select 
+    <include refid="Base_Column_List" />
+    from mobapp_news
+    where 1=1 <include refid="whereCondition" />
+    limit 1,10
+  </select>
+</mapper>

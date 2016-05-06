@@ -1,0 +1,605 @@
+<#import "common/common.html" as common /> <@common.html title="定向关注">
+<script type="text/javascript" language="javascript" src="${request.contextPath}/static/main/js/ECharts/echarts.js"></script>
+<div class="weibo">
+	<div class="weibo_content">
+		<div class="weibo_tab_bg">
+			<div class="weibo_tab">
+				<span class="cur">评论列表</span>
+				<span>评论总体分析</span>
+				<span>读者群分析</span>
+			</div>
+		</div>
+		<div class="weibo_display" id="weibo_display">
+			<div class="weibo_item">
+				<div class="search_box">
+					<form id="queryForm" action="${request.contextPath}/user/list"
+						method="post">
+						<ul>
+							<li>
+								<font>开始时间:</font>
+								<input type="text" class="input_txt" name="startTime"
+									value="${startTime}"
+									onfocus="WdatePicker({skin:'twoer',dateFmt:'yyyy-MM-dd',minDate:'2008-01-01',maxDate:'2100-12-31'})" />
+							</li>
+							<li>
+								<font>结束时间:</font>
+								<input type="text" class="input_txt" name="startTime"
+									value="${startTime}"
+									onfocus="WdatePicker({skin:'twoer',dateFmt:'yyyy-MM-dd',minDate:'2008-01-01',maxDate:'2100-12-31'})" />
+							</li>
+							<li>
+								<font>关键词:</font>
+								<input type="text" class="input_txt" name="userName" value="${item.userName}"/>
+							</li>
+							<li>
+								<div class="search_btn">
+									<a href="javascript:;" onclick="query();"> 搜索<i></i> </a>
+								</div>
+							</li>
+						</ul>
+					</form>
+					<div class="clear"></div>
+				</div>
+				<div class="right_border">
+					<div class="right_title_bg">
+						<div class="right_title">
+							查询列表
+						</div>
+
+					</div>
+					<div class="clear"></div>
+					<table id="tab">
+						<tr>
+							<th class="b10">
+								序号
+							</th>
+							<th class="b30">
+								新闻标题
+							</th>
+							<th class="b40">
+								印行期数
+							</th>
+							<th class="b10">
+								网站读者分析
+							</th>
+						</tr>
+						<!-- 
+						<#if page && page.list> <#list page.list as promotion>
+						<tr id="promotion_${promotion.id}_top">
+							<td class="b10">
+								${promotion.topic}
+							</td>
+							<td class="b10">
+								${promotion.keyWord}
+							</td>
+							<td class="b40">
+								${promotion.type}
+							</td>
+							<td class="b10">
+								${promotion.addTime}
+							</td>
+							<td class="b10">
+								<a
+									href="${request.contextPath}/promotion/editAttention/${promotion.id}">编辑</a>&nbsp;|&nbsp;
+								<a href="javascript:void(0);" onclick=
+	del('${promotion.id}');;
+>删除</a>&nbsp;&nbsp;|&nbsp;
+							</td>
+						</tr>
+						</#list> </#if>
+						 -->
+						 <tr>
+							<td class="b10">
+								1
+							</td>
+							<td class="b10">
+								<a href="http://news.ifeng.com/a/20160504/48673110_0.shtml" target="_blank">走出“五四”，必先回到“五四”</a>
+							</td>
+							<td class="b40">
+								总1234期
+							</td>
+							<td class="b10">
+								分析
+							</td>
+							<tr>
+							<td class="b10">
+								2
+							</td>
+							<td class="b10">
+								<a href="http://news.ifeng.com/a/20160502/48656845_0.shtml" target="_blank">“不信医生信百度”局面怎么扭转</a>
+							</td>
+							<td class="b40">
+								总1234期
+							</td>
+							<td class="b10">
+								分析
+							</td>
+							<tr>
+							<td class="b10">
+								3
+							</td>
+							<td class="b10">
+								<a href="http://news.ifeng.com/a/20160502/48655768_0.shtml" target="_blank">不归广告法管，魏则西式悲剧难绝</a>
+							</td>
+							<td class="b40">
+								总1234期
+							</td>
+							<td class="b10">
+								分析
+							</td>
+							<tr>
+							<td class="b10">
+								4
+							</td>
+							<td class="b10">
+								<a href="http://news.ifeng.com/a/20160502/48655749_0.shtml" target="_blank">魏则西之死，拷问医改困局怎么解</a>
+							</td>
+							<td class="b40">
+								总1234期
+							</td>
+							<td class="b10">
+								分析
+							</td>
+							<tr>
+							<td class="b10">
+								5
+							</td>
+							<td class="b10">
+								<a href="http://news.ifeng.com/a/20160502/48655699_0.shtml" target="_blank">谷歌“不作恶”并非因为“良心”</a>
+							</td>
+							<td class="b40">
+								总1234期
+							</td>
+							<td class="b10">
+								分析
+							</td>
+							<tr>
+							<td class="b10">
+								6
+							</td>
+							<td class="b10">
+								<a href="http://news.ifeng.com/a/20160502/48652309_0.shtml" target="_blank">魏则西之死，舆论是如何裂变的</a>
+							</td>
+							<td class="b40">
+								总1234期
+							</td>
+							<td class="b10">
+								分析
+							</td>
+							<tr>
+							<td class="b10">
+								7
+							</td>
+							<td class="b10">
+								<a href="http://news.ifeng.com/a/20160501/48652040_0.shtml" target="_blank">杀死魏则西的到底是什么</a>
+							</td>
+							<td class="b40">
+								总1234期
+							</td>
+							<td class="b10">
+								分析
+							</td>
+							<tr>
+							<td class="b10">
+								8
+							</td>
+							<td class="b10">
+								<a href="http://news.ifeng.com/a/20160501/48650986_0.shtml" target="_blank">魏则西之死，谁在作恶？</a>
+							</td>
+							<td class="b40">
+								总1234期
+							</td>
+							<td class="b10">
+								分析
+							</td>
+							<tr>
+							<td class="b10">
+								9
+							</td>
+							<td class="b10">
+								<a href="http://news.ifeng.com/a/20160429/48635108_0.shtml" target="_blank">一个白鹿原子弟眼中的陈忠实</a>
+							</td>
+							<td class="b40">
+								总1234期
+							</td>
+							<td class="b10">
+								分析
+							</td>
+							<tr>
+							<td class="b10">
+								10
+							</td>
+							<td class="b10">
+								<a href="http://news.ifeng.com/a/20160428/48616041_0.shtml" target="_blank">“不该让每个人打得起车”错在哪</a>
+							</td>
+							<td class="b40">
+								总1234期
+							</td>
+							<td class="b10">
+								分析
+							</td>
+					</table>
+					<div class="clear"></div>
+					<#if page>
+					<div class="page_box">
+						<div class="pagging">
+							<#if page.hasPreviousPage>
+							<a
+								href="?pageNum=${page.prePage}&date=${date}&timestamp=${timestamp}&searchWord=${searchWord}"
+								style="margin-right: 27px;">&lt;上页</a> </#if> <#list
+							page.navigatepageNums as num> <#if num == page.pageNum>
+							<a href="javascript:void(0)" class="cur">${num}</a> <#else>
+							<a
+								href="?pageNum=${num}&date=${date}&timestamp=${timestamp}&searchWord=${searchWord}">${num}</a>
+							</#if> </#list> <#if page.hasNextPage>
+							<a
+								href="?pageNum=${page.nextPage}&date=${date}&timestamp=${timestamp}&searchWord=${searchWord}"
+								style="margin-left: 27px;">下页&gt;</a> </#if>
+							<span>跳转</span>
+							<input type="text" class="input_page" />
+							<span class="span2">页</span>
+						</div>
+					</div>
+					</#if>
+				</div>
+				<div class="clear"></div>
+			</div>
+			<div class="weibo_item">
+				<div class="clear"></div>
+				<div class="right_border">
+					<div class="clear"></div>
+		
+				</div>
+                  <div class="index_content">
+   					<div class="clear"></div>
+  		
+        				<div id="individualTopics"  style="height: 400px; width:1000px;border: 1px solid #ccc; padding: 10px;"></div>
+        			
+				</div>
+				
+			</div>
+			<div class="weibo_item">
+				<div class="clear"></div>
+				<div class="right_border">
+					<div class="clear"></div>
+				</div>
+				<div class="index_content">
+   					<div class="clear"></div>
+  		
+        				<div id="sexInfo"  style="height: 400px; width:450px;border: 1px solid #ccc; padding: 10px;"></div>
+        				<div id="areaInfo"  style="height: 400px; width:450px;border: 1px solid #ccc; padding: 10px;"></div>
+        				<div id="ageInfo"  style="height: 400px; width:450px;border: 1px solid #ccc; padding: 10px;"></div>
+        				<div id="studyInfo"  style="height: 400px; width:450px;border: 1px solid #ccc; padding: 10px;"></div>
+        			
+				</div>
+			</div>
+<script type="text/javascript">
+	$(function(){
+
+		var monChangeChart;
+		require.config({paths : {echarts : '${request.contextPath}/static/main/js/ECharts'}});	
+		require(['echarts','echarts/chart/line'],function(ec){
+			//初始化echarts图表
+			monChangeChart = ec.init(document.getElementById('individualTopics'));
+			//定义图表option
+			var option = {
+				    title : {
+		        text: '新闻评论总体分析',
+		    },
+		    tooltip : {
+		        trigger: 'axis'
+		    },
+		    legend: {
+		        data:['浏览量','评论量']
+		    },
+		    toolbox: {
+		        show : true,
+		        feature : {
+		            mark : {show: true},
+		            dataView : {show: true, readOnly: false},
+		            magicType : {show: true, type: ['line', 'bar']},
+		            restore : {show: true},
+		            saveAsImage : {show: true}
+		        }
+		    },
+		    calculable : true,
+		    xAxis : [
+		        {
+		            type : 'category',
+		            boundaryGap : false,
+		            data : ['1:00','2:00','3:00','4:00','5:00','6:00','7:00','8:00','9:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00','18:00','19:00','20:00','21:00','22:00','23:00','00:00']
+		        }
+		    ],
+		    yAxis : [
+		        {
+		            type : 'value',
+		        }
+		    ],
+		    series : [
+		        {
+		            name:'浏览量',
+		            type:'line',
+		            data:[0, 1000, 2000,100,2100,2300, 3000, 4000, 5000, 6000],
+		        },
+		        {
+		            name:'评论量',
+		            type:'line',
+		            data:[0, 200,230,500,600,1000, 2000, 3000, 4000, 5000, 6000],
+		        }
+		    ]
+		};
+		                    
+		                    
+			monChangeChart.setOption(option);
+			/* myChart.hideLoading(); */
+			/* getChartData(); */
+		});
+
+		/**柱状图
+		*/
+		var monChangeChart2;
+		require.config({paths : {echarts : '${request.contextPath}/static/main/js/ECharts'}});	
+		require(['echarts','echarts/chart/bar'],function(ec){
+			//初始化echarts图表
+			monChangeChart2 = ec.init(document.getElementById('sexInfo'));
+			//定义图表option
+			var option = {
+				    title : {
+		        text: '性别分布',
+		    },
+		    tooltip : {
+		        trigger: 'axis'
+		    },
+		    toolbox: {
+		        show : true,
+		        feature : {
+		            mark : {show: true},
+		            dataView : {show: true, readOnly: false},
+		            magicType: {show: true, type: ['line', 'bar']},
+		            restore : {show: true},
+		            saveAsImage : {show: true}
+		        }
+		    },
+		    calculable : true,
+		    xAxis : [
+		        {
+		            type : 'value',
+		            boundaryGap : [0, 0.01]
+		        }
+		    ],
+		    yAxis : [
+		        {
+		            type : 'category',
+		            data : ['男','女']
+		        }
+		    ],
+		    series : [
+		        {
+		            name:'性别比例',
+		            type:'bar',
+		            data:[9.6, 8.6, 8.3, 9.6, 6.9, 5.7, 5.3, 2.9, 1.3, 0.6]
+		        }
+		    ]
+		};
+		                    
+		                    
+			monChangeChart2.setOption(option);
+			/* myChart.hideLoading(); */
+			/* getChartData(); */
+		});
+
+
+		/**柱状图
+		*/
+		var monChangeChart3;
+		require.config({paths : {echarts : '${request.contextPath}/static/main/js/ECharts'}});	
+		require(['echarts','echarts/chart/map'],function(ec){
+			//初始化echarts图表
+			monChangeChart3 = ec.init(document.getElementById('areaInfo'));
+			//定义图表option
+			var option = {
+					   title : {
+		        			text: '地域',
+		    			},
+				    series : [
+				              {
+				                  name: 'Map',
+				                  type: 'map',
+				                  mapLocation: {
+				                      x : 'left',
+				                      y : 'top',
+				                      height : 500
+				                  },
+				                  selectedMode: 'multiple',
+				                  itemStyle: {
+				                      normal: {
+				                          borderWidth:2,
+				                          borderColor:'lightgreen',
+				                          color: 'orange',
+				                          label: {
+				                              show: false
+				                          }
+				                      },
+				                      emphasis: {                 // 也是选中样式
+				                          borderWidth:2,
+				                          borderColor:'#fff',
+				                          color: '#32cd32',
+				                          label: {
+				                              show: true,
+				                              textStyle: {
+				                                  color: '#fff'
+				                              }
+				                          }
+				                      }
+				                  },
+				                  data:[
+				                       {
+				                           name: '广东',
+				                           value: Math.round(Math.random()*1000),
+				                           itemStyle: {
+				                              normal: {
+				                                  color: '#32cd32',
+				                                  label: {
+				                                      show: true,
+				                                      textStyle: {
+				                                          color: '#fff',
+				                                          fontSize: 15
+				                                      }
+				                                  }
+				                              },
+				                              emphasis: {                 // 也是选中样式
+				                                  borderWidth:5,
+				                                  borderColor:'yellow',
+				                                  color: '#cd5c5c',
+				                                  label: {
+				                                      show: false,
+				                                      textStyle: {
+				                                          color: 'blue'
+				                                      }
+				                                  }
+				                              }
+				                          }
+				                      }
+				                  ],
+				                  markPoint : {
+				                      itemStyle : {
+				                          normal:{
+				                              color:'skyblue'
+				                          }
+				                      },
+				                      data : [
+				                          {name : '天津', value : 350},
+				                          {name : '上海', value : 103},
+				                          {
+				                              name : 'echarts',
+				                              symbol: 'image://../asset/img/echarts-logo.png',
+				                              symbolSize: 21,
+				                              x: 300,
+				                              y: 100
+				                          }
+				                      ]
+				                  },
+				                  geoCoord: {
+				                      '上海': [121.4648,31.2891],
+				                      '天津': [117.4219,39.4189]
+				                  }
+				              }
+				          ]
+				      };
+				                          
+		                    
+		                    
+			monChangeChart3.setOption(option);
+			/* myChart.hideLoading(); */
+			/* getChartData(); */
+		});
+
+		/**柱状图
+		*/
+		var monChangeChart4;
+		require.config({paths : {echarts : '${request.contextPath}/static/main/js/ECharts'}});	
+		require(['echarts','echarts/chart/bar'],function(ec){
+			//初始化echarts图表
+			monChangeChart4 = ec.init(document.getElementById('ageInfo'));
+			//定义图表option
+			var option = {
+				    title : {
+		        text: '年龄',
+		    },
+		    tooltip : {
+		        trigger: 'axis'
+		    },
+		    toolbox: {
+		        show : true,
+		        feature : {
+		            mark : {show: true},
+		            dataView : {show: true, readOnly: false},
+		            magicType: {show: true, type: ['line', 'bar']},
+		            restore : {show: true},
+		            saveAsImage : {show: true}
+		        }
+		    },
+		    calculable : true,
+		    xAxis : [
+		        {
+		            type : 'value',
+		            boundaryGap : [0, 0.01]
+		        }
+		    ],
+		    yAxis : [
+		        {
+		            type : 'category',
+		            data : ['12岁以下','12-18岁','19-24岁','25-34岁','35-50岁','51-80岁']
+		        }
+		    ],
+		    series : [
+		        {
+		            name:'年龄分布',
+		            type:'bar',
+		            data:[9.6, 8.6, 8.3, 9.6, 6.9, 5.7, 5.3, 2.9, 1.3, 0.6]
+		        }
+		    ]
+		};
+		                    
+		                    
+			monChangeChart4.setOption(option);
+			/* myChart.hideLoading(); */
+			/* getChartData(); */
+		});
+
+
+		/**柱状图
+		*/
+		var monChangeChart5;
+		require.config({paths : {echarts : '${request.contextPath}/static/main/js/ECharts'}});	
+		require(['echarts','echarts/chart/bar'],function(ec){
+			//初始化echarts图表
+			monChangeChart5 = ec.init(document.getElementById('studyInfo'));
+			//定义图表option
+			var option = {
+				    title : {
+		        text: '学历',
+		    },
+		    tooltip : {
+		        trigger: 'axis'
+		    },
+		    toolbox: {
+		        show : true,
+		        feature : {
+		            mark : {show: true},
+		            dataView : {show: true, readOnly: false},
+		            magicType: {show: true, type: ['line', 'bar']},
+		            restore : {show: true},
+		            saveAsImage : {show: true}
+		        }
+		    },
+		    calculable : true,
+		    xAxis : [
+		        {
+		            type : 'value',
+		            boundaryGap : [0, 0.01]
+		        }
+		    ],
+		    yAxis : [
+		        {
+		            type : 'category',
+		            data : ['小学','初中','高中','本科','硕士','博士']
+		        }
+		    ],
+		    series : [
+		        {
+		            name:'学历分布',
+		            type:'bar',
+		            data:[9.6, 8.6, 8.3, 9.6, 6.9, 5.7, 5.3, 2.9, 1.3, 0.6]
+		        }
+		    ]
+		};
+		                    
+		                    
+			monChangeChart5.setOption(option);
+			/* myChart.hideLoading(); */
+			/* getChartData(); */
+		});
+	});			     
+</script>
+</@common.html>

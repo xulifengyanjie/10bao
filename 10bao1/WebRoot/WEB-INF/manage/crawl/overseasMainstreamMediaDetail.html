@@ -1,0 +1,78 @@
+<#import "common/common.html" as common />
+<@common.html title="选题详情" menucode="0103">
+<div class="right">	
+	<form id="editForm" action="${request.contextPath}/dataCollection/doEdit"  method="post">
+	    
+	    <div class="search_box">
+        	<ul>
+            	<li>
+                	<font>境外媒体名称</font>
+                    <input type="text" class="input_txt" name="collectionsource" value="${crawlData.collectionsource}"/>
+                     <input type="hidden" name="type" value="overseasMainstreamMedia"/>
+                     <input type="hidden" name="id" value="${crawlData.id}"/>
+                </li>
+               <li>
+                	<font>网页链接</font>
+                    <input type="text" class="input_txt" name="link" value="${crawlData.link}"/>
+                </li>
+                <li>
+                	<font>抓取层数</font>
+                    <input type="text" class="input_txt" name="collectionlayer" value="${crawlData.collectionlayer}"/>
+                </li>
+                <li>
+                    <font>抓取时段</font>
+                    <input type="text" class="input_txt" name="collecttime" value="${crawlData.collecttime}"/>
+                </li>
+                 <li>
+                    <font>抓取频率</font>
+                    <input type="text" class="input_txt" name="collectacquisition" value="${crawlData.collectacquisition}"/>
+                </li>
+                <li>
+                	<div class="search_btn">
+                    	<a href="javascript:;" onclick="ajaxEdit();">
+                        	保存
+                        </a>
+                    </div>
+                </li>
+        
+            </ul>
+            <div class="clear"></div>
+        </div>
+	</form>
+</div>
+<script type="text/javascript">
+	function ajaxEdit(){
+		var ajaxCallUrl = $("#editForm").attr("action");
+		$.ajax({
+			cache: true,
+			type: "POST",
+			url:ajaxCallUrl,
+			data:$('#editForm').serialize(),
+			async: false,
+		    error: function(request) {
+		        swal("境外主流媒体修改失败！", "" ,"error");
+		    },
+		    success: function(data) {
+		    	if(data.msg){
+		    		swal(data.msg, "" ,"error");
+		    	}else{
+		    		swal({   
+		    			title: "境外主流媒体修改成功！",   
+						text: "",   
+						type: "success",   
+						showCancelButton: true,   
+						confirmButtonText: "确定",   
+						closeOnConfirm: false,
+						showCancelButton: false
+					}, 
+					function(isConfirm){
+						if (isConfirm){
+							window.location.href = "${request.contextPath}/dataCollection/overseasMainstreamMediaDataList";
+						}
+					});
+		    	}
+		    }
+		});
+	}
+</script>
+</@common.html>

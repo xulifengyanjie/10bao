@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.twsm.newstopic.dao.BbsNewsResultMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.twsm.newstopic.model.BbsNewsResult" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="NEWS_NUM" property="newsNum" jdbcType="VARCHAR" />
+    <result column="WEIGHT" property="weight" jdbcType="VARCHAR" />
+    <result column="BATCH_NUM" property="batchNum" jdbcType="VARCHAR" />
+    <result column="SORT" property="sort" jdbcType="INTEGER" />
+    <result column="BATCH_DATE" property="batchDate" jdbcType="VARCHAR" />
+    <result column="CATALOG_ID" property="catalogId" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, NEWS_NUM, WEIGHT, BATCH_NUM, SORT, BATCH_DATE, CATALOG_ID
+  </sql>
+   <sql id="whereCondition">
+  	  <if test="id != null" >
+        AND BBS_NEWS_RESULT.ID=#{id,jdbcType=VARCHAR}
+      </if>
+      <if test="newsNum != null" >
+        AND BBS_NEWS_RESULT.NEWS_NUM=#{newsNum,jdbcType=VARCHAR}
+      </if>
+      <if test="weight != null" >
+        AND BBS_NEWS_RESULT.WEIGHT=#{weight,jdbcType=VARCHAR}
+      </if>
+      <if test="batchNum != null" >
+        AND BBS_NEWS_RESULT.BATCH_NUM=#{batchNum,jdbcType=VARCHAR}
+      </if>
+      <if test="sort != null" >
+        AND BBS_NEWS_RESULT.SORT=#{sort,jdbcType=INTEGER}
+      </if>
+      <if test="batchDate != null" >
+        AND BBS_NEWS_RESULT.BATCH_DATE=#{batchDate,jdbcType=VARCHAR}
+      </if>
+      <if test="catalogId != null" >
+        AND BBS_NEWS_RESULT.CATALOG_ID = #{catalogId,jdbcType=INTEGER}
+      </if>
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from BBS_NEWS_RESULT
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from BBS_NEWS_RESULT
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.com.twsm.newstopic.model.BbsNewsResult" >
+    insert into BBS_NEWS_RESULT (ID, NEWS_NUM, WEIGHT, 
+      BATCH_NUM, SORT, BATCH_DATE, 
+      CATALOG_ID)
+    values (#{id,jdbcType=INTEGER}, #{newsNum,jdbcType=VARCHAR}, #{weight,jdbcType=VARCHAR}, 
+      #{batchNum,jdbcType=VARCHAR}, #{sort,jdbcType=INTEGER}, #{batchDate,jdbcType=VARCHAR}, 
+      #{catalogId,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.com.twsm.newstopic.model.BbsNewsResult" >
+    insert into BBS_NEWS_RESULT
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="newsNum != null" >
+        NEWS_NUM,
+      </if>
+      <if test="weight != null" >
+        WEIGHT,
+      </if>
+      <if test="batchNum != null" >
+        BATCH_NUM,
+      </if>
+      <if test="sort != null" >
+        SORT,
+      </if>
+      <if test="batchDate != null" >
+        BATCH_DATE,
+      </if>
+      <if test="catalogId != null" >
+        CATALOG_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="newsNum != null" >
+        #{newsNum,jdbcType=VARCHAR},
+      </if>
+      <if test="weight != null" >
+        #{weight,jdbcType=VARCHAR},
+      </if>
+      <if test="batchNum != null" >
+        #{batchNum,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null" >
+        #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="batchDate != null" >
+        #{batchDate,jdbcType=VARCHAR},
+      </if>
+      <if test="catalogId != null" >
+        #{catalogId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.com.twsm.newstopic.model.BbsNewsResult" >
+    update BBS_NEWS_RESULT
+    <set >
+      <if test="newsNum != null" >
+        NEWS_NUM = #{newsNum,jdbcType=VARCHAR},
+      </if>
+      <if test="weight != null" >
+        WEIGHT = #{weight,jdbcType=VARCHAR},
+      </if>
+      <if test="batchNum != null" >
+        BATCH_NUM = #{batchNum,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null" >
+        SORT = #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="batchDate != null" >
+        BATCH_DATE = #{batchDate,jdbcType=VARCHAR},
+      </if>
+      <if test="catalogId != null" >
+        CATALOG_ID = #{catalogId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.com.twsm.newstopic.model.BbsNewsResult" >
+    update BBS_NEWS_RESULT
+    set NEWS_NUM = #{newsNum,jdbcType=VARCHAR},
+      WEIGHT = #{weight,jdbcType=VARCHAR},
+      BATCH_NUM = #{batchNum,jdbcType=VARCHAR},
+      SORT = #{sort,jdbcType=INTEGER},
+      BATCH_DATE = #{batchDate,jdbcType=VARCHAR},
+      CATALOG_ID = #{catalogId,jdbcType=INTEGER}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  
+   <insert id="insertBatch" parameterType="List">
+    insert into BBS_NEWS_RESULT (NEWS_NUM, WEIGHT, 
+      BATCH_NUM, SORT, BATCH_DATE, 
+      CATALOG_ID)
+    values 
+    <foreach collection="list" item="item" separator="," index="index">
+      (#{item.newsNum,jdbcType=VARCHAR}, #{item.weight,jdbcType=VARCHAR}, 
+      #{item.batchNum,jdbcType=VARCHAR}, #{item.sort,jdbcType=INTEGER}, #{item.batchDate,jdbcType=VARCHAR}, 
+      #{item.catalogId,jdbcType=INTEGER})
+     </foreach>
+  </insert>
+  <select id="getByWhere" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select 
+    <include refid="Base_Column_List" />
+    from BBS_NEWS_RESULT
+    where 1=1 <include refid="whereCondition" />
+  </select>
+   <select id="selectByCrawlDate" resultType="java.lang.String" parameterType="java.util.Map" >
+    select BATCH_NUM
+    from BBS_NEWS_RESULT
+    where BATCH_DATE = #{batchDate,jdbcType=VARCHAR} AND CATALOG_ID = #{catalogId,jdbcType=INTEGER}
+    group by BATCH_NUM
+    order by BATCH_NUM DESC
+  </select>
+</mapper>

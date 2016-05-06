@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.twsm.newstopic.dao.WeiboMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.twsm.newstopic.model.Weibo" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="WEIBO_ID" property="weiboId" jdbcType="VARCHAR" />
+    <result column="TEXT" property="text" jdbcType="VARCHAR" />
+    <result column="WEIGHT" property="weight" jdbcType="VARCHAR" />
+    <result column="REPOSTS_COUNT" property="repostsCount" jdbcType="VARCHAR" />
+    <result column="SOURCE" property="source" jdbcType="VARCHAR" />
+    <result column="CREATED_AT" property="createdAt" jdbcType="VARCHAR" />
+    <result column="LINK" property="link" jdbcType="VARCHAR" />
+    <result column="COMMENTS_COUNT" property="commentsCount" jdbcType="VARCHAR" />
+    <result column="REPOSTS_ID" property="repostsId" jdbcType="VARCHAR" />
+    <result column="PUBLISHER" property="publisher" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, WEIBO_ID, TEXT, WEIGHT, REPOSTS_COUNT, SOURCE, CREATED_AT, LINK, COMMENTS_COUNT, 
+    REPOSTS_ID, PUBLISHER
+  </sql>
+  <sql id="whereCondition">
+  	     <if test="id != null" >
+        AND WEIBO.ID = #{id,jdbcType=INTEGER}
+      </if>
+      <if test="weiboId != null" >
+        AND WEIBO.WEIBO_ID = #{weiboId,jdbcType=VARCHAR}
+      </if>
+      <if test="text != null" >
+        AND WEIBO.TEXT = #{text,jdbcType=VARCHAR}
+      </if>
+      <if test="weight != null" >
+        AND WEIBO.WEIGHT = #{weight,jdbcType=VARCHAR}
+      </if>
+      <if test="repostsCount != null" >
+        AND WEIBO.REPOSTS_COUNT = #{repostsCount,jdbcType=VARCHAR}
+      </if>
+      <if test="source != null" >
+        AND WEIBO.SOURCE = #{source,jdbcType=VARCHAR}
+      </if>
+      <if test="createdAt != null" >
+        AND WEIBO.CREATED_AT = #{createdAt,jdbcType=VARCHAR}
+      </if>
+      <if test="link != null" >
+        AND WEIBO.LINK = #{link,jdbcType=VARCHAR}
+      </if>
+      <if test="commentsCount != null" >
+        AND WEIBO.COMMENTS_COUNT = #{commentsCount,jdbcType=VARCHAR}
+      </if>
+      <if test="repostsId != null" >
+        AND WEIBO.REPOSTS_ID = #{repostsId,jdbcType=VARCHAR}
+      </if>
+      <if test="publisher != null" >
+        AND WEIBO.PUBLISHER = #{publisher,jdbcType=VARCHAR}
+      </if>
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from WEIBO
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from WEIBO
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.com.twsm.newstopic.model.Weibo" >
+    insert into WEIBO (ID, WEIBO_ID, TEXT, 
+      WEIGHT, REPOSTS_COUNT, SOURCE, 
+      CREATED_AT, LINK, COMMENTS_COUNT, 
+      REPOSTS_ID, PUBLISHER)
+    values (#{id,jdbcType=INTEGER}, #{weiboId,jdbcType=VARCHAR}, #{text,jdbcType=VARCHAR}, 
+      #{weight,jdbcType=VARCHAR}, #{repostsCount,jdbcType=VARCHAR}, #{source,jdbcType=VARCHAR}, 
+      #{createdAt,jdbcType=VARCHAR}, #{link,jdbcType=VARCHAR}, #{commentsCount,jdbcType=VARCHAR}, 
+      #{repostsId,jdbcType=VARCHAR}, #{publisher,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.com.twsm.newstopic.model.Weibo" >
+    insert into WEIBO
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="weiboId != null" >
+        WEIBO_ID,
+      </if>
+      <if test="text != null" >
+        TEXT,
+      </if>
+      <if test="weight != null" >
+        WEIGHT,
+      </if>
+      <if test="repostsCount != null" >
+        REPOSTS_COUNT,
+      </if>
+      <if test="source != null" >
+        SOURCE,
+      </if>
+      <if test="createdAt != null" >
+        CREATED_AT,
+      </if>
+      <if test="link != null" >
+        LINK,
+      </if>
+      <if test="commentsCount != null" >
+        COMMENTS_COUNT,
+      </if>
+      <if test="repostsId != null" >
+        REPOSTS_ID,
+      </if>
+      <if test="publisher != null" >
+        PUBLISHER,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="weiboId != null" >
+        #{weiboId,jdbcType=VARCHAR},
+      </if>
+      <if test="text != null" >
+        #{text,jdbcType=VARCHAR},
+      </if>
+      <if test="weight != null" >
+        #{weight,jdbcType=VARCHAR},
+      </if>
+      <if test="repostsCount != null" >
+        #{repostsCount,jdbcType=VARCHAR},
+      </if>
+      <if test="source != null" >
+        #{source,jdbcType=VARCHAR},
+      </if>
+      <if test="createdAt != null" >
+        #{createdAt,jdbcType=VARCHAR},
+      </if>
+      <if test="link != null" >
+        #{link,jdbcType=VARCHAR},
+      </if>
+      <if test="commentsCount != null" >
+        #{commentsCount,jdbcType=VARCHAR},
+      </if>
+      <if test="repostsId != null" >
+        #{repostsId,jdbcType=VARCHAR},
+      </if>
+      <if test="publisher != null" >
+        #{publisher,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.com.twsm.newstopic.model.Weibo" >
+    update WEIBO
+    <set >
+      <if test="weiboId != null" >
+        WEIBO_ID = #{weiboId,jdbcType=VARCHAR},
+      </if>
+      <if test="text != null" >
+        TEXT = #{text,jdbcType=VARCHAR},
+      </if>
+      <if test="weight != null" >
+        WEIGHT = #{weight,jdbcType=VARCHAR},
+      </if>
+      <if test="repostsCount != null" >
+        REPOSTS_COUNT = #{repostsCount,jdbcType=VARCHAR},
+      </if>
+      <if test="source != null" >
+        SOURCE = #{source,jdbcType=VARCHAR},
+      </if>
+      <if test="createdAt != null" >
+        CREATED_AT = #{createdAt,jdbcType=VARCHAR},
+      </if>
+      <if test="link != null" >
+        LINK = #{link,jdbcType=VARCHAR},
+      </if>
+      <if test="commentsCount != null" >
+        COMMENTS_COUNT = #{commentsCount,jdbcType=VARCHAR},
+      </if>
+      <if test="repostsId != null" >
+        REPOSTS_ID = #{repostsId,jdbcType=VARCHAR},
+      </if>
+      <if test="publisher != null" >
+        PUBLISHER = #{publisher,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.com.twsm.newstopic.model.Weibo" >
+    update WEIBO
+    set WEIBO_ID = #{weiboId,jdbcType=VARCHAR},
+      TEXT = #{text,jdbcType=VARCHAR},
+      WEIGHT = #{weight,jdbcType=VARCHAR},
+      REPOSTS_COUNT = #{repostsCount,jdbcType=VARCHAR},
+      SOURCE = #{source,jdbcType=VARCHAR},
+      CREATED_AT = #{createdAt,jdbcType=VARCHAR},
+      LINK = #{link,jdbcType=VARCHAR},
+      COMMENTS_COUNT = #{commentsCount,jdbcType=VARCHAR},
+      REPOSTS_ID = #{repostsId,jdbcType=VARCHAR},
+      PUBLISHER = #{publisher,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <insert id="insertBatch" parameterType="List">
+    insert into WEIBO (WEIBO_ID, TEXT, 
+      WEIGHT, REPOSTS_COUNT, SOURCE, 
+      CREATED_AT, LINK, COMMENTS_COUNT, 
+      REPOSTS_ID, PUBLISHER)
+    values 
+    <foreach collection="list" item="item" separator="," index="index">
+  	  (#{item.weiboId,jdbcType=VARCHAR}, #{item.text,jdbcType=VARCHAR}, 
+      #{item.weight,jdbcType=VARCHAR}, #{item.repostsCount,jdbcType=VARCHAR}, #{item.source,jdbcType=VARCHAR}, 
+      #{item.createdAt,jdbcType=VARCHAR}, #{item.link,jdbcType=VARCHAR}, #{item.commentsCount,jdbcType=VARCHAR}, 
+      #{item.repostsId,jdbcType=VARCHAR}, #{item.publisher,jdbcType=VARCHAR})
+     </foreach>
+  </insert>
+  
+   <select id="getByWhere" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select 
+    <include refid="Base_Column_List" />
+    from WEIBO
+    where 1=1 <include refid="whereCondition" />
+    
+    <if test="orderBy == null" >
+        ORDER BY WEIBO.CREATED_AT DESC
+    </if>
+    <if test="orderBy != null" >
+        ORDER BY ${orderBy}
+    </if>
+  </select>
+  
+   <select id="getByNewsNum" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from WEIBO
+    where WEIBO_ID= #{weiboId,jdbcType=INTEGER}
+  </select>
+ <select id="getByNewsNums" resultMap="BaseResultMap" parameterType="List" >
+     select  
+	 <include refid="Base_Column_List" />  
+	 from WEIBO where WEIBO_ID in  
+	 <foreach item="item" index="index" collection="list" open="(" separator="," close=")">  
+	  #{item.newsNum}  
+ 	 </foreach> 
+  </select>
+</mapper>

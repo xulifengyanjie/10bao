@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.twsm.newstopic.dao.TopicSelectionMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.twsm.newstopic.model.TopicSelection" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="TITLE" property="title" jdbcType="VARCHAR" />
+    <result column="TOPIC_ID" property="topicId" jdbcType="INTEGER" />
+    <result column="APPROVAL_USER_ID" property="approvalUserId" jdbcType="INTEGER" />
+    <result column="ADD_USER_ID" property="addUserId" jdbcType="INTEGER" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+    <result column="ADD_TIME" property="addTime" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="cn.com.twsm.newstopic.model.TopicSelection" extends="BaseResultMap" >
+    <result column="CONTENT" property="content" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, TITLE, TOPIC_ID, APPROVAL_USER_ID, ADD_USER_ID, STATUS, ADD_TIME
+  </sql>
+  <sql id="Blob_Column_List" >
+    CONTENT
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from topic_selection
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from topic_selection
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.com.twsm.newstopic.model.TopicSelection" >
+    insert into topic_selection (ID, TITLE, TOPIC_ID, 
+      APPROVAL_USER_ID, ADD_USER_ID, STATUS, CONTENT,  
+      ADD_TIME)
+    values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{topicId,jdbcType=INTEGER}, 
+      #{approvalUserId,jdbcType=INTEGER}, #{addUserId,jdbcType=INTEGER}, #{status,jdbcType=VARCHAR}, 
+      #{content,jdbcType=LONGVARCHAR},#{addTime,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.com.twsm.newstopic.model.TopicSelection" >
+    insert into topic_selection
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="title != null" >
+        TITLE,
+      </if>
+      <if test="topicId != null" >
+        TOPIC_ID,
+      </if>
+      <if test="approvalUserId != null" >
+        APPROVAL_USER_ID,
+      </if>
+      <if test="addUserId != null" >
+        ADD_USER_ID,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="content != null" >
+        CONTENT,
+      </if>
+      <if test="content != null" >
+        CONTENT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="topicId != null" >
+        #{topicId,jdbcType=INTEGER},
+      </if>
+      <if test="approvalUserId != null" >
+        #{approvalUserId,jdbcType=INTEGER},
+      </if>
+      <if test="addUserId != null" >
+        #{addUserId,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.com.twsm.newstopic.model.TopicSelection" >
+    update topic_selection
+    <set >
+      <if test="title != null" >
+        TITLE = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="topicId != null" >
+        TOPIC_ID = #{topicId,jdbcType=INTEGER},
+      </if>
+      <if test="approvalUserId != null" >
+        APPROVAL_USER_ID = #{approvalUserId,jdbcType=INTEGER},
+      </if>
+      <if test="addUserId != null" >
+        ADD_USER_ID = #{addUserId,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        CONTENT = #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="cn.com.twsm.newstopic.model.TopicSelection" >
+    update topic_selection
+    set TITLE = #{title,jdbcType=VARCHAR},
+      TOPIC_ID = #{topicId,jdbcType=INTEGER},
+      APPROVAL_USER_ID = #{approvalUserId,jdbcType=INTEGER},
+      ADD_USER_ID = #{addUserId,jdbcType=INTEGER},
+      ADD_TIME = #{addTime,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=VARCHAR},
+      CONTENT = #{content,jdbcType=LONGVARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.com.twsm.newstopic.model.TopicSelection" >
+    update topic_selection
+    set TITLE = #{title,jdbcType=VARCHAR},
+      TOPIC_ID = #{topicId,jdbcType=INTEGER},
+      APPROVAL_USER_ID = #{approvalUserId,jdbcType=INTEGER},
+      ADD_USER_ID = #{addUserId,jdbcType=INTEGER},
+      ADD_TIME = #{addTime,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  
+   <sql id="whereCondition">
+  	  <if test="id != null" >
+        AND topic_selection.ID = #{id,jdbcType=INTEGER}
+      </if>
+      <if test="keyword != null" >
+        AND topic_selection.TITLE like CONCAT('%','${keyword}','%' )
+      </if>
+      <if test="topicId != null" >
+        AND topic_selection.TOPIC_ID = #{topicId,jdbcType=INTEGER}
+      </if>
+      <if test="status != null" >
+        AND topic_selection.STATUS = #{status,jdbcType=VARCHAR}
+      </if>
+  </sql>
+  
+  <select id="getByWhere" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select 
+    <include refid="Base_Column_List" />
+    from topic_selection
+    where 1=1 <include refid="whereCondition" />
+  </select>
+  
+  <select id="querySelectList" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from topic_selection
+    where STATUS = #{status,jdbcType=VARCHAR}
+    and TITLE like CONCAT('%',#{keyword,jdbcType=VARCHAR},'%' ) 
+  </select>
+</mapper>

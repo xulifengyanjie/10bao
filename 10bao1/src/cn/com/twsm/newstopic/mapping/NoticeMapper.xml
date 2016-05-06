@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.twsm.newstopic.dao.NoticeMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.twsm.newstopic.model.Notice" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="TITLE" property="title" jdbcType="VARCHAR" />
+    <result column="ADD_USER_ID" property="addUserId" jdbcType="INTEGER" />
+    <result column="APPROVAL_USER_ID" property="approvalUserId" jdbcType="INTEGER" />
+    <result column="ADD_TIME" property="addTime" jdbcType="VARCHAR" />
+    <result column="APPROVAL_STATUS" property="approvalStatus" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="cn.com.twsm.newstopic.model.Notice" extends="BaseResultMap" >
+    <result column="CONTENT" property="content" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, TITLE, ADD_USER_ID, APPROVAL_USER_ID, ADD_TIME, APPROVAL_STATUS, STATUS
+  </sql>
+  <sql id="Blob_Column_List" >
+    CONTENT
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from notice
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectById" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from notice
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from notice
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  
+  <insert id="insert" parameterType="cn.com.twsm.newstopic.model.Notice" >
+    insert into notice (ID, TITLE, ADD_USER_ID, 
+      APPROVAL_USER_ID, ADD_TIME, APPROVAL_STATUS, 
+      STATUS, CONTENT)
+    values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{addUserId,jdbcType=INTEGER}, 
+      #{approvalUserId,jdbcType=INTEGER}, #{addTime,jdbcType=VARCHAR}, #{approvalStatus,jdbcType=VARCHAR}, 
+      #{status,jdbcType=VARCHAR}, #{content,jdbcType=LONGVARCHAR})
+  </insert>
+  
+  <insert id="insertSelective" parameterType="cn.com.twsm.newstopic.model.Notice" >
+    insert into notice
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="title != null" >
+        TITLE,
+      </if>
+      <if test="addUserId != null" >
+        ADD_USER_ID,
+      </if>
+      <if test="approvalUserId != null" >
+        APPROVAL_USER_ID,
+      </if>
+      <if test="addTime != null" >
+        ADD_TIME,
+      </if>
+      <if test="approvalStatus != null" >
+        APPROVAL_STATUS,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="content != null" >
+        CONTENT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="addUserId != null" >
+        #{addUserId,jdbcType=INTEGER},
+      </if>
+      <if test="approvalUserId != null" >
+        #{approvalUserId,jdbcType=INTEGER},
+      </if>
+      <if test="addTime != null" >
+        #{addTime,jdbcType=VARCHAR},
+      </if>
+      <if test="approvalStatus != null" >
+        #{approvalStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="cn.com.twsm.newstopic.model.Notice" >
+    update notice
+    <set >
+      <if test="title != null" >
+        TITLE = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="addUserId != null" >
+        ADD_USER_ID = #{addUserId,jdbcType=INTEGER},
+      </if>
+      <if test="approvalUserId != null" >
+        APPROVAL_USER_ID = #{approvalUserId,jdbcType=INTEGER},
+      </if>
+      <if test="addTime != null" >
+        ADD_TIME = #{addTime,jdbcType=VARCHAR},
+      </if>
+      <if test="approvalStatus != null" >
+        APPROVAL_STATUS = #{approvalStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        CONTENT = #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="cn.com.twsm.newstopic.model.Notice" >
+    update notice
+    set TITLE = #{title,jdbcType=VARCHAR},
+      ADD_USER_ID = #{addUserId,jdbcType=INTEGER},
+      APPROVAL_USER_ID = #{approvalUserId,jdbcType=INTEGER},
+      ADD_TIME = #{addTime,jdbcType=VARCHAR},
+      APPROVAL_STATUS = #{approvalStatus,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=VARCHAR},
+      CONTENT = #{content,jdbcType=LONGVARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <update id="updateByPrimaryKey" parameterType="cn.com.twsm.newstopic.model.Notice" >
+    update notice
+    set TITLE = #{title,jdbcType=VARCHAR},
+      ADD_USER_ID = #{addUserId,jdbcType=INTEGER},
+      APPROVAL_USER_ID = #{approvalUserId,jdbcType=INTEGER},
+      ADD_TIME = #{addTime,jdbcType=VARCHAR},
+      APPROVAL_STATUS = #{approvalStatus,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  
+    
+   <sql id="whereCondition">
+  	  <if test="id != null" >
+        AND notice.ID = #{id,jdbcType=INTEGER}
+      </if>
+      <if test="status != null" >
+        AND notice.STATUS = #{status,jdbcType=INTEGER}
+      </if>
+  </sql>
+  
+  <select id="getByWhere" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select 
+    <include refid="Base_Column_List" />
+    from notice
+    where 1=1 <include refid="whereCondition" />
+  </select>
+  
+   <select id="queryNoticeList" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    *
+    from notice
+    where STATUS = #{status,jdbcType=VARCHAR} ORDER BY ADD_TIME DESC
+  </select>
+  
+  <delete id="deleteByIds" parameterType="java.util.List" >
+    delete from notice
+    where ID in
+    <foreach collection="list" item ="item" open="(" separator="," close=")">
+    	#{item}
+    </foreach>
+  </delete>
+</mapper>

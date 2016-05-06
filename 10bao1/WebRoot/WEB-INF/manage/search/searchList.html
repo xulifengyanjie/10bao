@@ -1,0 +1,101 @@
+<#import "common/common.html" as common />
+<@common.html title="集中检索">
+<script type="text/javascript" language="javascript" src="${request.contextPath}/static/main/js/echarts-plain-map.js"></script>
+<script type="text/javascript" language="javascript" src="${request.contextPath}/static/main/js/macarons.js"></script>
+<script type="text/javascript" language="javascript" src="${request.contextPath}/static/my97DatePicker/WdatePicker.js"></script>
+    <div class="weibo">
+    	<div class="weibo_content">
+            <div class="weibo_display">
+            	<div class="weibo_item">
+            		<form id="queryForm" action="${request.contextPath}/search/list" method="post">
+                	<div class="search_box">
+                        <ul>
+                            <li>
+                                <font>开始时间</font>
+                                <input type="text" name="startTime" class="input_txt" onfocus="WdatePicker({skin:'twoer'})"/>
+                            </li>
+                            <li>
+                                <font>结束时间</font>
+                                <input type="text" name="endTime" class="input_txt" onfocus="WdatePicker({skin:'twoer'})"/>
+                            </li>
+                            <li>
+                                <font>关键词 </font>
+                                <input type="text" name="title" class="input_txt" />
+                            </li>
+                            <li>
+                                <div class="search_btn">
+                                    <a href="javascript:;" onclick="query();">
+                                        搜索<i></i>
+                                    </a>
+                                </div>
+                            </li>
+                        </ul>
+                        <div class="clear"></div>	
+                    </div>
+                    </form>
+        	<div class="right_border">
+      	 			<div class="right_title_bg">
+                          <div class="right_title">查询列表</div>
+                      </div>
+                      <div class="clear"></div>
+            <table>
+            	<tr>
+                	<th class="b10">排名</th>
+                    <th class="b10">指数</th>
+                    <th class="b40">新闻标题</th>
+                    <th class="b10">来源</th>
+                    <th class="b20">发表日期</th>
+                </tr>
+                <#if page && page.list>
+                	<#list page.list as news>
+		                <tr id="news_${news.id}_top">
+		                   <td class="b10">${news.sort}</td>
+		                    <td class="b10">${news.newsIndex}</td>
+		                    <td class="b40"><a href="${news.newsLink}" target="_blank">${news.title}</a></td>
+		                    <td class="b10">${news.publishMedia}</td>
+		                    <td class="b20">${news.publishTime}</td>
+                		</tr>
+	                </#list>
+                </#if>	
+            </table>
+            <div class="clear"></div>
+            <#if page>
+             <div class="page_box">
+            	<div class="pagging">
+                    <#if page.hasPreviousPage>
+					      <a href="?pageNum=${page.prePage}&date=${date}&timestamp=${timestamp}&searchWord=${searchWord}" style=" margin-right:27px;">&lt;上页</a>
+				    </#if>
+				    <#list page.navigatepageNums as num>
+				    	<#if num == page.pageNum>
+				    		<a href="javascript:void(0)" class="cur">${num}</a>
+				    	<#else>
+				    		<a href="?pageNum=${num}&date=${date}&timestamp=${timestamp}&searchWord=${searchWord}">${num}</a>
+				    	</#if>
+				    </#list>
+				    <#if page.hasNextPage>
+					    <a href="?pageNum=${page.nextPage}&date=${date}&timestamp=${timestamp}&searchWord=${searchWord}" style="margin-left:27px;">下页&gt;</a>
+				    </#if>
+                    <span>跳转</span>
+                    <input type="text" class="input_page" />
+                    <span class="span2">页</span>
+                </div>
+            </div>
+            </#if>
+        </div>
+       </div>
+       </div>
+       </div>
+</div>
+<script>
+	function showPage(pageNum){
+		$("#queryForm").attr("action","${request.contextPath}/search/list?pageNum="+pageNum);
+		query();
+	}
+	function query(){
+		$("#queryForm").submit();
+	}
+	function resetForm(){
+		$("#queryForm")[0].reset();
+	}
+</script>
+</@common.html>

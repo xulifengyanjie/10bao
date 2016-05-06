@@ -1,0 +1,187 @@
+<#import "common/common.html" as common />
+<@common.html title="用户管理">
+ <link rel="stylesheet" href="${request.contextPath}/static/zTree/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <script type="text/javascript" src="${request.contextPath}/static/zTree/js/jquery.ztree.core.js"></script>
+  <script type="text/javascript" src="${request.contextPath}/static/zTree/js/jquery.ztree.excheck.js"></script>
+  <SCRIPT LANGUAGE="JavaScript">
+   	var setting = {
+			view: {
+				dblClickExpand: false
+			},
+			data: {
+				simpleData: {
+					enable: true
+				}
+			},
+			callback: {
+				onClick: onClick
+			}
+		};
+
+		/* function beforeClick(treeId, treeNode) {
+			var check = (treeNode && !treeNode.isParent);
+			//if (!check) alert("只能选择城市...");
+			return check;
+		} */
+		
+		function onClick(e, treeId, treeNode) {
+			if (treeNode) {
+	            $("#citySel").attr("value",treeNode.name);
+	            $("input[name='departmentId']").val(treeNode.id);
+	            hideMenu();
+	        }
+		}
+
+		function showMenu() {
+			var cityObj = $("#citySel");
+			var cityOffset = $("#citySel").offset();
+			$("#menuContent").css({left:cityOffset.left + "px", top:cityOffset.top + cityObj.outerHeight() + "px"}).slideDown("fast");
+
+			$("body").bind("mousedown", onBodyDown);
+		}
+		function hideMenu() {
+			$("#menuContent").fadeOut("fast");
+			$("body").unbind("mousedown", onBodyDown);
+		}
+		function onBodyDown(event) {
+			if (!(event.target.id == "menuBtn" || event.target.id == "menuContent" || $(event.target).parents("#menuContent").length>0)) {
+				hideMenu();
+			}
+		}
+
+		$(document).ready(function(){
+			$.fn.zTree.init($("#treeDemo"), setting, ${departmentTree});
+		});
+  </SCRIPT>
+  <div class="right">
+  		<div class="search_box">
+  			<form id="addForm" action="${request.contextPath}/user/doAdd" method="post">
+        	<ul>
+            	<li>
+                	<font>账号</font>
+                    <input type="text" class="input_txt" name="loginName" value="${item.loginName}"/>
+                </li>
+                <li>
+                	<font>初始密码</font>
+                    <input type="password" class="input_txt" name="password" value="${item.password}"/>
+                </li>
+                <li>
+                	<font>姓名</font>
+                    <input type="text" class="input_txt" name="userName" value="${item.userName}"/>
+                </li>
+                <!-- <li>
+                	<font>所属部门</font>
+                     <div class="select_bg">
+                    	<input type="hidden" class="input_txt" name="department.id" value="0"/>
+                        <div class="select_title"><font></font><i></i></div>
+                        <div class="select_list">
+                        	<#if departmentList>
+                        		<#list departmentList as d>
+                        			<a href="javascript:;" onclick="selectDepartment(${d.id})">${d.departmentName}</a>
+                        		</#list>
+                        	</#if>
+                        </div>
+                    </div>
+                </li> -->
+                <li>
+                	<font>所属部门</font>
+                    <div class="select_bg">
+						<input id="citySel" type="text" readonly class="input_txt" />
+						<input type="hidden" class="input_txt" name="departmentId" value="0"/>
+                        <div class="select_title" style="width:128px;"><i id="menuBtn" onclick="showMenu(); return false;"></i></div>
+                    </div>
+                </li>
+                <li>
+                	<font>性别</font>
+                	<div class="select_bg">
+                		<input type="hidden" class="input_txt" name="sex" value="男"/>
+                		<div class="select_title"><font>性别</font><i></i></div>
+                		<div class="select_list">
+	                		<a href="javascript:;" onclick="selectSex('1')">男</a>
+	                		<a href="javascript:;" onclick="selectSex('0')">女</a>
+                		</div>
+                    </div>
+                </li>
+                <li>
+                	<font>邮箱</font>
+                    <input type="text" class="input_txt" name="mail"/>
+                </li>
+                <li>
+                	<font>联系电话</font>
+                    <input type="text" class="input_txt" name="phone"/>
+                </li>
+                <li>
+                	<div class="search_btn">
+                		<#list roles as role>
+                			${role.roleName}<input type="checkbox" name="roleIds" value="${role.id}"/>
+                		</#list>
+                    </div>
+                </li>
+                <li>
+                	<div class="search_btn">
+                    	<a href="javascript:;" onclick="ajaxAdd();">
+                        	保存
+                        </a>
+                    </div>
+                </li>
+                <li>
+                	<div class="search_btn">
+                    	<a href="javascript:history.go(-1);">
+                        	取消
+                        </a>
+                    </div>
+                </li>
+            </ul>
+            </form>
+            <div class="clear"></div>
+        </div>
+</div>
+<div id="menuContent" class="menuContent" style="display:none; position: absolute;">
+	<ul id="treeDemo" class="ztree" style="margin-top:-60px; width:129px;border:1px solid #c6c6c6;overflow-y:scroll;overflow-x:auto;"></ul>
+</div>
+<script type="text/javascript">
+	function selectDepartment(id){
+		$("input[name='department.id']").val(id);
+	}
+	function selectSex(value){
+		$("input[name='sex']").val(value);
+	}
+	function add(){
+		$("#addForm").submit();
+	}
+	function ajaxAdd(){
+		var ajaxCallUrl = $("#addForm").attr("action");
+		$.ajax({
+			cache: true,
+			type: "POST",
+			url:ajaxCallUrl,
+			data:$('#addForm').serialize(),
+			async: false,
+		    error: function(request) {
+		        swal("用户添加失败！", "" ,"error");
+		    },
+		    success: function(data) {
+		    	if(data.msg){
+		    		swal(data.msg, "" ,"error");
+		    	}else{
+		    		swal({   
+		    			title: "用户添加成功！",   
+						text: "",   
+						type: "success",   
+						showCancelButton: true,   
+						confirmButtonText: "确定",   
+						closeOnConfirm: false,
+						showCancelButton: false
+					}, 
+					function(isConfirm){
+						if (isConfirm){
+							window.location.href = "${request.contextPath}/user/list";
+						}
+					});
+		    	}
+		    }
+		});
+	}
+	
+</script>
+</@common.html>

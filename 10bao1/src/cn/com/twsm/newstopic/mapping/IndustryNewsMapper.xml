@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.twsm.newstopic.dao.IndustryNewsMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.twsm.newstopic.model.IndustryNews" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="TITLE" property="title" jdbcType="VARCHAR" />
+    <result column="SUBTITLE" property="subtitle" jdbcType="VARCHAR" />
+    <result column="PUBLISH_TIME" property="publishTime" jdbcType="VARCHAR" />
+    <result column="PUBLISH_MEDIA" property="publishMedia" jdbcType="VARCHAR" />
+    <result column="NEWS_LINK" property="newsLink" jdbcType="VARCHAR" />
+    <result column="AUTHOR" property="author" jdbcType="VARCHAR" />
+    <result column="READ_NUM" property="readNum" jdbcType="INTEGER" />
+    <result column="CRAWL_TIME" property="crawlTime" jdbcType="VARCHAR" />
+    <result column="NEWS_INDEX" property="newsIndex" jdbcType="DECIMAL" />
+    <result column="NEWS_LEVEL" property="newsLevel" jdbcType="INTEGER" />
+    <result column="CATALOG_ID" property="catalogId" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="relationResultMap" type="cn.com.twsm.newstopic.model.IndustryNews" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="TITLE" property="title" jdbcType="VARCHAR" />
+    <result column="SUBTITLE" property="subtitle" jdbcType="VARCHAR" />
+    <result column="PUBLISH_TIME" property="publishTime" jdbcType="VARCHAR" />
+    <result column="PUBLISH_MEDIA" property="publishMedia" jdbcType="VARCHAR" />
+    <result column="NEWS_LINK" property="newsLink" jdbcType="VARCHAR" />
+    <result column="AUTHOR" property="author" jdbcType="VARCHAR" />
+    <result column="READ_NUM" property="readNum" jdbcType="INTEGER" />
+    <result column="CRAWL_TIME" property="crawlTime" jdbcType="VARCHAR" />
+    <result column="NEWS_INDEX" property="newsIndex" jdbcType="DECIMAL" />
+    <result column="NEWS_LEVEL" property="newsLevel" jdbcType="INTEGER" />
+    <result column="CATALOG_ID" property="catalogId" jdbcType="INTEGER" />
+    <result column="nSource" property="newsSource" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, TITLE, SUBTITLE, PUBLISH_TIME, PUBLISH_MEDIA, NEWS_LINK, AUTHOR, READ_NUM, CRAWL_TIME, 
+    NEWS_INDEX, NEWS_LEVEL, CATALOG_ID
+  </sql>
+   <sql id="whereCondition">
+  	  <if test="id != null" >
+        AND industry_news.ID = #{id,jdbcType=INTEGER}
+      </if>
+      <if test="title != null" >
+        AND industry_news.TITLE = #{title,jdbcType=VARCHAR}
+      </if>
+      <if test="subtitle != null" >
+        AND industry_news.SUBTITLE = #{subtitle,jdbcType=VARCHAR}
+      </if>
+      <if test="publishTime != null" >
+        AND industry_news.PUBLISH_TIME = #{publishTime,jdbcType=VARCHAR}
+      </if>
+      <if test="publishMedia != null" >
+        AND industry_news.PUBLISH_MEDIA = #{publishMedia,jdbcType=VARCHAR}
+      </if>
+      <if test="newsLink != null" >
+        AND industry_news.NEWS_LINK = #{newsLink,jdbcType=VARCHAR}
+      </if>
+      <if test="author != null" >
+        AND industry_news.AUTHOR = #{author,jdbcType=VARCHAR}
+      </if>
+      <if test="readNum != null" >
+        AND industry_news.READ_NUM = #{readNum,jdbcType=INTEGER}
+      </if>
+      <if test="crawlTime != null" >
+        AND industry_news.CRAWL_TIME = #{crawlTime,jdbcType=VARCHAR}
+      </if>
+      <if test="newsIndex != null" >
+        AND industry_news.NEWS_INDEX = #{newsIndex,jdbcType=DECIMAL}
+      </if>
+      <if test="newsLevel != null" >
+        AND industry_news.NEWS_LEVEL = #{newsLevel,jdbcType=INTEGER}
+      </if>
+      <if test="catalogId != null" >
+        AND industry_news.CATALOG_ID = #{catalogId,jdbcType=INTEGER}
+      </if>
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from industry_news
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from industry_news
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.com.twsm.newstopic.model.IndustryNews" >
+    insert into industry_news (ID, TITLE, SUBTITLE, 
+      PUBLISH_TIME, PUBLISH_MEDIA, NEWS_LINK, 
+      AUTHOR, READ_NUM, CRAWL_TIME, 
+      NEWS_INDEX, NEWS_LEVEL, CATALOG_ID
+      )
+    values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{subtitle,jdbcType=VARCHAR}, 
+      #{publishTime,jdbcType=VARCHAR}, #{publishMedia,jdbcType=VARCHAR}, #{newsLink,jdbcType=VARCHAR}, 
+      #{author,jdbcType=VARCHAR}, #{readNum,jdbcType=INTEGER}, #{crawlTime,jdbcType=VARCHAR}, 
+      #{newsIndex,jdbcType=DECIMAL}, #{newsLevel,jdbcType=INTEGER}, #{catalogId,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.com.twsm.newstopic.model.IndustryNews" >
+    insert into industry_news
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="title != null" >
+        TITLE,
+      </if>
+      <if test="subtitle != null" >
+        SUBTITLE,
+      </if>
+      <if test="publishTime != null" >
+        PUBLISH_TIME,
+      </if>
+      <if test="publishMedia != null" >
+        PUBLISH_MEDIA,
+      </if>
+      <if test="newsLink != null" >
+        NEWS_LINK,
+      </if>
+      <if test="author != null" >
+        AUTHOR,
+      </if>
+      <if test="readNum != null" >
+        READ_NUM,
+      </if>
+      <if test="crawlTime != null" >
+        CRAWL_TIME,
+      </if>
+      <if test="newsIndex != null" >
+        NEWS_INDEX,
+      </if>
+      <if test="newsLevel != null" >
+        NEWS_LEVEL,
+      </if>
+      <if test="catalogId != null" >
+        CATALOG_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="subtitle != null" >
+        #{subtitle,jdbcType=VARCHAR},
+      </if>
+      <if test="publishTime != null" >
+        #{publishTime,jdbcType=VARCHAR},
+      </if>
+      <if test="publishMedia != null" >
+        #{publishMedia,jdbcType=VARCHAR},
+      </if>
+      <if test="newsLink != null" >
+        #{newsLink,jdbcType=VARCHAR},
+      </if>
+      <if test="author != null" >
+        #{author,jdbcType=VARCHAR},
+      </if>
+      <if test="readNum != null" >
+        #{readNum,jdbcType=INTEGER},
+      </if>
+      <if test="crawlTime != null" >
+        #{crawlTime,jdbcType=VARCHAR},
+      </if>
+      <if test="newsIndex != null" >
+        #{newsIndex,jdbcType=DECIMAL},
+      </if>
+      <if test="newsLevel != null" >
+        #{newsLevel,jdbcType=INTEGER},
+      </if>
+      <if test="catalogId != null" >
+        #{catalogId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.com.twsm.newstopic.model.IndustryNews" >
+    update industry_news
+    <set >
+      <if test="title != null" >
+        TITLE = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="subtitle != null" >
+        SUBTITLE = #{subtitle,jdbcType=VARCHAR},
+      </if>
+      <if test="publishTime != null" >
+        PUBLISH_TIME = #{publishTime,jdbcType=VARCHAR},
+      </if>
+      <if test="publishMedia != null" >
+        PUBLISH_MEDIA = #{publishMedia,jdbcType=VARCHAR},
+      </if>
+      <if test="newsLink != null" >
+        NEWS_LINK = #{newsLink,jdbcType=VARCHAR},
+      </if>
+      <if test="author != null" >
+        AUTHOR = #{author,jdbcType=VARCHAR},
+      </if>
+      <if test="readNum != null" >
+        READ_NUM = #{readNum,jdbcType=INTEGER},
+      </if>
+      <if test="crawlTime != null" >
+        CRAWL_TIME = #{crawlTime,jdbcType=VARCHAR},
+      </if>
+      <if test="newsIndex != null" >
+        NEWS_INDEX = #{newsIndex,jdbcType=DECIMAL},
+      </if>
+      <if test="newsLevel != null" >
+        NEWS_LEVEL = #{newsLevel,jdbcType=INTEGER},
+      </if>
+      <if test="catalogId != null" >
+        CATALOG_ID = #{catalogId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.com.twsm.newstopic.model.IndustryNews" >
+    update industry_news
+    set TITLE = #{title,jdbcType=VARCHAR},
+      SUBTITLE = #{subtitle,jdbcType=VARCHAR},
+      PUBLISH_TIME = #{publishTime,jdbcType=VARCHAR},
+      PUBLISH_MEDIA = #{publishMedia,jdbcType=VARCHAR},
+      NEWS_LINK = #{newsLink,jdbcType=VARCHAR},
+      AUTHOR = #{author,jdbcType=VARCHAR},
+      READ_NUM = #{readNum,jdbcType=INTEGER},
+      CRAWL_TIME = #{crawlTime,jdbcType=VARCHAR},
+      NEWS_INDEX = #{newsIndex,jdbcType=DECIMAL},
+      NEWS_LEVEL = #{newsLevel,jdbcType=INTEGER},
+      CATALOG_ID = #{catalogId,jdbcType=INTEGER}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <insert id="insertBatch" parameterType="List">
+    insert into industry_news (TITLE, SUBTITLE, 
+      PUBLISH_TIME, PUBLISH_MEDIA, NEWS_LINK, 
+      AUTHOR, READ_NUM, CRAWL_TIME, 
+      NEWS_INDEX, NEWS_LEVEL, CATALOG_ID)
+    values 
+    <foreach collection="list" item="item" separator="," index="index">
+     ( #{item.title,jdbcType=VARCHAR}, #{item.subtitle,jdbcType=VARCHAR}, 
+      #{item.publishTime,jdbcType=VARCHAR}, #{item.publishMedia,jdbcType=VARCHAR}, #{item.newsLink,jdbcType=VARCHAR}, 
+      #{item.author,jdbcType=VARCHAR}, #{item.readNum,jdbcType=INTEGER}, #{item.crawlTime,jdbcType=VARCHAR}, 
+      #{item.newsIndex,jdbcType=DECIMAL}, #{item.newsLevel,jdbcType=INTEGER}, #{item.catalogId,jdbcType=INTEGER}
+      )
+     </foreach>
+  </insert>
+  
+   <select id="getByWhere" resultMap="relationResultMap" parameterType="java.util.Map" >
+    SELECT
+	  industry_news.ID, 
+	  industry_news.TITLE, 
+	  industry_news.SUBTITLE, 
+      industry_news.PUBLISH_TIME, 
+      industry_news.PUBLISH_MEDIA, 
+      industry_news.NEWS_LINK, 
+      industry_news.AUTHOR, 
+      industry_news.READ_NUM, 
+      industry_news.CRAWL_TIME, 
+      industry_news.NEWS_INDEX, 
+      industry_news.NEWS_LEVEL, 
+      industry_news.CATALOG_ID,
+      news_source.NAME AS nSource
+	FROM
+		industry_news
+	RIGHT JOIN news_source ON industry_news.PUBLISH_MEDIA = news_source.URL
+	where 1=1 <include refid="whereCondition" />
+	order by industry_news.READ_NUM ASC
+  </select>
+</mapper>

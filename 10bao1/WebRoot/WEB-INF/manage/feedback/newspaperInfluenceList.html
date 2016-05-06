@@ -1,0 +1,100 @@
+<#import "common/common.html" as common /> <@common.html title="报社影响力分析">
+<script type="text/javascript" language="javascript" src="${request.contextPath}/static/main/js/ECharts/echarts.js"></script>
+<script type="text/javascript" language="javascript" src="${request.contextPath}/static/my97DatePicker/WdatePicker.js"></script>
+  <div class="search_box">
+        	<ul>
+            	<li>
+                	<font>开始时间</font>
+                    <input type="text" class="input_txt" onfocus="WdatePicker({skin:'twoer',dateFmt:'yyyy-MM-dd',minDate:'2008-01-01',maxDate:'2100-12-31'})"/>
+                </li>
+                <li>
+                	<font>结束时间</font>
+                    <input type="text" class="input_txt" onfocus="WdatePicker({skin:'twoer',dateFmt:'yyyy-MM-dd',minDate:'2008-01-01',maxDate:'2100-12-31'})"/>
+                </li>
+                <li>
+                    	<div class="search_btn">
+									<a href="javascript:;" onclick="query();"> 搜索<i></i> </a>
+								</div>
+                </li>
+            </ul>
+            <div class="clear"></div>
+        </div>
+        <div class="clear"></div>
+        <div class="right_border">
+            <div class="right_title_bg">
+                <div class="right_title">报社影响力变化趋势</div>
+                <div class="feed_star">
+                	<font>本报社影响力指数：</font>
+                    <div class="star_bg">
+                    	<div class="star_press" style="width:60%;"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+          <div class="index_chart_box">
+        	<div id="selecteTopicAnalysis" style="height:470px; border:1px; solid #ccc; padding:10px;"></div>
+        </div>	
+    </div>
+<script>
+    $(function(){
+
+    	query();
+        
+    });
+    function query(){
+    	/**折线图
+		*/
+		var monChangeChart;
+		require.config({paths : {echarts : '${request.contextPath}/static/main/js/ECharts'}});	
+		require(['echarts','echarts/chart/line'],function(ec){
+			//初始化echarts图表
+			monChangeChart = ec.init(document.getElementById('selecteTopicAnalysis'));
+			//定义图表option
+			var option = {
+				    title : {
+				        text: '时间/浏览量',
+		    		},
+				    tooltip : {
+				        trigger: 'axis'
+				    },
+				    toolbox: {
+				        show : true,
+				        feature : {
+				            mark : {show: true}, 
+				            dataView : {show: true, readOnly: false},
+				            magicType : {show: true, type: ['line', 'bar']},
+				            restore : {show: true},
+				            saveAsImage : {show: true}
+				        }
+				    },
+		           calculable : true,
+				    xAxis : [
+				        {
+				            type : 'category',
+				            boundaryGap : false,
+				            data : ['8:00','9:00','10:00','11:00','12:00','13:00','14:00','15:00']
+				        }
+				    ],
+				    yAxis : [
+				        {
+				            type : 'value',
+				        }
+				    ],
+				    series : [
+				        {
+				            name:'浏览量',
+				            type:'line',
+				            data:[0, 1000,1500,1700,1800,1900, 2000,2100,2200,2300,2400,2500,2600,2700,2800,2900, 3000, 4000, 5000],
+				        },
+		
+				    ]
+				};
+		                    
+			monChangeChart.setOption(option);
+			/* myChart.hideLoading(); */
+			/* getChartData(); */
+		});
+    }
+</script>
+</@common.html>

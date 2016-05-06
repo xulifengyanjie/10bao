@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.twsm.newstopic.dao.PermissionMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.twsm.newstopic.model.Permission" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="PERMISSION_CODE_CHAIN" property="permissionCodeChain" jdbcType="VARCHAR" />
+    <result column="PERMISSION_NAME" property="permissionName" jdbcType="VARCHAR" />
+    <result column="PARENT_ID" property="parentId" jdbcType="INTEGER" />
+    <result column="PERMISSION_LEVEL" property="permissionLevel" jdbcType="INTEGER" />
+    <result column="PERMISSION_URL" property="permissionUrl" jdbcType="VARCHAR" />
+    <result column="PERMISSION_TYPE" property="permissionType" jdbcType="VARCHAR" />
+    <result column="SORT" property="sort" jdbcType="INTEGER" />
+    <result column="IS_LEAF" property="isLeaf" jdbcType="INTEGER" />
+    <result column="PERMISSION_CODE" property="permissionCode" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, PERMISSION_CODE_CHAIN, PERMISSION_NAME, PARENT_ID, PERMISSION_LEVEL, PERMISSION_URL, 
+    PERMISSION_TYPE, SORT, IS_LEAF, PERMISSION_CODE
+  </sql>
+  <sql id="whereCondition">
+      <if test="permissionUrl != null" >
+        AND PERMISSION_URL = #{permissionUrl,jdbcType=VARCHAR}
+      </if>
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from permission
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from permission
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.com.twsm.newstopic.model.Permission" >
+    insert into permission (ID, PERMISSION_CODE_CHAIN, PERMISSION_NAME, 
+      PARENT_ID, PERMISSION_LEVEL, PERMISSION_URL, 
+      PERMISSION_TYPE, SORT, IS_LEAF, 
+      PERMISSION_CODE)
+    values (#{id,jdbcType=INTEGER}, #{permissionCodeChain,jdbcType=VARCHAR}, #{permissionName,jdbcType=VARCHAR}, 
+      #{parentId,jdbcType=INTEGER}, #{permissionLevel,jdbcType=INTEGER}, #{permissionUrl,jdbcType=VARCHAR}, 
+      #{permissionType,jdbcType=VARCHAR}, #{sort,jdbcType=INTEGER}, #{isLeaf,jdbcType=INTEGER}, 
+      #{permissionCode,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.com.twsm.newstopic.model.Permission" >
+    insert into permission
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="permissionCodeChain != null" >
+        PERMISSION_CODE_CHAIN,
+      </if>
+      <if test="permissionName != null" >
+        PERMISSION_NAME,
+      </if>
+      <if test="parentId != null" >
+        PARENT_ID,
+      </if>
+      <if test="permissionLevel != null" >
+        PERMISSION_LEVEL,
+      </if>
+      <if test="permissionUrl != null" >
+        PERMISSION_URL,
+      </if>
+      <if test="permissionType != null" >
+        PERMISSION_TYPE,
+      </if>
+      <if test="sort != null" >
+        SORT,
+      </if>
+      <if test="isLeaf != null" >
+        IS_LEAF,
+      </if>
+      <if test="permissionCode != null" >
+        PERMISSION_CODE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="permissionCodeChain != null" >
+        #{permissionCodeChain,jdbcType=VARCHAR},
+      </if>
+      <if test="permissionName != null" >
+        #{permissionName,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null" >
+        #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test="permissionLevel != null" >
+        #{permissionLevel,jdbcType=INTEGER},
+      </if>
+      <if test="permissionUrl != null" >
+        #{permissionUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="permissionType != null" >
+        #{permissionType,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null" >
+        #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="isLeaf != null" >
+        #{isLeaf,jdbcType=INTEGER},
+      </if>
+      <if test="permissionCode != null" >
+        #{permissionCode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.com.twsm.newstopic.model.Permission" >
+    update permission
+    <set >
+      <if test="permissionCodeChain != null" >
+        PERMISSION_CODE_CHAIN = #{permissionCodeChain,jdbcType=VARCHAR},
+      </if>
+      <if test="permissionName != null" >
+        PERMISSION_NAME = #{permissionName,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null" >
+        PARENT_ID = #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test="permissionLevel != null" >
+        PERMISSION_LEVEL = #{permissionLevel,jdbcType=INTEGER},
+      </if>
+      <if test="permissionUrl != null" >
+        PERMISSION_URL = #{permissionUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="permissionType != null" >
+        PERMISSION_TYPE = #{permissionType,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null" >
+        SORT = #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="isLeaf != null" >
+        IS_LEAF = #{isLeaf,jdbcType=INTEGER},
+      </if>
+      <if test="permissionCode != null" >
+        PERMISSION_CODE = #{permissionCode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.com.twsm.newstopic.model.Permission" >
+    update permission
+    set PERMISSION_CODE_CHAIN = #{permissionCodeChain,jdbcType=VARCHAR},
+      PERMISSION_NAME = #{permissionName,jdbcType=VARCHAR},
+      PARENT_ID = #{parentId,jdbcType=INTEGER},
+      PERMISSION_LEVEL = #{permissionLevel,jdbcType=INTEGER},
+      PERMISSION_URL = #{permissionUrl,jdbcType=VARCHAR},
+      PERMISSION_TYPE = #{permissionType,jdbcType=VARCHAR},
+      SORT = #{sort,jdbcType=INTEGER},
+      IS_LEAF = #{isLeaf,jdbcType=INTEGER},
+      PERMISSION_CODE = #{permissionCode,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <select id="getByWhere" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select 
+    <include refid="Base_Column_List" />
+    from permission
+    where 1=1 <include refid="whereCondition" />
+    <if test="orderBy != null" >
+        ORDER BY ${orderBy}
+    </if>
+  </select>
+</mapper>

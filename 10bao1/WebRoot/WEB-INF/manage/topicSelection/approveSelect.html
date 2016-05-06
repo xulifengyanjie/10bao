@@ -1,0 +1,85 @@
+<#import "common/common.html" as common />
+<@common.html title="选题审批" menucode="0104">
+<div class="right">	
+<div class="search_box">
+	<form id="appFrom" action="${request.contextPath}/approveSel/approveSelect" class="form-horizontal" method="post">
+		<ul>
+			<li>
+				<font>选题标题：</font>
+				<input class="input_txt" type="text" name="title" value="${topicSelection.title}"/>
+				<input type="hidden" name="selectId" value="${topicSelection.id}">
+			</li>
+			<li>
+				<font>选题内容：</font>
+				<textarea rows="2" cols="30" name="content">${topicSelection.content}</textarea>
+			</li>
+			<li>
+				<font>审批内容：</font>
+				<textarea rows="2" cols="30" id="appContent" name="appContent">${topicSelection.appContent}</textarea>
+			</li>
+			<li>
+	        	<div class="search_btn">
+	              	<a href="javascript:;" onclick="ajaxEdit('publish');">
+	                  	通过
+	                </a>
+	        	</div>
+        	</li>
+			<li>
+	        	<div class="search_btn">
+	              	<a href="javascript:;" onclick="ajaxEdit('recheck');">
+	                  	不通过
+	                </a>
+	        	</div>
+        	</li>
+        	<li>
+	          	<div class="search_btn">
+	              <a href="javascript:history.go(-1);">
+	                  	取消
+	              </a>
+	            </div>
+       		</li>
+		</ul>
+	</form>
+</div>
+<script type="text/javascript">
+	function ajaxEdit(status){
+		var selectId = $("input[name='selectId']").val();
+		var appContent = $("#appContent").val();
+		var url = "${request.contextPath}/approveSel/approveSelect";
+		$.ajax({
+			type:"POST" ,
+			url:url,
+			cache: false,
+			data : {selectId:selectId,appContent:appContent,status:status},
+			dataType:"json",
+			error: function(request) {
+		        swal("审批失败！", "" ,"error");
+		    },
+			success: function(data){
+				if(data.msg){
+		    		swal(data.msg, "" ,"error");
+		    	}else{
+		    		swal({   title: "已审批！",   
+						text: "",   
+						type: "success",   
+						showCancelButton: true,   
+						confirmButtonText: "确定",   
+						closeOnConfirm: false,
+						showCancelButton: false
+					}, 
+					function(isConfirm){
+						if (isConfirm){
+							window.location.href = "${request.contextPath}/topicSelection/appSelList";
+						}
+					});
+		    	}
+			}
+		});
+	}
+	
+	function selectItemType(value){
+		$("input[name='approvalUserId']").val(value);
+	}
+	
+</script>
+</@common.html>

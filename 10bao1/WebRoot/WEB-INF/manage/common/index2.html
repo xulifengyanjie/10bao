@@ -1,0 +1,1322 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>首页</title>
+<script type="text/javascript" language="javascript" src="${request.contextPath}/static/main/js/jquery-2.1.4.min.js"></script>
+<script type="text/javascript" language="javascript" src="${request.contextPath}/static/main/js/common.js"></script>
+<script type="text/javascript" language="javascript" src="${request.contextPath}/static/main/js/hot_word.js"></script>
+<script type="text/javascript" language="javascript" src="${request.contextPath}/static/main/js/ECharts/echarts.js"></script>
+<link href="${request.contextPath}/static/bootstrap/css/bootstrap.css" type="text/css" rel="stylesheet" />
+<link href="${request.contextPath}/static/main/css/css.css" type="text/css" rel="stylesheet" />
+</head>
+<body>
+<div class="header">
+	<div class="index_header">
+        <div class="logo">
+            <img src="${request.contextPath}/static/main/images/logo.png" />
+        </div>
+        <div class="menu">
+            <ul>
+            <#if menus?exists>
+		  		<#list menus as menu>
+		             <#if request.contextPath + menu.permissionUrl == request.requestUri && menu.permissionLevel == 1 && menu.isLeaf == 1>
+		                <#assign curMenu=menu />
+		                <#break>
+		            </#if>
+		    	</#list>
+				<#list menus as menu>
+					<#if menu.permissionLevel == 1>
+		            <li>
+		            	<a href="${request.contextPath}${menu.permissionUrl}" <#if menu.permissionCode == curMenu.permissionCodeChain?substring(0,6)>class="cur"</#if>>${menu.permissionName}</a>
+		            </li>
+		            </#if>
+		    	</#list>
+			</#if>
+        </ul>
+            <div class="user_box">
+                <div class="user_name">
+                    ${cur_user.userName}
+                    <i></i>
+                </div>
+                <div class="user_link">
+                    <a href="javascript:;">修改密码</a><br />
+                    <a href="${request.contextPath}/common/logout">注销</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="clear"></div>
+<div class="index_content">
+	<div class="index_left">
+    	<div class="index_left_top">
+        	<div class="index_left_item">
+            	<div class="index_title">
+                    <i></i>个人工作任务<a href="javascript:;">更多</a>
+                </div>
+                <div class="item_box">
+                	<div class="index_task">
+                    	<ul>
+                        	<li>
+                            	<h3>
+                                	<a href="javascript:;">
+                                    	<i></i><font>［采访计划采访计划采访计划采访计划采访计划］</font>
+                                    </a>
+                                </h3>
+                                <p><a href="javascript:;">1.国信陈虹桥事件国信陈虹桥事件国信陈虹桥事件国信陈虹桥事件</a></p>
+                                <p><a href="javascript:;">2.习近平连问珠三角PM2.5多少</a></p>
+                            </li>
+                            <li>
+                            	<h3>
+                                	<a href="javascript:;">
+                                    	<i></i><font>［日程提醒］</font>
+                                    </a>
+                                </h3>
+                                <p><a href="javascript:;">1.下午2:00选题会</a></p>
+                                <p><a href="javascript:;">2.周三16:34选题推荐会</a></p>
+                            </li>
+                            <li>
+                            	<h3>
+                                	<a href="javascript:;">
+                                    	<i></i><font>［选题策划］</font>
+                                    </a>
+                                </h3>
+                                <p><a href="javascript:;">1.国信陈虹桥事件</a></p>
+                                <p><a href="javascript:;">2.习近平连问珠三角PM2.5多少</a></p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="index_left_item">
+            	<div class="index_title">
+                    <i></i>热门话题<a href="javascript:;">更多</a>
+                </div>
+                <div class="item_box">
+                	<div class="index_top_list">
+                    	<ul>
+                        	<li>
+                            	<font class="bg_red">1</font>
+                                <a href="http://wwww.cuiruo.com/3132.html" target="_blank">冒充快递员骗手机卡 盗刷女事主12万元 网银转账5分钟内转走12万</a>
+                                <i class="top1"></i>
+                            </li>
+                            <li>
+                            	<font class="bg_red">2</font>
+                                <a href="http://blog.cuiruo.com/3194.html" target="_blank">安徽麦当劳发生砍人事件 伤者被砍时正在睡觉</a>
+                                <i class="top2"></i>
+                            </li>
+                            <li>
+                            	<font class="bg_red">3</font>
+                                <a href="http://blog.cuiruo.com/3196.html" target="_blank">李克强考察成都，菜市樱桃3元/斤？官方：你看错了</a>
+                                <i class="top3"></i>
+                            </li>
+                            <li>
+                            	<font>4</font>
+                                <a href="http://blog.cuiruo.com/3197.html" target="_blank">人贩子将12岁女孩拐走 称【养大了给自己当媳妇】</a>
+                                <i class="top4"></i>
+                            </li>
+                            <li>
+                            	<font>5</font>
+                                <a href="http://blog.cuiruo.com/3192.html" target="_blank">帮朋友出头被捅死 20岁小伙被14岁少年捅死</a>
+                                <i class="top5"></i>
+                            </li>
+                            <li>
+                            	<font>6</font>
+                                <a href="http://blog.cuiruo.com/3190.html" target="_blank">小伙因长得帅遭暴打 与美女同行遭6人暴打</a>
+                                <i class="top6"></i>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="index_left_item">
+            	<div class="index_title">
+                    <i></i>选题推荐<a href="javascript:;">更多</a>
+                </div>
+                <div class="item_box">
+                	<div class="index_top_list">
+                    	<ul>
+                        	<li>
+                            	<font class="bg_red">1</font>
+                                <a href="http://sports.sina.com.cn/g/laliga/2016-05-04/doc-ifxrtzte9926665.shtml">欧冠-莱万破门穆勒+托妞失点 拜仁2-1马竞出局</a>
+                                <i class="top1"></i>
+                            </li>
+                            <li>
+                            	<font class="bg_red">2</font>
+                                <a href="http://video.sina.com.cn/p/news/s/v/2015-11-19/072465131537.html">宜宾首富遭绑架细节：长期密谋分工摸底半年</a>
+                                <i class="top2"></i>
+                            </li>
+                            <li>
+                            	<font class="bg_red">3</font>
+                                <a href="http://news.sina.com.cn/c/sz/2016-05-03/doc-ifxrtzte9908351.shtml">习近平为何要说“莫用三爷，废职亡家”？</a>
+                                <i class="top3"></i>
+                            </li>
+                            <li>
+                            	<font>4</font>
+                                <a href="http://mil.news.sina.com.cn/china/2016-05-03/doc-ifxrtzte9914516.shtml">解放军发布震撼征兵视频：歼10从辽宁舰上起飞</a>
+                                <i class="top4"></i>
+                            </li>
+                            <li>
+                            	<font>5</font>
+                                <a href="http://news.sina.com.cn/o/2016-05-03/doc-ifxruaee5490523.shtml">发改委晒去年价改成绩单:19次调油价减负超千亿</a>
+                                <i class="top5"></i>
+                            </li>
+                            <li>
+                            	<font>6</font>
+                                <a href="http://news.sina.com.cn/c/nd/2016-05-03/doc-ifxrtvtp2036483.shtml">前员工:百度每次被爆负面高管都一副受害者论调</a>
+                                <i class="top6"></i>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clear"></div>
+        <div class="index_title">
+        	<i></i>热搜新闻词<a href="javascript:;">更多</a>
+        </div>
+        <div class="index_hot_word">
+        	<div class="index_hot_list">
+            	<ul>
+                	<li>
+                    	<div class="index_hot_1">
+                        	<div class="hot_content1">
+                            	<p>重庆一小学运动会　学生cos30个＂国家＂参赛</p>
+                            	<a href="http://rmrbimg2.people.cn/data/rmrbwap/2016/04/21/cms_1629392790553600.html" target="_blank"></a>
+                            </div>
+                            <div class="hot_content2">
+                            	<p>菲律宾武器遭调侃：全是古董货！装备水平差中国个世纪</p>
+                            	<a href="http://toutiao.com/group/6275193334743367938/?iid=156356741&app=news_article" target="_blank"></a>
+                            </div>
+                            <div class="hot_content3">
+                            	<p>美国大兵的路边杀手竟然被中国一招轻松破解：美方不得不登门讨教</p>
+                            	<a href="http://toutiao.com/group/6275238632702263554/?iid=156356741&app=news_article" target="_blank"></a>
+                            </div>
+                            <div class="hot_content4">
+                            	<p>西安一大妈接连被忽悠260万！骗子是怎么做到的？</p>
+                            	<a href="http://view.inews.qq.com/a/20160420A02VOR00" target="_blank"></a>
+                            </div>
+                        </div>
+                        <div class="index_hot_2">
+                        	<div class="hot_content1">
+                            	<p>腾讯、阿里幕后的老板竟然他们，我绝对不是最后一个才知道的！</p>
+                            	<a href="http://toutiao.com/group/6275152986461864193/?iid=156356741&app=news_article" target="_blank"></a>	
+                            </div>
+                            <div class="hot_content2">
+                            	<p>神秘人狂砸1350万购域名 疑似进域名创投市场</p>
+                            	<a href="http://toutiao.com/group/6275468011039539458/?iid=156356741&app=news_article" target="_blank"></a>
+                            </div>
+                            <div class="hot_content3">
+                            	<p>微信最大的挑战是？</p>
+                            	<a href="http://toutiao.com/group/6275464427512807681/?iid=156356741&app=news_article"  target="_blank"></a>
+                            </div>
+                        </div>
+                        <div class="index_hot_3">
+                        	<div class="hot_content1">
+                            	<p>老兵因救人毁容 “换脸”后重获新生</p>
+                            	<a href="http://view.inews.qq.com/a/NEW2016041905947503" target="_blank"></a>	
+                            </div>
+                            <div class="hot_content2">
+                            	<p>成都小伙留学花150万回国开火锅店　网友：为梦想值</p>
+                            	<a href="http://rmrbimg2.people.cn/data/rmrbwap/2016/04/20/cms_1628203319264256.html" target="_blank"></a>
+                            </div>
+                            <div class="hot_content3">
+                            	<p>海南西线高速多车连环相撞　司机路边补胎当场身亡</p>
+                            	<a href="http://rmrbimg2.people.cn/data/rmrbwap/2016/04/20/cms_1628222975198208.html" target="_blank"></a>
+                            </div>
+                        </div>
+                        <div class="index_hot_4">
+                        	<div class="hot_content1">
+                            	<p>中国饮料工业协会回应"氮气风波":可使用无需标识</p>
+                            	<a href="http://pad.ce.cn/sy/chanye/201604/20/t20160420_10672897.html" target="_blank"></a>	
+                            </div>
+                            <div class="hot_content2">
+                            	<p>入群有惊喜“总理清华北大行”群聊邀你加入</p>
+                            	<a href="http://xw.feedss.com/P2tfR3" target="_blank"></a>
+                            </div>
+                            <div class="hot_content3">
+                            	<p>2016电子商务与O2O领袖峰会圆满落幕</p>
+                            	<a href="http://rmrbimg2.people.cn/data/rmrbwap/2016/04/20/cms_1628203318494208.html" target="_blank"></a>
+                            </div>
+                            <div class="hot_content4">
+                            	<p>朝鲜热情澎湃的16张彩色宣传画，特别耐人寻味</p>
+                            	<a href="http://toutiao.com/group/6275461744605741313/?iid=156356741&app=news_article" target="_blank"></a>	
+                            </div>
+                            <div class="hot_content5">
+                            	<p>新西兰企业通过阿里巴巴入华 商界称“神来之笔”</p>
+                            	<a href="http://pad.ce.cn/sy/guoji/201604/20/t20160420_10671244.html" target="_blank"></a>
+                            </div>
+                            <div class="hot_content6">
+                            	<p>英特尔将裁1.2万人以应对个人电脑市场萎缩</p>
+                            	<a href="http://pad.ce.cn/sy/guoji/201604/20/t20160420_10673169.html" target="_blank"></a>
+                            </div>
+                        </div>
+                        <div class="index_hot_5">
+                        	<div class="hot_content1">
+                            	<p>大连港加速推进“中韩俄”国际物流大通道建设</p>
+                            	<a href="http://pad.ce.cn/sy/guoji/201604/20/t20160420_10671794.html" target="_blank"></a>
+                            </div>
+                            <div class="hot_content2">
+                            	<p>比利时怀疑更多IS成员返回欧洲 欲策划更多袭击</p>
+                            	<a href="http://app.cntv.cn/special/news/detail/arti/index.html?id=ARTIp6XWVpHBQ0BKg5UZFg4W160420&isfromapp=1" target="_blank"></a>
+                            </div>
+                            <div class="hot_content3">
+                            	<p>铁路迎近10年来最大规模调图 高铁增开夜车</p>
+                            	<a href="http://app.cntv.cn/special/news/detail/arti/index.html?id=ARTIoTLJwC376k5RfNdn2TEu160420&isfromapp=1" target="_blank"></a>
+                            </div>
+                            <div class="hot_content4">
+                            	<p>疯狂的“壳”：A股“壳”费一天涨一亿</p>
+                            	<a href="http://rmrbimg2.people.cn/data/rmrbwap/2016/04/20/cms_1627967390942208.html" target="_blank"></a>
+                            </div>
+                        </div>
+                    </li>
+                    <!--  
+                    <li>
+                    	<div class="index_hot_1">
+                        	<div class="hot_content1">
+                            	<p>福厚长老金身塑成2</p>
+                            	<a href="javascript:;"></a>
+                            </div>
+                            <div class="hot_content2">
+                            	<p>破1.5亿假药案</p>
+                            	<a href="javascript:;"></a>
+                            </div>
+                            <div class="hot_content3">
+                            	<p>破1.5亿假药案</p>
+                            	<a href="javascript:;"></a>
+                            </div>
+                            <div class="hot_content4">
+                            	<p>诈骗犯3步让人转账</p>
+                            	<a href="javascript:;"></a>
+                            </div>
+                        </div>
+                        <div class="index_hot_2">
+                        	<div class="hot_content1">
+                            	<p>破1.5亿假药案</p>
+                            	<a href="javascript:;"></a>	
+                            </div>
+                            <div class="hot_content2">
+                            	<p>破1.5亿假药案</p>
+                            	<a href="javascript:;"></a>
+                            </div>
+                            <div class="hot_content3">
+                            	<p>取消手机国内漫游费</p>
+                            	<a href="javascript:;"></a>
+                            </div>
+                        </div>
+                        <div class="index_hot_3">
+                        	<div class="hot_content1">
+                            	<p>破1.5亿假药案</p>
+                            	<a href="javascript:;"></a>	
+                            </div>
+                            <div class="hot_content2">
+                            	<p>破1.5亿假药案</p>
+                            	<a href="javascript:;"></a>
+                            </div>
+                            <div class="hot_content3">
+                            	<p>中国人口性别比下降</p>
+                            	<a href="javascript:;"></a>
+                            </div>
+                        </div>
+                        <div class="index_hot_4">
+                        	<div class="hot_content1">
+                            	<p>摇滚巨<br />星<br />去世</p>
+                            	<a href="javascript:;"></a>	
+                            </div>
+                            <div class="hot_content2">
+                            	<p>破1.5亿假药案</p>
+                            	<a href="javascript:;"></a>
+                            </div>
+                            <div class="hot_content3">
+                            	<p>破1.5亿假药案</p>
+                            	<a href="javascript:;"></a>
+                            </div>
+                            <div class="hot_content4">
+                            	<p>破1.5亿假药案</p>
+                            	<a href="javascript:;"></a>	
+                            </div>
+                            <div class="hot_content5">
+                            	<p>破1.5亿假药案</p>
+                            	<a href="javascript:;"></a>
+                            </div>
+                            <div class="hot_content6">
+                            	<p>长江中下游</p>
+                            	<a href="javascript:;"></a>
+                            </div>
+                        </div>
+                        <div class="index_hot_5">
+                        	<div class="hot_content1">
+                            	<p>北京车展</p>
+                            	<a href="javascript:;"></a>
+                            </div>
+                            <div class="hot_content2">
+                            	<p>马航370残片</p>
+                            	<a href="javascript:;"></a>
+                            </div>
+                            <div class="hot_content3">
+                            	<p>破1.5亿假药案</p>
+                            	<a href="javascript:;"></a>
+                            </div>
+                            <div class="hot_content4">
+                            	<p>破1.5亿假药案</p>
+                            	<a href="javascript:;"></a>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                    	<div class="index_hot_1">
+                        	<div class="hot_content1">
+                            	<p>福厚长老金身塑成3</p>
+                            	<a href="javascript:;"></a>
+                            </div>
+                            <div class="hot_content2">
+                            	<p>破1.5亿假药案</p>
+                            	<a href="javascript:;"></a>
+                            </div>
+                            <div class="hot_content3">
+                            	<p>破1.5亿假药案</p>
+                            	<a href="javascript:;"></a>
+                            </div>
+                            <div class="hot_content4">
+                            	<p>诈骗犯3步让人转账</p>
+                            	<a href="javascript:;"></a>
+                            </div>
+                        </div>
+                        <div class="index_hot_2">
+                        	<div class="hot_content1">
+                            	<p>破1.5亿假药案</p>
+                            	<a href="javascript:;"></a>	
+                            </div>
+                            <div class="hot_content2">
+                            	<p>破1.5亿假药案</p>
+                            	<a href="javascript:;"></a>
+                            </div>
+                            <div class="hot_content3">
+                            	<p>取消手机国内漫游费</p>
+                            	<a href="javascript:;"></a>
+                            </div>
+                        </div>
+                        <div class="index_hot_3">
+                        	<div class="hot_content1">
+                            	<p>破1.5亿假药案</p>
+                            	<a href="javascript:;"></a>	
+                            </div>
+                            <div class="hot_content2">
+                            	<p>破1.5亿假药案</p>
+                            	<a href="javascript:;"></a>
+                            </div>
+                            <div class="hot_content3">
+                            	<p>中国人口性别比下降</p>
+                            	<a href="javascript:;"></a>
+                            </div>
+                        </div>
+                        <div class="index_hot_4">
+                        	<div class="hot_content1">
+                            	<p>摇滚巨<br />星<br />去世</p>
+                            	<a href="javascript:;"></a>	
+                            </div>
+                            <div class="hot_content2">
+                            	<p>破1.5亿假药案</p>
+                            	<a href="javascript:;"></a>
+                            </div>
+                            <div class="hot_content3">
+                            	<p>破1.5亿假药案</p>
+                            	<a href="javascript:;"></a>
+                            </div>
+                            <div class="hot_content4">
+                            	<p>破1.5亿假药案</p>
+                            	<a href="javascript:;"></a>	
+                            </div>
+                            <div class="hot_content5">
+                            	<p>破1.5亿假药案</p>
+                            	<a href="javascript:;"></a>
+                            </div>
+                            <div class="hot_content6">
+                            	<p>长江中下游</p>
+                            	<a href="javascript:;"></a>
+                            </div>
+                        </div>
+                        <div class="index_hot_5">
+                        	<div class="hot_content1">
+                            	<p>北京车展</p>
+                            	<a href="javascript:;"></a>
+                            </div>
+                            <div class="hot_content2">
+                            	<p>马航370残片</p>
+                            	<a href="javascript:;"></a>
+                            </div>
+                            <div class="hot_content3">
+                            	<p>破1.5亿假药案</p>
+                            	<a href="javascript:;"></a>
+                            </div>
+                            <div class="hot_content4">
+                            	<p>破1.5亿假药案</p>
+                            	<a href="javascript:;"></a>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                    	<div class="index_hot_1">
+                        	<div class="hot_content1">
+                            	<p>福厚长老金身塑成4</p>
+                            	<a href="javascript:;"></a>
+                            </div>
+                            <div class="hot_content2">
+                            	<p>破1.5亿假药案</p>
+                            	<a href="javascript:;"></a>
+                            </div>
+                            <div class="hot_content3">
+                            	<p>破1.5亿假药案</p>
+                            	<a href="javascript:;"></a>
+                            </div>
+                            <div class="hot_content4">
+                            	<p>诈骗犯3步让人转账</p>
+                            	<a href="javascript:;"></a>
+                            </div>
+                        </div>
+                        <div class="index_hot_2">
+                        	<div class="hot_content1">
+                            	<p>破1.5亿假药案</p>
+                            	<a href="javascript:;"></a>	
+                            </div>
+                            <div class="hot_content2">
+                            	<p>破1.5亿假药案</p>
+                            	<a href="javascript:;"></a>
+                            </div>
+                            <div class="hot_content3">
+                            	<p>取消手机国内漫游费</p>
+                            	<a href="javascript:;"></a>
+                            </div>
+                        </div>
+                        <div class="index_hot_3">
+                        	<div class="hot_content1">
+                            	<p>破1.5亿假药案</p>
+                            	<a href="javascript:;"></a>	
+                            </div>
+                            <div class="hot_content2">
+                            	<p>破1.5亿假药案</p>
+                            	<a href="javascript:;"></a>
+                            </div>
+                            <div class="hot_content3">
+                            	<p>中国人口性别比下降</p>
+                            	<a href="javascript:;"></a>
+                            </div>
+                        </div>
+                        <div class="index_hot_4">
+                        	<div class="hot_content1">
+                            	<p>摇滚巨<br />星<br />去世</p>
+                            	<a href="javascript:;"></a>	
+                            </div>
+                            <div class="hot_content2">
+                            	<p>破1.5亿假药案</p>
+                            	<a href="javascript:;"></a>
+                            </div>
+                            <div class="hot_content3">
+                            	<p>破1.5亿假药案</p>
+                            	<a href="javascript:;"></a>
+                            </div>
+                            <div class="hot_content4">
+                            	<p>破1.5亿假药案</p>
+                            	<a href="javascript:;"></a>	
+                            </div>
+                            <div class="hot_content5">
+                            	<p>破1.5亿假药案</p>
+                            	<a href="javascript:;"></a>
+                            </div>
+                            <div class="hot_content6">
+                            	<p>长江中下游</p>
+                            	<a href="javascript:;"></a>
+                            </div>
+                        </div>
+                        <div class="index_hot_5">
+                        	<div class="hot_content1">
+                            	<p>北京车展</p>
+                            	<a href="javascript:;"></a>
+                            </div>
+                            <div class="hot_content2">
+                            	<p>马航370残片</p>
+                            	<a href="javascript:;"></a>
+                            </div>
+                            <div class="hot_content3">
+                            	<p>破1.5亿假药案</p>
+                            	<a href="javascript:;"></a>
+                            </div>
+                            <div class="hot_content4">
+                            	<p>破1.5亿假药案</p>
+                            	<a href="javascript:;"></a>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                    	<div class="index_hot_1">
+                        	<div class="hot_content1">
+                            	<p>福厚长老金身塑成5</p>
+                            	<a href="javascript:;"></a>
+                            </div>
+                            <div class="hot_content2">
+                            	<p>破1.5亿假药案</p>
+                            	<a href="javascript:;"></a>
+                            </div>
+                            <div class="hot_content3">
+                            	<p>破1.5亿假药案</p>
+                            	<a href="javascript:;"></a>
+                            </div>
+                            <div class="hot_content4">
+                            	<p>诈骗犯3步让人转账</p>
+                            	<a href="javascript:;"></a>
+                            </div>
+                        </div>
+                        <div class="index_hot_2">
+                        	<div class="hot_content1">
+                            	<p>破1.5亿假药案</p>
+                            	<a href="javascript:;"></a>	
+                            </div>
+                            <div class="hot_content2">
+                            	<p>破1.5亿假药案</p>
+                            	<a href="javascript:;"></a>
+                            </div>
+                            <div class="hot_content3">
+                            	<p>取消手机国内漫游费</p>
+                            	<a href="javascript:;"></a>
+                            </div>
+                        </div>
+                        <div class="index_hot_3">
+                        	<div class="hot_content1">
+                            	<p>破1.5亿假药案</p>
+                            	<a href="javascript:;"></a>	
+                            </div>
+                            <div class="hot_content2">
+                            	<p>破1.5亿假药案</p>
+                            	<a href="javascript:;"></a>
+                            </div>
+                            <div class="hot_content3">
+                            	<p>中国人口性别比下降</p>
+                            	<a href="javascript:;"></a>
+                            </div>
+                        </div>
+                        <div class="index_hot_4">
+                        	<div class="hot_content1">
+                            	<p>中国饮料工业协会回应"氮气风波":可使用无需标识</p>
+                            	<a href="http://pad.ce.cn/sy/chanye/201604/20/t20160420_10672897.html"></a>	
+                            </div>
+                            <div class="hot_content2">
+                            	<p>破1.5亿假药案</p>
+                            	<a href="javascript:;"></a>
+                            </div>
+                            <div class="hot_content3">
+                            	<p>破1.5亿假药案</p>
+                            	<a href="javascript:;"></a>
+                            </div>
+                            <div class="hot_content4">
+                            	<p>破1.5亿假药案</p>
+                            	<a href="javascript:;"></a>	
+                            </div>
+                            <div class="hot_content5">
+                            	<p>破1.5亿假药案</p>
+                            	<a href="javascript:;"></a>
+                            </div>
+                            <div class="hot_content6">
+                            	<p>长江中下游</p>
+                            	<a href="javascript:;"></a>
+                            </div>
+                        </div>
+                        <div class="index_hot_5">
+                        	<div class="hot_content1">
+                            	<p>北京车展</p>
+                            	<a href="javascript:;"></a>
+                            </div>
+                            <div class="hot_content2">
+                            	<p>马航370残片</p>
+                            	<a href="javascript:;"></a>
+                            </div>
+                            <div class="hot_content3">
+                            	<p>破1.5亿假药案</p>
+                            	<a href="javascript:;"></a>
+                            </div>
+                            <div class="hot_content4">
+                            	<p>破1.5亿假药案</p>
+                            	<a href="javascript:;"></a>
+                            </div>
+                        </div>
+                    </li>
+                    -->
+                </ul>
+            </div>
+            <div class="index_hot_span">
+            	<span>04-21</span>
+            </div>
+            <div class="index_hot_refresh">
+            	<a href="javascript:;"></a>
+            </div>
+        	
+        </div>
+        <div class="clear"></div>
+        <div class="index_title">
+        	<i></i>个人选题分布情况
+        </div>
+        <div class="index_chart_box">
+        	<div id="individualTopics" style="height:470px; border:1px; solid #ccc; padding:10px;"></div>
+        </div>	
+        <div class="clear"></div>
+    </div>
+    <div class="index_right">
+    	<div class="index_title">
+        	<i></i>定向关注<a href="javascript:;">更多</a>
+        </div>
+        <div class="index_follow">
+        	<ul>
+        	    <#if promotionList>
+                		<#list promotionList as promotion>
+                			
+		            	<li class="bg_color1">
+		                	<p>${promotion.keyWord}</p>
+		                    <!-- <a href="${request.contextPath}/promotion/newsList?type=${promotion.keyWord}"></a> -->
+		                    <a href="javascript:void(0);" onclick="showPie('${promotion.keyWord}')"></a>
+		                </li>
+                		</#list>
+                	</#if>
+            </ul>
+        </div>
+    	<div class="index_title">
+        	<i></i>本报社 TOP<a href="javascript:;">更多</a>
+        </div>
+        <div class="index_right_item">
+        	<ul>
+            	<li class="cur">
+                	<div class="list_title">
+                        <i></i>
+                        <a href="http://news.sina.com.cn/c/nd/2016-04-29/doc-ifxrtzte9787123.shtml" target="_blank">上海虹桥机场一施工现场起火已致2死4伤 </a>
+                    </div>
+                    <div class="list_content_img">
+                    	<img src="${request.contextPath}/static/main/img/3zbP-fxrtzte9787019.jpg" />
+                        <p>上海虹桥机场一施工现场起火已致2死4伤 。<a href="http://news.sina.com.cn/c/nd/2016-04-29/doc-ifxrtzte9787123.shtml" target="_blank">［详细］</a></p>
+                    </div>
+                </li>
+                <li>
+                	<div class="list_title">
+                        <i></i>
+                        <a href="http://news.sina.com.cn/c/2016-04-29/doc-ifxruaee5093081.shtml" target="_blank">马英九拒日主张遭威胁：成“外交事件”你负责</a>
+                    </div>
+                    <div class="list_content">
+                        <p>马英九拒日主张遭威胁：成“外交事件”你负责。<a href="http://news.sina.com.cn/c/2016-04-29/doc-ifxruaee5093081.shtml" target="_blank">［详细］</a></p>
+                    </div>
+                </li>
+                <li>
+                	<div class="list_title">
+                        <i></i>
+                        <a href="http://news.sina.com.cn/c/nd/2016-04-29/doc-ifxrtztc3020595.shtml" target="_blank">温家宝向成都理工大学赠亲笔题字书籍</a>
+                    </div>
+                    <div class="list_content_img">
+                    	<img src="img/index_demo_img.png" />
+                        <p>温家宝向成都理工大学赠亲笔题字书籍。<a href="http://news.sina.com.cn/c/nd/2016-04-29/doc-ifxrtztc3020595.shtml" target="_blank">［详细］</a></p>
+                    </div>
+                </li>
+                <li>
+                	<div class="list_title">
+                        <i></i>
+                        <a href="http://news.sina.com.cn/c/2016-04-29/doc-ifxruaee5100088.shtml" target="_blank">台湾：前解放军军官策反台退役少将获刑4年</a>
+                    </div>
+                    <div class="list_content_img">
+                    	<img src="img/index_demo_img.png" />
+                        <p>台湾：前解放军军官策反台退役少将获刑4年。<a href="http://news.sina.com.cn/c/2016-04-29/doc-ifxruaee5100088.shtml" target="_blank">［详细］</a></p>
+                    </div>
+                </li>
+            </ul>
+        </div>	
+        <div class="index_title">
+        	<i></i>门户 TOP<a href="javascript:;">更多</a>
+        </div>
+        <div class="index_right_item">
+        	<ul>
+            	<li class="cur">
+                	<div class="list_title">
+                        <i></i>
+                        <a href="http://news.sina.com.cn/c/nd/2016-04-29/doc-ifxrtztc3027565.shtml" target="_blank">日媒:岸田文雄访华基本确定可获李克强接见</a>
+                    </div>
+                    <div class="list_content_img">
+                    	<img src="${request.contextPath}/static/main/img/pObn-fxrtztc3100733.jpg" />
+                        <p>日媒:岸田文雄访华基本确定可获李克强接见。<a href="http://news.sina.com.cn/c/nd/2016-04-29/doc-ifxrtztc3027565.shtml" target="_blank">［详细］</a></p>
+                    </div>
+                </li>
+                <li>
+                	<div class="list_title">
+                        <i></i>
+                        <a href="http://news.sina.com.cn/c/nd/2016-04-29/doc-ifxrtzte9777592.shtml" target="_blank">习近平：农村土地集体所有制不能改垮了</a>
+                    </div>
+                    <div class="list_content">
+                        <p>习近平：农村土地集体所有制不能改垮了。<a href="http://news.sina.com.cn/c/nd/2016-04-29/doc-ifxrtzte9777592.shtml" target="_blank">［详细］</a></p>
+                    </div>
+                </li>
+                <li>
+                	<div class="list_title">
+                        <i></i>
+                        <a href="http://news.sina.com.cn/w/zx/2016-04-29/doc-ifxrtztc3037565.shtml" target="_blank">奥巴马否认要与中国搞对抗 不会在南海选边站</a>
+                    </div>
+                    <div class="list_content_img">
+                    	<img src="img/index_demo_img.png" />
+                        <p>奥巴马否认要与中国搞对抗 不会在南海选边站。<a href="http://news.sina.com.cn/w/zx/2016-04-29/doc-ifxrtztc3037565.shtml">［详细］</a></p>
+                    </div>
+                </li>
+                <li>
+                	<div class="list_title">
+                        <i></i>
+                        <a href="http://news.sina.com.cn/c/nd/2016-04-28/doc-ifxrtzte9769180.shtml" target="_blank">宁波落马市长曾为嫖娼企业家撑腰 令警方放人</a>
+                    </div>
+                    <div class="list_content_img">
+                    	<img src="img/index_demo_img.png" />
+                        <p>宁波落马市长曾为嫖娼企业家撑腰 令警方放人。<a href="http://news.sina.com.cn/c/nd/2016-04-28/doc-ifxrtzte9769180.shtml" target="_blank">［详细］</a></p>
+                    </div>
+                </li>
+            </ul>
+        </div>	
+        <div class="index_title">
+        	<i></i>微博 TOP<a href="javascript:;">更多</a>
+        </div>
+        <div class="index_right_item">
+        	<ul>
+        	     <#if weiboList > 
+        	        <#list weiboList as weibo> 
+        	           <#if weibo_index == 0>
+			            	<li class="cur">
+			                	<div class="list_title">
+			                        <i></i>
+			                        <a href="${weibo.link}" target="_blank">${weibo.text}</a>
+			                    </div>
+			                    <!-- 
+			                    <div class="list_content_img">
+			                    	<img src="" />
+			                        <p><a href="${weibo.link}" target="_blank">［详细］</a></p>
+			                    </div>
+			                     -->
+			                </li>
+        	              <#else>
+				                <li>
+				                	<div class="list_title">
+				                        <i></i>
+				                        <a href="${weibo.link}" target="_blank">${weibo.text}</a>
+				                    </div>
+				                    <div class="list_content">
+				                        <p><a href="${weibo.link}" target="_blank">［详细］</a></p>
+				                    </div>
+				                </li>
+        	               
+        	           </#if>
+        	        </#list>
+        	      </#if>  
+            </ul>
+        </div>	
+        
+		
+    </div>
+    <div class="clear"></div>
+</div>
+<div class="footer">2016-2019&gt;天文数媒有限公司版权所有</div>
+<div class="pop_bg" style="display:none;">
+	<!--修改密码-->
+	<div class="pop_content" style="display:none;">
+    	<h2>
+        	<font>修改密码</font>
+            <a href="javascript:;"></a>
+        </h2>
+        <div class="modify_pwd">
+        	<ul>
+            	<li>
+                	<span>原密码：</span>
+                    <input type="text" />
+                </li>
+                <li>
+                	<span>新密码：</span>
+                    <input type="text" />
+                </li>
+                <li>
+                	<span>确认密码：</span>
+                    <input type="text" />
+                </li>
+            </ul>
+            <div class="clear"></div>
+            <div class="pop_fot_btn">
+            	<span>
+                	<a href="javascript:;">保存</a>
+                </span>
+            	<span>
+                	<a href="javascript:;">取消</a>
+                </span>
+            </div>
+        </div>
+    </div>
+    <!--退出-->
+    <div class="pop_content" style="display:none;">
+    	<h2>
+        	<font>提示信息</font>
+            <a href="javascript:;"></a>
+        </h2>
+        <div class="pop_info">
+        	<p>您确定要退出系统么？</p>
+            <div class="clear"></div>
+            <div class="pop_fot_btn">
+            	<span>
+                	<a href="javascript:;">保存</a>
+                </span>
+            	<span>
+                	<a href="javascript:;">取消</a>
+                </span>
+            </div>
+        </div>
+    </div>
+    <!--删除-->
+    <div class="pop_content" style="display:none;">
+    	<h2>
+        	<font>提示信息</font>
+            <a href="javascript:;"></a>
+        </h2>
+        <div class="pop_info">
+        	<p>确定要删除本条信息么？</p>
+            <div class="clear"></div>
+            <div class="pop_fot_btn">
+            	<span>
+                	<a href="javascript:;">删除</a>
+                </span>
+            	<span>
+                	<a href="javascript:;">取消</a>
+                </span>
+            </div>
+        </div>
+    </div>
+    <!--新闻溯源-->
+    <div class="pop_content" style="display:none;">
+    	<h2>
+        	<font>新闻溯源</font>
+            <a href="javascript:;"></a>
+        </h2>
+        <div class="pop_info">
+        	<ul>
+            	<li>
+                	<div class="pop_info_title">新闻标题：</div>
+                    <div class="pop_info_con">山东平邑改口承认村民在家中被烧死因强拆引发</div>
+                </li>
+                <li>
+                	<div class="pop_info_title">新闻来源：</div>
+                    <div class="pop_info_con">中国经济网</div>
+                </li>
+                <li>
+                	<div class="pop_info_title">发布时间：</div>
+                    <div class="pop_info_con">2015-09-21 08:31</div>
+                </li>
+            </ul>
+            <div class="clear"></div>
+            <div class="pop_fot_btn">
+            	<span>
+                	<a href="javascript:;">关闭</a>
+                </span>
+            </div>
+        </div>
+    </div>
+   <!--新闻趋势-->
+    <div id="trend_content" class="pop_content" style="display:none; margin-left:-300px">
+    	<h2>
+        	<font>事件分析</font>
+            <a name="trend_close" href="javascript:;"></a>
+        </h2>
+        <div class="pop_chart">
+            <div class="pop_chart_con">
+            	<div id="newsPromotion" style="width:560px;height:300px;"></div>
+            </div>
+            <div class="clear"></div>
+            <div class="pop_fot_btn">
+            	<span>
+                	<a name="trend_close" href="javascript:;">关闭</a>
+                </span>
+            </div>
+        </div>
+    </div>
+    <!--新闻趋势-->
+    <div id="trend_content1" class="pop_content" style="display:none; margin-left:-300px">
+    	<h2>
+        	<font>事件分析</font>
+            <a name="trend_close" href="javascript:;"></a>
+        </h2>
+        <div class="pop_chart">
+            <div class="pop_chart_con">
+            	<div id="newsPromotion1" style="width:560px;height:300px;"></div>
+            </div>
+            <div class="clear"></div>
+            <div class="pop_fot_btn">
+            	<span>
+                	<a name="trend_close" href="javascript:;">关闭</a>
+                </span>
+            </div>
+        </div>
+    </div>
+    <!--新闻趋势-->
+    <div id="trend_content2" class="pop_content" style="display:none; margin-left:-300px">
+    	<h2>
+        	<font>事件分析</font>
+            <a name="trend_close" href="javascript:;"></a>
+        </h2>
+        <div class="pop_chart">
+            <div class="pop_chart_con">
+            	<div id="newsPromotion2" style="width:560px;height:300px;"></div>
+            </div>
+            <div class="clear"></div>
+            <div class="pop_fot_btn">
+            	<span>
+                	<a name="trend_close" href="javascript:;">关闭</a>
+                </span>
+            </div>
+        </div>
+    </div>
+    <!--新闻趋势-->
+    <div id="trend_content3" class="pop_content" style="display:none; margin-left:-300px">
+    	<h2>
+        	<font>事件分析</font>
+            <a name="trend_close" href="javascript:;"></a>
+        </h2>
+        <div class="pop_chart">
+            <div class="pop_chart_con">
+            	<div id="newsPromotion3" style="width:560px;height:300px;"></div>
+            </div>
+            <div class="clear"></div>
+            <div class="pop_fot_btn">
+            	<span>
+                	<a name="trend_close" href="javascript:;">关闭</a>
+                </span>
+            </div>
+        </div>
+    </div>
+    <!--添加定向关注-->
+	<div class="pop_content" style="display:none;">
+    	<h2>
+        	<font>添加定向关注</font>
+            <a href="javascript:;"></a>
+        </h2>
+        <div class="modify_pwd">
+        	<ul>
+            	<li>
+                	<span>专题名称：</span>
+                    <input type="text" />
+                </li>
+                <li>
+                	<span>关键词：</span>
+                    <input type="text" />
+                </li>
+                <li>
+                	<span>关注类别：</span>
+                    <div class="pop_select_bg1">
+                    	<div class="select_title"><font>新闻关注</font><i></i></div>
+                        <div class="select_list">
+                        	<a href="javascript:;">新闻关注1</a>
+                            <a href="javascript:;">新闻关注2</a>
+                            <a href="javascript:;">新闻关注3</a>
+                        </div>
+                    </div>
+                    <div class="pop_select_bg2">
+                    	<div class="select_title"><font>外媒</font><i></i></div>
+                        <div class="select_list">
+                        	<a href="javascript:;">外媒1</a>
+                            <a href="javascript:;">外媒2</a>
+                            <a href="javascript:;">外媒3</a>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <div class="clear"></div>
+            <div class="pop_fot_btn">
+            	<span>
+                	<a href="javascript:;">保存</a>
+                </span>
+            	<span>
+                	<a href="javascript:;">取消</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+//折线图
+$(document).ready(function(){
+
+			/**饼状图
+			*/
+			var monChangeChart1;
+			require.config({paths : {echarts : '${request.contextPath}/static/main/js/ECharts'}});	
+			require(['echarts','echarts/chart/pie'],function(ec){
+				//初始化echarts图表
+				monChangeChart1 = ec.init(document.getElementById('individualTopics'));
+				//定义图表option
+				var option = option = {  
+		                        title : {  
+				                    text: '个人选题分布情况 ',  
+				                    x:'center'  
+                },  
+                tooltip : {  
+                    trigger: 'item',  
+                    formatter: "{a} <br/>{b} : {c} ({d}%)"  
+                },  
+                legend: {  
+                    orient : 'vertical',  
+                    x : 'left',  
+                    data:['股市','理财','金融','贸易']  
+                },  
+                toolbox: {  
+                    show : true,  
+                    feature : {  
+                        mark : {show: true},  
+                        dataView : {show: true, readOnly: false},  
+                        restore : {show: true},  
+                        saveAsImage : {show: true}  
+                    }  
+                },  
+                calculable : true,  
+                series : [  
+                    {  
+                        type:'pie',  
+                        radius : '55%',  
+                        center: ['50%', '60%'],  
+                        data:[  
+                            {value:335, name:'股市'},  
+                            {value:310, name:'理财'},  
+                            {value:234, name:'金融'},  
+                            {value:135, name:'贸易'},  
+                        ]  
+                    }  
+                ]  
+            };  
+			                    
+				monChangeChart1.setOption(option);
+				/* myChart.hideLoading(); */
+				/* getChartData(); */
+			});
+			
+			/**饼状图
+			*/
+			var monChangeChart2;
+			require.config({paths : {echarts : '${request.contextPath}/static/main/js/ECharts'}});	
+			require(['echarts','echarts/chart/pie'],function(ec){
+				//初始化echarts图表
+				monChangeChart2 = ec.init(document.getElementById('newsPromotion'));
+				//定义图表option
+				var option1 = {  
+		                        title : {  
+				                    text: '魏则西事件关注分析',  
+				                    x:'center'  
+                },  
+                tooltip : {  
+                    trigger: 'item',  
+                    formatter: "{a} <br/>{b} : {c} ({d}%)"  
+                },  
+                legend: {  
+                    orient : 'vertical',  
+                    x : 'left',  
+                    data:['医疗纠纷','莆田系','医疗广告','虚假宣传','百度竞价排名']  
+                },  
+                toolbox: {  
+                    show : false,  
+                    feature : {  
+                        mark : {show: true},  
+                        dataView : {show: true, readOnly: false},  
+                        restore : {show: true},  
+                        saveAsImage : {show: true}  
+                    }  
+                },  
+                calculable : true,  
+                series : [  
+                    {  
+                        type:'pie',  
+                        radius : '55%',  
+                        center: ['50%', '60%'],  
+                        data:[  
+                            {value:150, name:'医疗纠纷'},  
+                            {value:150, name:'莆田系'},  
+                            {value:150, name:'医疗广告'},  
+                            {value:50, name:'虚假宣传'}, 
+                            {value:650, name:'百度竞价排名'} 
+                        ]  
+                    }  
+                ]  
+            };  
+			                    
+				monChangeChart2.setOption(option1);
+				/* myChart.hideLoading(); */
+				/* getChartData(); */
+			});
+			
+			/**饼状图
+			*/
+			var monChangeChart3;
+			require.config({paths : {echarts : '${request.contextPath}/static/main/js/ECharts'}});	
+			require(['echarts','echarts/chart/pie'],function(ec){
+				//初始化echarts图表
+				monChangeChart3 = ec.init(document.getElementById('newsPromotion1'));
+				//定义图表option
+				var option2 = {  
+		                        title : {  
+				                    text: '川师大杀人案关注分析',  
+				                    x:'center'  
+                },  
+                tooltip : {  
+                    trigger: 'item',  
+                    formatter: "{a} <br/>{b} : {c} ({d}%)"  
+                },  
+                legend: {  
+                    orient : 'vertical',  
+                    x : 'left',  
+                    data:['嫌犯抑郁症可信吗','嫌疑人在行凶的精神状态','抑郁症患者就可杀人吗？']  
+                },  
+                toolbox: {  
+                    show : false,  
+                    feature : {  
+                        mark : {show: true},  
+                        dataView : {show: true, readOnly: false},  
+                        restore : {show: true},  
+                        saveAsImage : {show: true}  
+                    }  
+                },  
+                calculable : true,  
+                series : [  
+                    {  
+                        type:'pie',  
+                        radius : '55%',  
+                        center: ['50%', '60%'],  
+                        data:[  
+                            {value:50, name:'嫌犯抑郁症可信吗'},  
+                            {value:34, name:'嫌疑人在行凶的精神状态'},  
+                            {value:80, name:'抑郁症患者就可杀人吗？'},  
+                        ]  
+                    }  
+                ]  
+            };  
+			                    
+				monChangeChart3.setOption(option2);
+				/* myChart.hideLoading(); */
+				/* getChartData(); */
+			});
+			
+			/**饼状图
+			*/
+			var monChangeChart4;
+			require.config({paths : {echarts : '${request.contextPath}/static/main/js/ECharts'}});	
+			require(['echarts','echarts/chart/pie'],function(ec){
+				//初始化echarts图表
+				monChangeChart4 = ec.init(document.getElementById('newsPromotion2'));
+				//定义图表option
+				var option3 = {  
+		                        title : {  
+				                    text: '联防队员拆违打人事件关注分析',  
+				                    x:'center'  
+                },  
+                tooltip : {  
+                    trigger: 'item',  
+                    formatter: "{a} <br/>{b} : {c} ({d}%)"  
+                },  
+                legend: {  
+                    orient : 'vertical',  
+                    x : 'left',  
+                    data:['联防队员殴打民众','区长引咎辞职','强调打人有理','联防队员受伤','联防队员被刑拘']  
+                },  
+                toolbox: {  
+                    show : false,  
+                    feature : {  
+                        mark : {show: true},  
+                        dataView : {show: true, readOnly: false},  
+                        restore : {show: true},  
+                        saveAsImage : {show: true}  
+                    }  
+                },  
+                calculable : true,  
+                series : [  
+                    {  
+                        type:'pie',  
+                        radius : '55%',  
+                        center: ['50%', '60%'],  
+                        data:[  
+                            {value:350, name:'联防队员殴打民众'},  
+                            {value:120, name:'区长引咎辞职'},  
+                            {value:240, name:'强调打人有理'},  
+                            {value:80, name:'联防队员受伤'}, 
+                            {value:300, name:'联防队员被刑拘'} 
+                        ]  
+                    }  
+                ]  
+            };  
+			         
+				monChangeChart4.setOption(option3);
+				/* myChart.hideLoading(); */
+				/* getChartData(); */
+			});
+			
+			/**饼状图
+			*/
+			var monChangeChart5;
+			require.config({paths : {echarts : '${request.contextPath}/static/main/js/ECharts'}});	
+			require(['echarts','echarts/chart/pie'],function(ec){
+				//初始化echarts图表
+				monChangeChart5 = ec.init(document.getElementById('newsPromotion3'));
+					//定义图表option
+				var option4 = {  
+		                        title : {  
+				                    text: '波多黎各债务违约关注分析',  
+				                    x:'center'  
+                },  
+                tooltip : {  
+                    trigger: 'item',  
+                    formatter: "{a} <br/>{b} : {c} ({d}%)"  
+                },  
+                legend: {  
+                    orient : 'vertical',  
+                    x : 'left',  
+                    data:['美国受其拖累','政府将无力偿还','全球债务违约风险','波多黎各违约可预见','波多黎各面临被起诉风险']  
+                },  
+                toolbox: {  
+                    show : false,  
+                    feature : {  
+                        mark : {show: true},  
+                        dataView : {show: true, readOnly: false},  
+                        restore : {show: true},  
+                        saveAsImage : {show: true}  
+                    }  
+                },  
+                calculable : true,  
+                series : [  
+                    {  
+                        type:'pie',  
+                        radius : '55%',  
+                        center: ['50%', '60%'],  
+                        data:[  
+                            {value:120, name:'美国受其拖累'},  
+                            {value:150, name:'政府将无力偿还'},  
+                            {value:250, name:'全球债务违约风险'},  
+                            {value:180, name:'波多黎各违约可预见'}, 
+                            {value:350, name:'波多黎各面临被起诉风险'} 
+                        ]  
+                    }  
+                ]  
+            };  
+			           
+			                    
+				monChangeChart5.setOption(option4);
+				/* myChart.hideLoading(); */
+				/* getChartData(); */
+			});
+});
+function showPie(keyword){
+	$("#trend_content").hide();
+	$("#trend_content1").hide();
+	$("#trend_content2").hide();
+	$("#trend_content3").hide();
+	if(keyword=='魏则西'){
+		$("#trend_content").show();
+	}else if(keyword=='川师大杀人案'){
+		$("#trend_content1").show();
+	}else if(keyword=='联防队员拆违打人'){
+		$("#trend_content2").show();
+	}else if(keyword=='波多黎各债务违约'){
+		$("#trend_content3").show();
+	}else{
+		window.location.href = "${request.contextPath}/promotion/newsList?type="+keyword;
+	}
+	$(".pop_bg").show();
+}
+</script>
+</body>
+</html>

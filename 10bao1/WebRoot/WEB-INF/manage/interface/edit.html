@@ -1,0 +1,82 @@
+<#import "common/common.html" as common />
+<@common.html title="接口添加">
+  <div class="right">
+  		<div class="search_box">
+  			<form id="editForm" action="${request.contextPath}/interface/doEdit" method="post">
+        	<ul>
+            	<li>
+                	<font>接口名称</font>
+                	<input type="hidden" class="input_txt" name="id" value="${item.id}"/>
+                    <input type="text" class="input_txt" name="interfaceName" value="${item.interfaceName}"/>
+                    <input type="hidden" class="input_txt" name="addTime" value="${item.addTime}"/>
+                </li>
+                <li>
+                	<font>调用方</font>
+                    <input type="text" class="input_txt" name="caller" value="${item.caller}"/>
+                </li>
+                <li>
+                	<font>调用方式</font>
+                    <input type="text" class="input_txt" name="invokeMethod" value="${item.invokeMethod}"/>
+                </li>
+                <li>
+                	<font>调用地址</font>
+                    <input type="text" class="input_txt" name="invokeAddress" value="${item.invokeAddress}"/>
+                </li>
+                <li>
+                	<div class="search_btn">
+                    	<a href="javascript:;" onclick="ajaxEdit();">
+                        	保存
+                        </a>
+                    </div>
+                </li>
+                <li>
+                	<div class="search_btn">
+                    	<a href="javascript:history.go(-1);">
+                        	取消
+                        </a>
+                    </div>
+                </li>
+            </ul>
+            </form>
+            <div class="clear"></div>
+        </div>
+</div>
+<script type="text/javascript">
+	function edit(){
+		$("#editForm").submit();
+	}
+	function ajaxEdit(){
+		var ajaxCallUrl = $("#editForm").attr("action");
+		$.ajax({
+			cache: true,
+			type: "POST",
+			url:ajaxCallUrl,
+			data:$('#editForm').serialize(),
+			async: false,
+		    error: function(request) {
+		        swal("接口修改失败！", "" ,"error");
+		    },
+		    success: function(data) {
+		    	if(data.msg){
+		    		swal(data.msg, "" ,"error");
+		    	}else{
+		    		swal({   
+		    			title: "接口修改成功！",   
+						text: "",   
+						type: "success",   
+						showCancelButton: true,   
+						confirmButtonText: "确定",   
+						closeOnConfirm: false,
+						showCancelButton: false
+					}, 
+					function(isConfirm){
+						if (isConfirm){
+							window.location.href = "${request.contextPath}/interface/list";
+						}
+					});
+		    	}
+		    }
+		});
+	}
+</script>
+</@common.html>

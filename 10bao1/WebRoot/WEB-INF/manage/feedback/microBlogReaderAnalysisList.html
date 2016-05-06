@@ -1,0 +1,222 @@
+<#import "common/common.html" as common /> <@common.html title="定向关注">
+
+<div class="weibo">
+	<div class="weibo_content">
+		<div class="weibo_tab_bg">
+			<div class="weibo_tab">
+			</div>
+		</div>
+		<div class="weibo_display" id="weibo_display">
+			<div class="weibo_item">
+				<div class="search_box">
+					<form id="queryForm" action="${request.contextPath}/user/list"
+						method="post">
+						<ul>
+							<li>
+								<font>开始时间:</font>
+								<input type="text" class="input_txt" name="startTime"
+									value="${startTime}"
+									onfocus="WdatePicker({skin:'twoer',dateFmt:'yyyy-MM-dd',minDate:'2008-01-01',maxDate:'2100-12-31'})" />
+							</li>
+							<li>
+								<font>结束时间:</font>
+								<input type="text" class="input_txt" name="startTime"
+									value="${startTime}"
+									onfocus="WdatePicker({skin:'twoer',dateFmt:'yyyy-MM-dd',minDate:'2008-01-01',maxDate:'2100-12-31'})" />
+							</li>
+							<li>
+								<font>关键词:</font>
+								<input type="text" class="input_txt" name="userName" value="${item.userName}"/>
+							</li>
+							<li>
+								<div class="search_btn">
+									<a href="javascript:;" onclick="query();"> 搜索<i></i> </a>
+								</div>
+							</li>
+						</ul>
+					</form>
+					<div class="clear"></div>
+				</div>
+				<div class="right_border">
+					<div class="right_title_bg">
+						<div class="right_title">
+							查询列表
+						</div>
+
+					</div>
+					<div class="clear"></div>
+					<table id="tab">
+						<tr>
+							<th class="b10">
+								排序
+							</th>
+							<th class="b10">
+								微博标题
+							</th>
+							<th class="b10">
+								微博反馈详情
+							</th>
+						</tr>
+						<!--  
+						<#if page && page.list> <#list page.list as promotion>
+						<tr id="promotion_${promotion.id}_top">
+							<td class="b10">
+								${promotion.topic}
+							</td>
+							<td class="b10">
+								${promotion.keyWord}
+							</td>
+							<td class="b40">
+								${promotion.type}
+							</td>
+							<td class="b10">
+								${promotion.addTime}
+							</td>
+							<td class="b10">
+								<a
+									href="${request.contextPath}/promotion/editAttention/${promotion.id}">编辑</a>&nbsp;|&nbsp;
+								<a href="javascript:void(0);" onclick=
+	del('${promotion.id}');;
+>删除</a>&nbsp;&nbsp;|&nbsp;
+							</td>
+						</tr>
+						</#list> </#if>
+						-->
+						<tr >
+							<td class="b10">
+								1
+							</td>
+							<td class="b10">
+								银行卡被盗刷，赶紧做这6件事
+							</td>
+							<td class="b10">
+							    查看
+							</td>
+						</tr>
+						<tr >
+							<td class="b10">
+								2
+							</td>
+							<td class="b10">
+								路遇拾荒老人 洒水车洒出最美弧度
+							</td>
+							<td class="b10">
+							    查看
+							</td>
+						</tr>
+						<tr >
+							<td class="b10">
+								3
+							</td>
+							<td class="b10">
+								致青春丨永远年轻，永远热泪盈眶
+							</td>
+							<td class="b10">
+							    查看
+							</td>
+						</tr>
+						<tr >
+							<td class="b10">
+								4
+							</td>
+							<td class="b10">
+								路遇拾荒老人 洒水车洒出最美弧度
+							</td>
+							<td class="b10">
+							    查看
+							</td>
+						</tr>
+						<tr >
+							<td class="b10">
+								5
+							</td>
+							<td class="b10">
+								美底特律公立学校再陷管理危机 4.5万学生停课
+							</td>
+							<td class="b10">
+							    查看
+							</td>
+						</tr>
+						<tr >
+							<td class="b10">
+								6
+							</td>
+							<td class="b10">
+								大学生动车上拒和老人挤着坐遭指责
+							</td>
+							<td class="b10">
+							    查看
+							</td>
+						</tr>
+						<tr >
+							<td class="b10">
+								7
+							</td>
+							<td class="b10">
+								IT工程师连续熬夜写程序 感冒两个月肺部烂成“马蜂窝”
+							</td>
+							<td class="b10">
+							    查看
+							</td>
+						</tr>
+						<tr >
+							<td class="b10">
+								8
+							</td>
+							<td class="b10">
+								【@人民日报：青年要敢做先锋，不当看客】
+							</td>
+							<td class="b10">
+							    查看
+							</td>
+						</tr>
+						<tr >
+							<td class="b10">
+								9
+							</td>
+							<td class="b10">
+								【海南这些县市改名后，有的肠子都悔青了，有的却笑疯！】
+							</td>
+							<td class="b10">
+							    查看
+							</td>
+						</tr>
+						<tr >
+							<td class="b10">
+								10
+							</td>
+							<td class="b10">
+								【人民日报再评魏则西事件：靠竞价排名办医是一条邪路】
+							</td>
+							<td class="b10">
+							    查看
+							</td>
+						</tr>
+					</table>
+					<div class="clear"></div>
+					<#if page>
+					<div class="page_box">
+						<div class="pagging">
+							<#if page.hasPreviousPage>
+							<a
+								href="?pageNum=${page.prePage}&date=${date}&timestamp=${timestamp}&searchWord=${searchWord}"
+								style="margin-right: 27px;">&lt;上页</a> </#if> <#list
+							page.navigatepageNums as num> <#if num == page.pageNum>
+							<a href="javascript:void(0)" class="cur">${num}</a> <#else>
+							<a
+								href="?pageNum=${num}&date=${date}&timestamp=${timestamp}&searchWord=${searchWord}">${num}</a>
+							</#if> </#list> <#if page.hasNextPage>
+							<a
+								href="?pageNum=${page.nextPage}&date=${date}&timestamp=${timestamp}&searchWord=${searchWord}"
+								style="margin-left: 27px;">下页&gt;</a> </#if>
+							<span>跳转</span>
+							<input type="text" class="input_page" />
+							<span class="span2">页</span>
+						</div>
+					</div>
+					</#if>
+				</div>
+				<div class="clear"></div>
+
+			
+				</@common.html>

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.twsm.newstopic.dao.RoleMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.twsm.newstopic.model.Role" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="ROLE_NAME" property="roleName" jdbcType="VARCHAR" />
+    <result column="ROLE_DESCRIPTION" property="roleDescription" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="rolePermissionResultMap" type="cn.com.twsm.newstopic.model.Role" extends="BaseResultMap">
+    <collection property="permissions" ofType="cn.com.twsm.newstopic.model.Permission">
+    	<id column="PERMISSION_ID" jdbcType="INTEGER" property="id" />
+	   	<result column="PERMISSION_CODE" jdbcType="VARCHAR" property="permissionCode" />
+	    <result column="PERMISSION_NAME" jdbcType="VARCHAR" property="permissionName" />
+	    <result column="PARENT_ID" jdbcType="INTEGER" property="parentId" />
+	    <result column="PERMISSION_LEVEL" jdbcType="INTEGER" property="permissionLevel" />
+	    <result column="PERMISSION_URL" jdbcType="VARCHAR" property="permissionUrl" />
+	    <result column="PERMISSION_TYPE" jdbcType="VARCHAR" property="permissionType" />
+	    <result column="SORT" jdbcType="INTEGER" property="sort" />
+	    <result column="IS_LEAF" jdbcType="INTEGER" property="isLeaf" />
+	    <result column="PERMISSION_CODE_CHAIN" property="permissionCodeChain" jdbcType="VARCHAR" />
+    </collection>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, ROLE_NAME, ROLE_DESCRIPTION
+  </sql>
+  <sql id="whereCondition">
+  	  <if test="id != null" >
+        AND ID = #{id,jdbcType=INTEGER}
+      </if>
+      <if test="roleName != null" >
+        AND ROLE_NAME = #{roleName,jdbcType=VARCHAR}
+      </if>
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from role
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from role
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.com.twsm.newstopic.model.Role" keyProperty="id" useGeneratedKeys="true">
+    insert into role (ID, ROLE_NAME, ROLE_DESCRIPTION
+      )
+    values (#{id,jdbcType=INTEGER}, #{roleName,jdbcType=VARCHAR}, #{roleDescription,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.com.twsm.newstopic.model.Role" >
+    insert into role
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="roleName != null" >
+        ROLE_NAME,
+      </if>
+      <if test="roleDescription != null" >
+        ROLE_DESCRIPTION,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="roleName != null" >
+        #{roleName,jdbcType=VARCHAR},
+      </if>
+      <if test="roleDescription != null" >
+        #{roleDescription,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.com.twsm.newstopic.model.Role" >
+    update role
+    <set >
+      <if test="roleName != null" >
+        ROLE_NAME = #{roleName,jdbcType=VARCHAR},
+      </if>
+      <if test="roleDescription != null" >
+        ROLE_DESCRIPTION = #{roleDescription,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.com.twsm.newstopic.model.Role" >
+    update role
+    set ROLE_NAME = #{roleName,jdbcType=VARCHAR},
+      ROLE_DESCRIPTION = #{roleDescription,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="getByWhere" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select 
+    <include refid="Base_Column_List" />
+    from role
+    where 1=1 <include refid="whereCondition" />
+  </select>
+  <select id="getPermissionByRoleId" resultMap="rolePermissionResultMap" parameterType="java.lang.Integer">
+  	SELECT
+	r.ID,
+	r.ROLE_NAME,
+	r.ROLE_DESCRIPTION,
+	p.ID AS PERMISSION_ID,
+	p.PERMISSION_CODE,
+	p.PERMISSION_NAME,
+	p.PARENT_ID,
+	p.PERMISSION_LEVEL,
+	p.PERMISSION_URL,
+	p.PERMISSION_TYPE,
+	p.IS_LEAF,
+	p.SORT,
+	p.PERMISSION_CODE_CHAIN
+	FROM
+		role AS r
+		LEFT JOIN role_permission_relation AS rpr ON r.ID = rpr.ROLE_ID
+		LEFT JOIN permission AS p ON rpr.PERMISSION_ID = p.ID
+	WHERE r.ID = #{id,jdbcType=INTEGER}
+	ORDER BY p.SORT
+  </select>
+  
+  <delete id="deleteByIds" parameterType="java.util.List" >
+    delete from role
+    where ID in
+    <foreach collection="list" item ="item" open="(" separator="," close=")">
+    	#{item}
+    </foreach>
+  </delete>
+</mapper>

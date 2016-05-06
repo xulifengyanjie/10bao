@@ -1,0 +1,175 @@
+<#import "common/common.html" as common />
+<@common.html title="重大选题报告分析" menucode="0101">
+<div class="right">
+		<form id="searchForm" action="${request.contextPath}/person/analyze" method="post">
+  		<div class="search_box">
+        	<ul>
+                <li>
+                	<font>关键词</font>
+                    <input type="text" class="input_txt" name="keyword" value="${keyword}"/>
+                </li>
+                <li>
+	           		<font>所属类别</font>
+	                <div class="select_bg">
+                        <div class="select_title"><font>
+                        <#if type == "">社会</#if>
+                        <#if type != ""&&type=="shehui">社会</#if>
+                        <#if type != ""&&type=="shehui">金融</#if>
+                        </font><i></i></div>
+                        <div class="select_list">
+                        	<input type="hidden" name="type"  class="input_txt" >
+                            <a href="javascript:;" onclick="selectType('shehui')">社会</a>
+                            <a href="javascript:;" onclick="selectType('jinrong')">金融</a>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                	<div class="search_btn">
+                    	<a href="javascript:;" onclick="query();">
+                        	搜索<i></i>
+                        </a>
+                    </div>
+                </li>
+            </ul>
+            <div class="clear"></div>
+        </div>
+    	</form>
+        
+        <div class="right_border">
+        	<div class="right_title_bg">
+            	<div class="right_title"><a href="javascript:;">详情</a>列表</div>
+            </div>
+            <div class="clear"></div>
+            <table>
+            	<tr>
+                	<th class="b5">序号</th>
+                	<th class="b5">指数</th>
+                	<th class="b20">标题</th>
+                    <th class="b10">所属类别</th>
+                    <th class="b10">线索来源</th>
+                    <th class="b10">选题分析</th>
+                    <th class="b10">详细信息</th>
+                </tr>
+                <tr>
+                    <td class="b5">1</td>
+                    <td class="b5">5.9</td>
+                    <td class="b20">欧冠-莱万破门穆勒+托妞失点 拜仁2-1马竞出局</td>
+                    <td class="b10">社会</td>
+                    <td class="b10">新浪体育</td>
+                    <td class="b10"><a href="http://sports.sina.com.cn/g/laliga/2016-05-04/doc-ifxrtzte9926665.shtml">详情</a></td>
+                    <td class="b10"><a href="javascript:;">深度检索</a></td>
+              	</tr>
+                <tr>
+                    <td class="b5">2</td>
+                    <td class="b5">5.8</td>
+                    <td class="b20">宜宾首富遭绑架细节：长期密谋分工摸底半年</td>
+                    <td class="b10">社会</td>
+                    <td class="b10">法制网</td>
+                    <td class="b10"><a href="http://video.sina.com.cn/p/news/s/v/2015-11-19/072465131537.html">详情</a></td>
+                    <td class="b10"><a href="javascript:;">深度检索</a></td>
+              	</tr>
+                <tr>
+                    <td class="b5">3</td>
+                    <td class="b5">5.7</td>
+                    <td class="b20">习近平为何要说“莫用三爷，废职亡家”？</td>
+                    <td class="b10">社会</td>
+                    <td class="b10">中国网</td>
+                    <td class="b10"><a href="http://news.sina.com.cn/c/sz/2016-05-03/doc-ifxrtzte9908351.shtml">详情</a></td>
+                    <td class="b10"><a href="javascript:;">深度检索</a></td>
+              	</tr>
+                <tr>
+                    <td class="b5">4</td>
+                    <td class="b5">5.6</td>
+                    <td class="b20">解放军发布震撼征兵视频：歼10从辽宁舰上起飞</td>
+                    <td class="b10">社会</td>
+                    <td class="b10">综合</td>
+                    <td class="b10"><a href="http://mil.news.sina.com.cn/china/2016-05-03/doc-ifxrtzte9914516.shtml">详情</a></td>
+                    <td class="b10"><a href="javascript:;">深度检索</a></td>
+              	</tr>
+                <tr>
+                    <td class="b5">5</td>
+                    <td class="b5">5.5</td>
+                    <td class="b20">发改委晒去年价改成绩单:19次调油价减负超千亿</td>
+                    <td class="b10">金融</td>
+                    <td class="b10">新浪</td>
+                    <td class="b10"><a href="http://news.sina.com.cn/o/2016-05-03/doc-ifxruaee5490523.shtml">详情</a></td>
+                    <td class="b10"><a href="javascript:;">深度检索</a></td>
+              	</tr>
+                <tr>
+                    <td class="b5">6</td>
+                    <td class="b5">5.4</td>
+                    <td class="b20">前员工:百度每次被爆负面高管都一副受害者论调</td>
+                    <td class="b10">社会</td>
+                    <td class="b10">新浪</td>
+                    <td class="b10"><a href="http://news.sina.com.cn/c/nd/2016-05-03/doc-ifxrtvtp2036483.shtml">详情</a></td>
+                    <td class="b10"><a href="javascript:;">深度检索</a></td>
+              	</tr>
+                <tr>
+                    <td class="b5">7</td>
+                    <td class="b5">5.3</td>
+                    <td class="b20">揭秘：“火”遍网络的燕城监狱，究竟有多牛？(组图)</td>
+                    <td class="b10">社会</td>
+                    <td class="b10">长安剑</td>
+                    <td class="b10"><a href="http://news.qq.com/a/20160429/001069.htm">详情</a></td>
+                    <td class="b10"><a href="javascript:;">深度检索</a></td>
+              	</tr>
+                <tr>
+                    <td class="b5">8</td>
+                    <td class="b5">5.2</td>
+                    <td class="b20">女房客准备洗澡服务员打开房门 酒店称不知有人</td>
+                    <td class="b10">社会</td>
+                    <td class="b10">网易</td>
+                    <td class="b10"><a href="http://news.163.com/16/0503/07/BM4INS0O00014AED.html">详情</a></td>
+                    <td class="b10"><a href="javascript:;">深度检索</a></td>
+              	</tr>
+                <tr>
+                    <td class="b5">9</td>
+                    <td class="b5">5.1</td>
+                    <td class="b20">莆田系被曝“送礼名单” 上至院长政委礼金达50万</td>
+                    <td class="b10">金融</td>
+                    <td class="b10">火狐</td>
+                    <td class="b10"><a href="http://shehui.firefox.163.com/16/0504/02/K18J4G2LDC906FQS.html">详情</a></td>
+                    <td class="b10"><a href="javascript:;">深度检索</a></td>
+              	</tr>
+                <tr>
+                    <td class="b5">10</td>
+                    <td class="b5">5.0</td>
+                    <td class="b20">多名接受生物疗法患者及家属到武警二院要求退款</td>
+                    <td class="b10">金融</td>
+                    <td class="b10">网易</td>
+                    <td class="b10"><a href="http://money.163.com/16/0503/11/BM4TM7FN00253B0H.html">详情</a></td>
+                    <td class="b10"><a href="javascript:;">深度检索</a></td>
+              	</tr>
+            </table>
+            <div class="clear"></div>
+             <div class="page_box">
+            	<div class="pagging">
+                    <#if page.hasPreviousPage>
+					      <a href="?pageNum=${page.prePage}" style=" margin-right:27px;">&lt;上页</a>
+				    </#if>
+				    <#list page.navigatepageNums as num>
+				    	<#if num == page.pageNum>
+				    		<a href="javascript:void(0)" class="cur">${num}</a>
+				    	<#else>
+				    		<a href="?pageNum=${num}">${num}</a>
+				    	</#if>
+				    </#list>
+				    <#if page.hasNextPage>
+					    <a href="?pageNum=${page.nextPage}" style="margin-left:27px;">下页&gt;</a>
+				    </#if>
+                    <span>跳转</span>
+                    <input type="text" class="input_page" />
+                    <span class="span2">页</span>
+                </div>
+            </div>
+        </div>
+</div>
+<script type="text/javascript">
+	function query(value){
+		$("#searchForm").submit();
+	}
+		function selectType(value){
+		$("input[name='type']").val(value);
+	}
+</script>
+</@common.html>

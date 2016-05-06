@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.twsm.newstopic.dao.BbsNewsMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.twsm.newstopic.model.BbsNews" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="NEWS_NUM" property="newsNum" jdbcType="VARCHAR" />
+    <result column="TITLE" property="title" jdbcType="VARCHAR" />
+    <result column="WEIGHT" property="weight" jdbcType="VARCHAR" />
+    <result column="HITS_COUNT" property="hitsCount" jdbcType="INTEGER" />
+    <result column="COLLECT_TIME" property="collectTime" jdbcType="VARCHAR" />
+    <result column="SUB_TYPE" property="subType" jdbcType="VARCHAR" />
+    <result column="POSTER" property="poster" jdbcType="VARCHAR" />
+    <result column="COMMENTS_COUNT" property="commentsCount" jdbcType="INTEGER" />
+    <result column="SMALL_TYPE" property="smallType" jdbcType="VARCHAR" />
+    <result column="FORUM_LINK" property="forumLink" jdbcType="VARCHAR" />
+    <result column="COLLECT_SOURCE" property="collectSource" jdbcType="VARCHAR" />
+    <result column="BIG_TYPE" property="bigType" jdbcType="VARCHAR" />
+    <result column="POST_TIME" property="postTime" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, NEWS_NUM, TITLE, WEIGHT, HITS_COUNT, COLLECT_TIME, SUB_TYPE, POSTER, COMMENTS_COUNT, 
+    SMALL_TYPE, FORUM_LINK, COLLECT_SOURCE, BIG_TYPE, POST_TIME
+  </sql>
+  <sql id="whereCondition">
+  	  <if test="id != null" >
+        AND BBS_NEWS.ID=#{id,jdbcType=INTEGER}
+      </if>
+      <if test="newsNum != null" >
+        AND BBS_NEWS.NEWS_NUM=#{newsNum,jdbcType=VARCHAR}
+      </if>
+      <if test="title != null" >
+        AND BBS_NEWS.TITLE=#{title,jdbcType=VARCHAR}
+      </if>
+      <if test="weight != null" >
+        AND BBS_NEWS.WEIGHT=#{weight,jdbcType=VARCHAR}
+      </if>
+      <if test="hitsCount != null" >
+        AND BBS_NEWS.HITS_COUNT=#{hitsCount,jdbcType=INTEGER}
+      </if>
+      <if test="collectTime != null" >
+        AND BBS_NEWS.COLLECT_TIME=#{collectTime,jdbcType=VARCHAR}
+      </if>
+      <if test="subType != null" >
+        AND BBS_NEWS.SUB_TYPE=#{subType,jdbcType=VARCHAR}
+      </if>
+      <if test="poster != null" >
+        AND BBS_NEWS.POSTER=#{poster,jdbcType=VARCHAR}
+      </if>
+      <if test="commentsCount != null" >
+        AND BBS_NEWS.COMMENTS_COUNT=#{commentsCount,jdbcType=INTEGER}
+      </if>
+      <if test="smallType != null" >
+        AND BBS_NEWS.SMALL_TYPE=#{smallType,jdbcType=VARCHAR}
+      </if>
+      <if test="forumLink != null" >
+        AND BBS_NEWS.FORUM_LINK=#{forumLink,jdbcType=VARCHAR}
+      </if>
+      <if test="collectSource != null" >
+        AND BBS_NEWS.COLLECT_SOURCE=#{collectSource,jdbcType=VARCHAR}
+      </if>
+      <if test="bigType != null" >
+        AND BBS_NEWS.BIG_TYPE=#{bigType,jdbcType=VARCHAR}
+      </if>
+      <if test="postTime != null" >
+        AND BBS_NEWS.POST_TIME = #{postTime,jdbcType=VARCHAR}
+      </if>
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from BBS_NEWS
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from BBS_NEWS
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.com.twsm.newstopic.model.BbsNews" >
+    insert into BBS_NEWS (ID, NEWS_NUM, TITLE, 
+      WEIGHT, HITS_COUNT, COLLECT_TIME, 
+      SUB_TYPE, POSTER, COMMENTS_COUNT, 
+      SMALL_TYPE, FORUM_LINK, COLLECT_SOURCE, 
+      BIG_TYPE, POST_TIME)
+    values (#{id,jdbcType=INTEGER}, #{newsNum,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, 
+      #{weight,jdbcType=VARCHAR}, #{hitsCount,jdbcType=INTEGER}, #{collectTime,jdbcType=VARCHAR}, 
+      #{subType,jdbcType=VARCHAR}, #{poster,jdbcType=VARCHAR}, #{commentsCount,jdbcType=INTEGER}, 
+      #{smallType,jdbcType=VARCHAR}, #{forumLink,jdbcType=VARCHAR}, #{collectSource,jdbcType=VARCHAR}, 
+      #{bigType,jdbcType=VARCHAR}, #{postTime,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.com.twsm.newstopic.model.BbsNews" >
+    insert into BBS_NEWS
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="newsNum != null" >
+        NEWS_NUM,
+      </if>
+      <if test="title != null" >
+        TITLE,
+      </if>
+      <if test="weight != null" >
+        WEIGHT,
+      </if>
+      <if test="hitsCount != null" >
+        HITS_COUNT,
+      </if>
+      <if test="collectTime != null" >
+        COLLECT_TIME,
+      </if>
+      <if test="subType != null" >
+        SUB_TYPE,
+      </if>
+      <if test="poster != null" >
+        POSTER,
+      </if>
+      <if test="commentsCount != null" >
+        COMMENTS_COUNT,
+      </if>
+      <if test="smallType != null" >
+        SMALL_TYPE,
+      </if>
+      <if test="forumLink != null" >
+        FORUM_LINK,
+      </if>
+      <if test="collectSource != null" >
+        COLLECT_SOURCE,
+      </if>
+      <if test="bigType != null" >
+        BIG_TYPE,
+      </if>
+      <if test="postTime != null" >
+        POST_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="newsNum != null" >
+        #{newsNum,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="weight != null" >
+        #{weight,jdbcType=VARCHAR},
+      </if>
+      <if test="hitsCount != null" >
+        #{hitsCount,jdbcType=INTEGER},
+      </if>
+      <if test="collectTime != null" >
+        #{collectTime,jdbcType=VARCHAR},
+      </if>
+      <if test="subType != null" >
+        #{subType,jdbcType=VARCHAR},
+      </if>
+      <if test="poster != null" >
+        #{poster,jdbcType=VARCHAR},
+      </if>
+      <if test="commentsCount != null" >
+        #{commentsCount,jdbcType=INTEGER},
+      </if>
+      <if test="smallType != null" >
+        #{smallType,jdbcType=VARCHAR},
+      </if>
+      <if test="forumLink != null" >
+        #{forumLink,jdbcType=VARCHAR},
+      </if>
+      <if test="collectSource != null" >
+        #{collectSource,jdbcType=VARCHAR},
+      </if>
+      <if test="bigType != null" >
+        #{bigType,jdbcType=VARCHAR},
+      </if>
+      <if test="postTime != null" >
+        #{postTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.com.twsm.newstopic.model.BbsNews" >
+    update BBS_NEWS
+    <set >
+      <if test="newsNum != null" >
+        NEWS_NUM = #{newsNum,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        TITLE = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="weight != null" >
+        WEIGHT = #{weight,jdbcType=VARCHAR},
+      </if>
+      <if test="hitsCount != null" >
+        HITS_COUNT = #{hitsCount,jdbcType=INTEGER},
+      </if>
+      <if test="collectTime != null" >
+        COLLECT_TIME = #{collectTime,jdbcType=VARCHAR},
+      </if>
+      <if test="subType != null" >
+        SUB_TYPE = #{subType,jdbcType=VARCHAR},
+      </if>
+      <if test="poster != null" >
+        POSTER = #{poster,jdbcType=VARCHAR},
+      </if>
+      <if test="commentsCount != null" >
+        COMMENTS_COUNT = #{commentsCount,jdbcType=INTEGER},
+      </if>
+      <if test="smallType != null" >
+        SMALL_TYPE = #{smallType,jdbcType=VARCHAR},
+      </if>
+      <if test="forumLink != null" >
+        FORUM_LINK = #{forumLink,jdbcType=VARCHAR},
+      </if>
+      <if test="collectSource != null" >
+        COLLECT_SOURCE = #{collectSource,jdbcType=VARCHAR},
+      </if>
+      <if test="bigType != null" >
+        BIG_TYPE = #{bigType,jdbcType=VARCHAR},
+      </if>
+      <if test="postTime != null" >
+        POST_TIME = #{postTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.com.twsm.newstopic.model.BbsNews" >
+    update BBS_NEWS
+    set NEWS_NUM = #{newsNum,jdbcType=VARCHAR},
+      TITLE = #{title,jdbcType=VARCHAR},
+      WEIGHT = #{weight,jdbcType=VARCHAR},
+      HITS_COUNT = #{hitsCount,jdbcType=INTEGER},
+      COLLECT_TIME = #{collectTime,jdbcType=VARCHAR},
+      SUB_TYPE = #{subType,jdbcType=VARCHAR},
+      POSTER = #{poster,jdbcType=VARCHAR},
+      COMMENTS_COUNT = #{commentsCount,jdbcType=INTEGER},
+      SMALL_TYPE = #{smallType,jdbcType=VARCHAR},
+      FORUM_LINK = #{forumLink,jdbcType=VARCHAR},
+      COLLECT_SOURCE = #{collectSource,jdbcType=VARCHAR},
+      BIG_TYPE = #{bigType,jdbcType=VARCHAR},
+      POST_TIME = #{postTime,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <insert id="insertBatch" parameterType="List">
+    insert into BBS_NEWS (NEWS_NUM, TITLE, 
+      WEIGHT, HITS_COUNT, COLLECT_TIME, 
+      SUB_TYPE, POSTER, COMMENTS_COUNT, 
+      SMALL_TYPE, FORUM_LINK, COLLECT_SOURCE, 
+      BIG_TYPE, POST_TIME)
+    values 
+    <foreach collection="list" item="item" separator="," index="index">
+   	  (#{item.newsNum,jdbcType=VARCHAR}, #{item.title,jdbcType=VARCHAR}, 
+      #{item.weight,jdbcType=VARCHAR}, #{item.hitsCount,jdbcType=INTEGER}, #{item.collectTime,jdbcType=VARCHAR}, 
+      #{item.subType,jdbcType=VARCHAR}, #{item.poster,jdbcType=VARCHAR}, #{item.commentsCount,jdbcType=INTEGER}, 
+      #{item.smallType,jdbcType=VARCHAR}, #{item.forumLink,jdbcType=VARCHAR}, #{item.collectSource,jdbcType=VARCHAR}, 
+      #{item.bigType,jdbcType=VARCHAR}, #{item.postTime,jdbcType=VARCHAR})
+     </foreach>
+  </insert>
+  
+   <select id="getByWhere" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select 
+    <include refid="Base_Column_List" />
+    from BBS_NEWS
+    where 1=1 <include refid="whereCondition" />
+  </select>
+  
+   <select id="getByNewsNum" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from BBS_NEWS
+    where NEWS_NUM= #{newsNum,jdbcType=INTEGER}
+  </select>
+ <select id="getByNewsNums" resultMap="BaseResultMap" parameterType="List" >
+     select  
+	 <include refid="Base_Column_List" />  
+	 from BBS_NEWS where NEWS_NUM in  
+	 <foreach item="item" index="index" collection="list" open="(" separator="," close=")">  
+	  #{item.newsNum}  
+ 	 </foreach> 
+  </select>
+</mapper>

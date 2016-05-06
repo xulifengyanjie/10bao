@@ -1,0 +1,109 @@
+<#import "common/common.html" as common />
+<@common.html title="权重修改">
+  <div class="right">
+  		<div class="search_box">
+  			<form id="editForm" action="${request.contextPath}/weight/doEdit" method="post">
+        	<ul>
+            	<li>
+                	<font>权重项</font>
+                	<input type="hidden" class="input_txt" name="id" value="${item.id}"/>
+                    <input type="text" class="input_txt" name="itemName" value="${item.itemName}"/>
+                </li>
+                <li>
+                	<font>权重值</font>
+                    <input type="text" class="input_txt" name="itemValue" value="${item.itemValue}"/>
+                </li>
+                <li>
+                	<font>权重类型</font>
+                    <div class="select_bg">
+                    	<input type="hidden" class="input_txt" name="itemType" value="${item.itemType}"/>
+                    	<#if item.itemType == 'news'>
+                    		<div class="select_title"><font>新闻热度</font><i></i></div>
+                    	</#if>
+                    	<#if item.itemType == 'weibo'>
+                    		<div class="select_title"><font>微博热度</font><i></i></div>
+                    	</#if>
+                    	<#if item.itemType == 'weixin'>
+                    		<div class="select_title"><font>微信热度</font><i></i></div>
+                    	</#if>
+                    	<#if item.itemType == 'feedback'>
+                    		<div class="select_title"><font>论坛热度</font><i></i></div>
+                    	</#if>
+                    	<#if item.itemType == 'feedback'>
+                    		<div class="select_title"><font>总体反馈</font><i></i></div>
+                    	</#if>
+                    	<#if item.itemType == 'power'>
+                    		<div class="select_title"><font>报社影响力</font><i></i></div>
+                    	</#if>
+                    	
+                        <div class="select_list">
+                        	<a href="javascript:;" onclick="selectItemType('news')">新闻热度</a>
+                        	<a href="javascript:;" onclick="selectItemType('weibo')">微博热度</a>
+                        	<a href="javascript:;" onclick="selectItemType('weixin')">微信热度</a>
+                        	<a href="javascript:;" onclick="selectItemType('bbs')">论坛热度</a>
+                        	<a href="javascript:;" onclick="selectItemType('feedback')">总体反馈</a>
+                        	<a href="javascript:;" onclick="selectItemType('power')">报社影响力</a>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                	<div class="search_btn">
+                    	<a href="javascript:;" onclick="ajaxEdit();">
+                        	保存
+                        </a>
+                    </div>
+                </li>
+                <li>
+                	<div class="search_btn">
+                    	<a href="javascript:history.go(-1);">
+                        	取消
+                        </a>
+                    </div>
+                </li>
+            </ul>
+            </form>
+            <div class="clear"></div>
+        </div>
+</div>
+<script type="text/javascript">
+	function edit(){
+		$("#editForm").submit();
+	}
+	function selectItemType(itemType){
+		$("input[name='itemType']").val(itemType);
+	}
+	function ajaxEdit(){
+		var ajaxCallUrl = $("#editForm").attr("action");
+		$.ajax({
+			cache: true,
+			type: "POST",
+			url:ajaxCallUrl,
+			data:$('#editForm').serialize(),
+			async: false,
+		    error: function(request) {
+		        swal("权重配置修改失败！", "" ,"error");
+		    },
+		    success: function(data) {
+		    	if(data.msg){
+		    		swal(data.msg, "" ,"error");
+		    	}else{
+		    		swal({   
+		    			title: "权重配置修改成功！",   
+						text: "",   
+						type: "success",   
+						showCancelButton: true,   
+						confirmButtonText: "确定",   
+						closeOnConfirm: false,
+						showCancelButton: false
+					}, 
+					function(isConfirm){
+						if (isConfirm){
+							window.location.href = "${request.contextPath}/weight/list";
+						}
+					});
+		    	}
+		    }
+		});
+	}
+</script>
+</@common.html>

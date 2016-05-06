@@ -1,0 +1,155 @@
+<#import "common/common.html" as common />
+<@common.html title="公告管理" menucode="0108">
+<script type="text/javascript" language="javascript" src="${request.contextPath}/static/main/js/echarts-plain-map.js"></script>
+<script type="text/javascript" language="javascript" src="${request.contextPath}/static/main/js/macarons.js"></script>
+<div class="right">
+    	<form id="searchForm"  action="${request.contextPath}/notice/noticeList" method="post">
+   		<div class="search_input_box">
+             <ul>
+                <li>
+                    <div class="select_bg">
+                        <div class="select_title"><font>
+						<#if status == "">全部</#if>
+                        <#if status != ""&&status=="publish">已发布</#if>
+                        <#if status != ""&&status=="nopublish">未发布</#if>
+						</font><i></i></div>
+                        <div class="select_list">
+                        	<input type="hidden" name="status" class="input_txt" >
+                            <a href="javascript:;" onclick="query('publish')">已发布</a>
+                            <a href="javascript:;" onclick="query('nopublish')">未发布</a>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        </form>
+        <div class="right_border">
+        	<div class="right_title_bg">
+            	<div class="right_title">查询列表</div>
+                <div class="right_btn_bg">
+                	<a href="${request.contextPath}/notice/add">添加</a>
+                	<a href ="javascript:void(0)" onclick="dels();">删除</a>	
+                </div>
+            </div>
+            <div class="clear"></div>
+            <table>
+            	<tr>
+            		<th class="b5"><input type="checkbox"  id="checkAll" /></th>
+                    <th class="b40">标题</th>
+                    <th class="b10">拟稿人</th>
+                    <th class="b20">时间</th>
+                    <th class="b10">最后处理人</th>
+                    <th class="b20">操作</th>
+                </tr>
+                <#if page && page.list>
+                	<#list page.list as notice>
+		                <tr id="notice_${notice.id}_top">
+		                	<td class="b5">
+                    			<input type="checkbox"  name="checkbox" id="${user.id}"/>
+                    		</td>
+		                    <td class="b40"><a href="${request.contextPath}/notice/noticeDetail/${notice.id}">${notice.title}</a></td>
+		                    <td class="b10">${notice.addUserName}</td>
+		                    <td class="b20">${notice.addTime}</td>
+		                    <td class="b10">${notice.approvalUserId}</td>
+		                    <td class="b20">
+		                    	<#if notice.status == "publish">
+		                    		<a href="javascript:void(0)">已发布</a>&nbsp;|&nbsp;
+		                    	</#if>
+		                    	<#if notice.status != "publish">
+		                    		<a href="${request.contextPath}/notice/publicNotice/${notice.id}">发布</a>&nbsp;|&nbsp;
+		                    	</#if>
+		                    	<a href="${request.contextPath}/notice/noticeDetail/${notice.id}">编辑</a>
+		                    	<!-- <a href="${request.contextPath}/notice/delete/${notice.id}">删除</a> -->
+		                    </td>
+                		</tr>
+	                </#list>
+                </#if>	
+            </table>
+            <div class="clear"></div>
+             <div class="page_box">
+            	<div class="pagging">
+                    <#if page.hasPreviousPage>
+					      <a href="?pageNum=${page.prePage}" style=" margin-right:27px;">&lt;上页</a>
+				    </#if>
+				    <#list page.navigatepageNums as num>
+				    	<#if num == page.pageNum>
+				    		<a href="javascript:void(0)" class="cur">${num}</a>
+				    	<#else>
+				    		<a href="?pageNum=${num}">${num}</a>
+				    	</#if>
+				    </#list>
+				    <#if page.hasNextPage>
+					    <a href="?pageNum=${page.nextPage}" style="margin-left:27px;">下页&gt;</a>
+				    </#if>
+                    <span>跳转</span>
+                    <input type="text" class="input_page" />
+                    <span class="span2">页</span>
+                </div>
+            </div>
+        </div>
+</div>
+
+<script type="text/javascript">
+function dels(){
+		var ids = [];
+		$('input[name="checkbox"]:checked').each(function() {
+			ids.push(parseInt($(this).attr("id")));
+		});
+		if(ids.length == 0){
+			swal("请选择删除的记录!")
+		}else{
+			swal({   title: "确定要删除吗?",   
+				text: "",   
+				type: "warning",   
+				showCancelButton: true,   
+				confirmButtonColor: "#DD6B55",   
+				confirmButtonText: "确定",   
+				cancelButtonText: "取消",   
+				closeOnConfirm: false   
+			}, 
+			function(isConfirm){
+				if (isConfirm){
+					deleteOper(ids);
+				}
+			});
+		}
+		return false;
+	}
+	function deleteOper(ids){
+		var url = "${request.contextPath}/notice/dels";
+		$.ajax({
+			type:"POST" ,
+			url:url,
+			cache: false,
+			data : {ids:ids},
+			dataType:"json",
+			error: function(request) {
+		        swal("删除失败！", "" ,"error");
+		    },
+			success: function(data){
+				if(data.msg){
+		    		swal(data.msg, "" ,"error");
+		    	}else{
+		    		swal({   title: "删除成功！",   
+						text: "",   
+						type: "success",   
+						showCancelButton: true,   
+						confirmButtonText: "确定",   
+						closeOnConfirm: false,
+						showCancelButton: false
+					}, 
+					function(isConfirm){
+						if (isConfirm){
+							window.location.href = "${request.contextPath}/notice/noticeList";
+						}
+					});
+		    	}
+			}
+		});
+	}
+	function query(value){
+		$("input[name='status']").val(value);
+		$("#searchForm").submit();
+	}
+</script>
+</@common.html>

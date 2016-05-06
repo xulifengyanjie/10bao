@@ -1,0 +1,109 @@
+<#import "common/common.html" as common />
+<@common.html title="角色修改">
+  <link rel="stylesheet" href="${request.contextPath}/static/zTree/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <script type="text/javascript" src="${request.contextPath}/static/zTree/js/jquery.ztree.core.js"></script>
+  <script type="text/javascript" src="${request.contextPath}/static/zTree/js/jquery.ztree.excheck.js"></script>
+  <SCRIPT LANGUAGE="JavaScript">
+   	var setting = {
+			check: {
+				enable: true
+			},
+			data: {
+				simpleData: {
+					enable: true
+				}
+			},
+			callback: {
+				onCheck: onCheck
+			}
+		};
+		function onCheck(e, treeId, treeNode) {
+			var zTree = $.fn.zTree.getZTreeObj("tree"),
+			nodes = zTree.getCheckedNodes(true),
+			v = "";
+			for (var i=0, l=nodes.length; i<l; i++) {
+				v += nodes[i].id + ",";
+			}
+			if (v.length > 0 ) v = v.substring(0, v.length-1);
+			$("input[name='permissionIds']").val(v);
+		}
+		$(document).ready(function(){
+			$.fn.zTree.init($("#tree"), setting, ${permissionTree});
+		});
+  </SCRIPT>
+  <div class="right">
+  		<form id="editForm" action="${request.contextPath}/role/doEdit" method="post">
+  		<div class="search_box">
+        	<ul>
+            	<li>
+                	<font>角色名称</font>
+                	<input type="hidden" class="input_txt" name="id" value="${item.id}"/>
+                    <input type="text" class="input_txt" name="roleName" value="${item.roleName}"/>
+                    <input type="hidden" class="input_txt" name="permissionIds" value="${permissionIds}"/>
+                </li>
+            </ul>
+            <div class="clear"></div>
+        </div>
+        <div>
+			  权限列表<ul id="tree" class="ztree"></ul>
+		</div>
+		<div class="search_box">
+        	<ul>
+                <li>
+                	<div class="search_btn">
+                    	<a href="javascript:;" onclick="ajaxEdit();">
+                        	保存
+                        </a>
+                    </div>
+                </li>
+                <li>
+                	<div class="search_btn">
+                    	<a href="javascript:history.go(-1);">
+                        	取消
+                        </a>
+                    </div>
+                </li>
+            </ul>
+            <div class="clear"></div>
+        </div>
+         </form>
+</div>
+<script type="text/javascript">
+	function edit(){
+		$("#editForm").submit();
+	}
+	function ajaxEdit(){
+		var ajaxCallUrl = $("#editForm").attr("action");
+		$.ajax({
+			cache: true,
+			type: "POST",
+			url:ajaxCallUrl,
+			data:$('#editForm').serialize(),
+			async: false,
+		    error: function(request) {
+		        swal("角色修改失败！", "" ,"error");
+		    },
+		    success: function(data) {
+		    	if(data.msg){
+		    		swal(data.msg, "" ,"error");
+		    	}else{
+		    		swal({   
+		    			title: "角色修改成功！",   
+						text: "",   
+						type: "success",   
+						showCancelButton: true,   
+						confirmButtonText: "确定",   
+						closeOnConfirm: false,
+						showCancelButton: false
+					}, 
+					function(isConfirm){
+						if (isConfirm){
+							window.location.href = "${request.contextPath}/role/list";
+						}
+					});
+		    	}
+		    }
+		});
+	}
+</script>
+</@common.html>

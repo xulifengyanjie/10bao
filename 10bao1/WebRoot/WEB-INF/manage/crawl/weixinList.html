@@ -1,0 +1,202 @@
+<#import "common/common.html" as common />
+<@common.html title="微信" menucode="1099">
+<script type="text/javascript" language="javascript" src="${request.contextPath}/static/main/js/echarts-plain-map.js"></script>
+<script type="text/javascript" language="javascript" src="${request.contextPath}/static/main/js/macarons.js"></script>
+<div class="right">
+	   <div class="search_box">
+	   	<form name="searchForm" id="queryWeixin" action="${request.contextPath}/dataCollection/weixinDataList" method="post">
+        	<ul>
+            	<li>
+                	<font>关键词:</font>
+                    <input type="text" name="keyword" class="input_txt" value="${keyword}"/>
+                </li>
+                <li>
+                	<div class="search_btn">
+                    	<a href="javascript:;" onclick="query();">
+                        	搜索<i></i>
+                        </a>
+                    </div>
+                </li>
+            </ul>
+			</form>
+            <div class="clear"></div>
+        </div>
+		
+        <div class="right_border">
+        	<div class="right_title_bg">
+            	<div class="right_title">查询列表</div>
+                <div class="right_btn_bg">
+                	<a href="${request.contextPath}/dataCollection/addSelect?type=weixin" >新增</a>&nbsp;
+                	<a href="javascript:void(0);" onclick="dels();">删除</a>	
+                </div>
+            </div>
+            <div class="clear"></div>
+            <table>
+            	<tr>
+            	    <th class="b5"><input type="checkbox"  id="checkAll"/></th>
+            	    <th class="b10">排序</th>
+                	<th class="b20">采集源</th>
+                    <th class="b10">采集频率</th>
+                    <th class="b10">采集时间</th>
+                    <th class="b10">微信公众号</th>
+                    <th class="b10">操作</th>
+                </tr>
+                <#if page && page.list>
+                	<#list page.list as crawl>
+		                <tr id="topicSelection_${crawl.id}_top">
+		                    <td class="b5">
+                    			<input type="checkbox"  name="checkbox" id="${crawl.id}"/>
+                    		</td>
+		                    <td class="b10">${crawl_index + 1}</td>
+		                    <td class="b20">${crawl.collectionsource}</td>
+		                    <td class="b10">${crawl.collectacquisition}</td>
+		                    <td class="b10">${crawl.collecttime}</td>
+		                    <td class="b10">${crawl.wechataccount}</td>
+		                    <td class="b10">
+		                    	<a href="${request.contextPath}/dataCollection/doDataDetail/${crawl.id}">修改</a>&nbsp;|&nbsp;
+		                    	<a href="javascript:void(0)" onclick="editStatus('${crawl.id}')">
+		                    	        <#if crawl.status==null>打开</#if>
+				                    	<#if crawl.status=='open'>打开</#if>
+				                    	<#if crawl.status=='close'>关闭</#if>
+		                    	</a>&nbsp;|&nbsp;
+		                    </td>
+                		</tr>
+	                </#list>
+                </#if>	
+            </table>
+            <div class="clear"></div>
+             <div class="page_box">
+            	<div class="pagging">
+                    <#if page.hasPreviousPage>
+					      <a href="?pageNum=${page.prePage}" style=" margin-right:27px;">&lt;上页</a>
+				    </#if>
+				    <#list page.navigatepageNums as num>
+				    	<#if num == page.pageNum>
+				    		<a href="javascript:void(0)" class="cur">${num}</a>
+				    	<#else>
+				    		<a href="?pageNum=${num}">${num}</a>
+				    	</#if>
+				    </#list>
+				    <#if page.hasNextPage>
+					    <a href="?pageNum=${page.nextPage}" style="margin-left:27px;">下页&gt;</a>
+				    </#if>
+                    <span>跳转</span>
+                    <input type="text" class="input_page" />
+                    <span class="span2">页</span>
+                </div>
+            </div>
+        </div>
+</div>
+
+<script type="text/javascript">
+function dels(){
+	var ids = [];
+	$('input[name="checkbox"]:checked').each(function() {
+		ids.push(parseInt($(this).attr("id")));
+	});
+	if(ids.length == 0){
+		swal("请选择删除的记录!")
+	}else{
+		swal({   title: "确定要删除微信吗?",   
+			text: "",   
+			type: "warning",   
+			showCancelButton: true,   
+			confirmButtonColor: "#DD6B55",   
+			confirmButtonText: "确定",   
+			cancelButtonText: "取消",   
+			closeOnConfirm: false   
+		}, 
+		function(isConfirm){
+			if (isConfirm){
+				deleteOper(ids);
+			}
+		});
+	}
+	return false;
+}
+function deleteOper(ids){
+	var url = "${request.contextPath}/dataCollection/dels";
+	$.ajax({
+		type:"POST" ,
+		url:url,
+		cache: false,
+		data : {ids:ids},
+		dataType:"json",
+		error: function(request) {
+	        swal("微信删除失败！", "" ,"error");
+	    },
+		success: function(data){
+			if(data.msg){
+	    		swal(data.msg, "" ,"error");
+	    	}else{
+	    		swal({   title: "微信删除成功！",   
+					text: "",   
+					type: "success",   
+					showCancelButton: true,   
+					confirmButtonText: "确定",   
+					closeOnConfirm: false,
+					showCancelButton: false
+				}, 
+				function(isConfirm){
+					if (isConfirm){
+						window.location.href = "${request.contextPath}/dataCollection/weixinDataList";
+					}
+				});
+	    	}
+		}
+	});
+}
+   function query(){
+		$("#queryWeixin").submit();
+	}
+   function editStatus(id){
+		swal({   title: "确定要修改吗?",   
+			text: "",   
+			type: "warning",   
+			showCancelButton: true,   
+			confirmButtonColor: "#DD6B55",   
+			confirmButtonText: "确定",   
+			cancelButtonText: "取消",   
+			closeOnConfirm: false   
+		}, 
+		function(isConfirm){
+			if (isConfirm){
+				updateStatus(id);
+			}
+		});
+		return false;
+	}
+	function updateStatus(id){
+		var url = "${request.contextPath}/dataCollection/editStatus";
+		$.ajax({
+			type:"POST" ,
+			url:url,
+			cache: false,
+			data : {id:id},
+			dataType:"json",
+			error: function(request) {
+		        swal("修改失败！", "" ,"error");
+		    },
+			success: function(data){
+				if(data.msg){
+		    		swal(data.msg, "" ,"error");
+		    	}else{
+		    		swal({   title: "操作已生效",   
+						text: "",   
+						type: "success",   
+						showCancelButton: true,   
+						confirmButtonText: "确定",   
+						closeOnConfirm: false,
+						showCancelButton: false
+					}, 
+					function(isConfirm){
+						if (isConfirm){
+							window.location.href = "${request.contextPath}/dataCollection/weixinDataList";
+						}
+					});
+		    	}
+			}
+		});
+	}
+</script>
+</@common.html>

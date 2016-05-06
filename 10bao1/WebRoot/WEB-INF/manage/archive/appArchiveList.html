@@ -1,0 +1,75 @@
+<#import "common/common.html" as common />
+<@common.html title="公文管理" menucode="0111">
+<script type="text/javascript" language="javascript" src="${request.contextPath}/static/main/js/macarons.js"></script>
+ <div class="weibo_tab_bg">
+    	<div class="weibo_tab">
+    	    <a href="${request.contextPath}/archive/archiveList"><span>公文登记</span></a>
+    	    <a href="${request.contextPath}/archive/appArchiveList"><span class="cur" >公文审批</span></a>
+    	    <a href="${request.contextPath}/archive/pubArchiveList"><span>发文登记簿</span></a>
+        </div>
+        <div class="clear"></div>
+    </div>
+
+<div class="right">
+        <div class="right_border">
+        	<div class="right_title_bg">
+            	<div class="right_title">查询列表</div>
+                <div class="right_btn_bg">
+                	<a href="${request.contextPath}/archive/add">添加</a>	
+                </div>
+            </div>
+            <div class="clear"></div>
+            <table>
+            	<tr>
+                    <th class="b40">标题</th>
+                    <th class="b10">拟稿人</th>
+                    <th class="b10">状态</th>
+                    <th class="b20">时间</th>
+                    <th class="b10">最后处理人</th>
+                    <th class="b20">操作</th>
+                </tr>
+                <#if page && page.list>
+                	<#list page.list as archive>
+		                <tr id="archive_${archive.id}_top">
+		                    <td class="b40"><a href="${request.contextPath}/archive/archiveDetail/${archive.id}">${archive.title}</a></td>
+		                    <td class="b10">${archive.addUserId}</td>
+		                    <td class="b10">
+								<#if archive.status == "submit">已提交</#if>
+							</td>
+		                    <td class="b20">${archive.addTime}</td>
+		                    <td class="b10">${archive.approvalUserId}</td>
+		                    <td class="b20">
+		                    	<a href="${request.contextPath}/archive/shenpiArchive/${archive.id}">审批</a>
+		                    </td>
+                		</tr>
+	                </#list>
+                </#if>	
+            </table>
+            <div class="clear"></div>
+             <div class="page_box">
+            	<div class="pagging">
+                    <#if page.hasPreviousPage>
+					      <a href="?pageNum=${page.prePage}" style=" margin-right:27px;">&lt;上页</a>
+				    </#if>
+				    <#list page.navigatepageNums as num>
+				    	<#if num == page.pageNum>
+				    		<a href="javascript:void(0)" class="cur">${num}</a>
+				    	<#else>
+				    		<a href="?pageNum=${num}">${num}</a>
+				    	</#if>
+				    </#list>
+				    <#if page.hasNextPage>
+					    <a href="?pageNum=${page.nextPage}" style="margin-left:27px;">下页&gt;</a>
+				    </#if>
+                    <span>跳转</span>
+                    <input type="text" class="input_page" />
+                    <span class="span2">页</span>
+                </div>
+            </div>
+        </div>
+</div>
+
+<script type="text/javascript">
+
+</script>
+</@common.html>

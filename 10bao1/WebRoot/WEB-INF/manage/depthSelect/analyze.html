@@ -1,0 +1,224 @@
+<#import "common/common.html" as common />
+<@common.html title="选题深度分析" menucode="0101">
+ <link rel="stylesheet" href="${request.contextPath}/static/zTree/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <script type="text/javascript" src="${request.contextPath}/static/zTree/js/jquery.ztree.core.js"></script>
+  <script type="text/javascript" src="${request.contextPath}/static/zTree/js/jquery.ztree.excheck.js"></script>
+  <SCRIPT LANGUAGE="JavaScript">
+  	var setting = {
+			view: {
+				dblClickExpand: false
+			},
+			data: {
+				simpleData: {
+					enable: true
+				}
+			},
+			callback: {
+				onClick: onClick
+			}
+		};
+
+		/* function beforeClick(treeId, treeNode) {
+			var check = (treeNode && !treeNode.isParent);
+			//if (!check) alert("只能选择城市...");
+			return check;
+		} */
+		
+		function onClick(e, treeId, treeNode) {
+			if (treeNode) {
+	            $("#citySel").attr("value",treeNode.name);
+	            $("input[name='departmentId']").val(treeNode.id);
+	            hideMenu();
+	        }
+		}
+
+		function showMenu() {
+			var cityObj = $("#citySel");
+			var cityOffset = $("#citySel").offset();
+			$("#menuContent").css({left:cityOffset.left + "px", top:cityOffset.top + cityObj.outerHeight() + "px"}).slideDown("fast");
+
+			$("body").bind("mousedown", onBodyDown);
+		}
+		function hideMenu() {
+			$("#menuContent").fadeOut("fast");
+			$("body").unbind("mousedown", onBodyDown);
+		}
+		function onBodyDown(event) {
+			if (!(event.target.id == "menuBtn" || event.target.id == "menuContent" || $(event.target).parents("#menuContent").length>0)) {
+				hideMenu();
+			}
+		}
+
+		$(document).ready(function(){
+			$.fn.zTree.init($("#treeDemo"), setting, ${departmentTree});
+		});
+  </SCRIPT>
+<div class="right">
+		<form id="searchForm" action="${request.contextPath}/person/analyze" method="post">
+  		<div class="search_box">
+        	<ul>
+                <li>
+                	<font>姓名:</font>
+                    <input type="text" class="input_txt" name="keyword" value="${keyword}"/>
+                </li>
+                <li>
+	           		<font>部门:</font>
+	                <div class="select_bg">
+                        <input id="citySel" type="text" readonly class="input_txt" />
+						<input type="hidden" class="input_txt" name="departmentId" value="0"/>
+	                    <div class="select_title" style="width:128px;"><i id="menuBtn" onclick="showMenu(); return false;"></i></div>
+                    </div>
+                </li>
+                <li>
+                	<div class="search_btn">
+                    	<a href="javascript:;" onclick="query();">
+                        	搜索<i></i>
+                        </a>
+                    </div>
+                </li>
+            </ul>
+            <div class="clear"></div>
+        </div>
+    	</form>
+        
+        <div class="right_border">
+        	<div class="right_title_bg">
+            	<div class="right_title"><a href="javascript:;">查询</a>列表</div>
+            </div>
+            <div class="clear"></div>
+            <table>
+            	<tr>
+                	<th class="b5">序号</th>
+                	<th class="b5">指数</th>
+                	<th class="b20">标题</th>
+                    <th class="b10">所属类别</th>
+                    <th class="b10">线索来源</th>
+                    <th class="b10">选题分析</th>
+                    <th class="b10">详细信息</th>
+                </tr>
+                <tr>
+                    <td class="b5">1</td>
+                    <td class="b5">5.9</td>
+                    <td class="b20">思聪送员工法拉利</td>
+                    <td class="b10">金融</td>
+                    <td class="b10">门户</td>
+                    <td class="b10"><a href="http://china.ynet.com/3.1/1605/04/11259341.html">查询</a></td>
+                    <td class="b10"><a href="javascript:;">深度检索</a></td>
+              	</tr>
+                <tr>
+                    <td class="b5">2</td>
+                    <td class="b5">5.8</td>
+                    <td class="b20">继母骗三孩子喝农药 砍伤丈夫不解恨拿孩子下手</td>
+                    <td class="b10">社会</td>
+                    <td class="b10">门户</td>
+                    <td class="b10"><a href="http://www.sxdaily.com.cn/n/2016/0504/c322-5874242-3.html">查询</a></td>
+                    <td class="b10"><a href="javascript:;">深度检索</a></td>
+              	</tr>
+                <tr>
+                    <td class="b5">3</td>
+                    <td class="b5">5.7</td>
+                    <td class="b20">孙芸芸父亲破产 带小32岁嫩妻开豪车住豪宅</td>
+                    <td class="b10">金融</td>
+                    <td class="b10">门户</td>
+                    <td class="b10"><a href="http://china.ynet.com/3.1/1605/03/11258453.html">查询</a></td>
+                    <td class="b10"><a href="javascript:;">深度检索</a></td>
+              	</tr>
+                <tr>
+                    <td class="b5">4</td>
+                    <td class="b5">5.6</td>
+                    <td class="b20">港姐参加真人秀被打成猪头 宣布退出娱乐圈</td>
+                    <td class="b10">娱乐</td>
+                    <td class="b10">门户</td>
+                    <td class="b10"><a href="http://china.ynet.com/3.1/1605/03/11257079.html">查询</a></td>
+                    <td class="b10"><a href="javascript:;">深度检索</a></td>
+              	</tr>
+                <tr>
+                    <td class="b5">5</td>
+                    <td class="b5">5.5</td>
+                    <td class="b20">超女百强亮相</td>
+                    <td class="b10">娱乐</td>
+                    <td class="b10">微博</td>
+                    <td class="b10"><a href="http://weibo.com/1746580461/DtERQFh2W?c=spr_qdhz_bd_baidusmt_weibo_s">查询</a></td>
+                    <td class="b10"><a href="javascript:;">深度检索</a></td>
+              	</tr>
+                <tr>
+                    <td class="b5">6</td>
+                    <td class="b5">5.4</td>
+                    <td class="b20">乌龟致车祸被逮捕 网友:龟丞相摊上事了</td>
+                    <td class="b10">社会</td>
+                    <td class="b10">门户</td>
+                    <td class="b10"><a href="http://china.ynet.com/3.1/1605/03/11259121.html">查询</a></td>
+                    <td class="b10"><a href="javascript:;">深度检索</a></td>
+              	</tr>
+                <tr>
+                    <td class="b5">7</td>
+                    <td class="b5">5.3</td>
+                    <td class="b20">7名联防队员拆违中殴打民众 当地政府致歉</td>
+                    <td class="b10">法制</td>
+                    <td class="b10">门户</td>
+                    <td class="b10"><a href="http://cn.ynet.com/3.1/1605/01/11251631.html">查询</a></td>
+                    <td class="b10"><a href="javascript:;">深度检索</a></td>
+              	</tr>
+                <tr>
+                    <td class="b5">8</td>
+                    <td class="b5">5.2</td>
+                    <td class="b20">液化气灌装点爆炸 消防员抢出百余液化罐</td>
+                    <td class="b10">社会</td>
+                    <td class="b10">门户</td>
+                    <td class="b10"><a href="http://china.ynet.com/3.1/1605/04/11260012.html">查询</a></td>
+                    <td class="b10"><a href="javascript:;">深度检索</a></td>
+              	</tr>
+                <tr>
+                    <td class="b5">9</td>
+                    <td class="b5">5.1</td>
+                    <td class="b20">继母骗三孩子喝农药 继母究竟为什么如此恶毒</td>
+                    <td class="b10">社会</td>
+                    <td class="b10">门户</td>
+                    <td class="b10"><a href="http://finance.ifeng.com/a/20160504/14361319_0.shtml">查询</a></td>
+                    <td class="b10"><a href="javascript:;">深度检索</a></td>
+              	</tr>
+                <tr>
+                    <td class="b5">10</td>
+                    <td class="b5">5.1</td>
+                    <td class="b20">高山院士逝世</td>
+                    <td class="b10">科学</td>
+                    <td class="b10">微博</td>
+                    <td class="b10"><a href="http://weibo.com/1729014640/DtW552fXm?c=spr_qdhz_bd_baidusmt_weibo_s">查询</a></td>
+                    <td class="b10"><a href="javascript:;">深度检索</a></td>
+              	</tr>
+            </table>
+            <div class="clear"></div>
+             <div class="page_box">
+            	<div class="pagging">
+                    <#if page.hasPreviousPage>
+					      <a href="?pageNum=${page.prePage}" style=" margin-right:27px;">&lt;上页</a>
+				    </#if>
+				    <#list page.navigatepageNums as num>
+				    	<#if num == page.pageNum>
+				    		<a href="javascript:void(0)" class="cur">${num}</a>
+				    	<#else>
+				    		<a href="?pageNum=${num}">${num}</a>
+				    	</#if>
+				    </#list>
+				    <#if page.hasNextPage>
+					    <a href="?pageNum=${page.nextPage}" style="margin-left:27px;">下页&gt;</a>
+				    </#if>
+                    <span>跳转</span>
+                    <input type="text" class="input_page" />
+                    <span class="span2">页</span>
+                </div>
+            </div>
+        </div>
+</div>
+<div id="menuContent" class="menuContent" style="display:none; position: absolute;">
+	<ul id="treeDemo" class="ztree" style="margin-top:-60px; width:129px;border:1px solid #c6c6c6;overflow-y:scroll;overflow-x:auto;"></ul>
+</div>
+<script type="text/javascript">
+	function query(value){
+		$("#searchForm").submit();
+	}
+		function selectType(value){
+		$("input[name='type']").val(value);
+	}
+</script>
+</@common.html>

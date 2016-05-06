@@ -1,0 +1,173 @@
+<#import "common/common.html" as common />
+<@common.html title="部门管理">
+  <div class="right">
+  		<div class="search_box">
+  			<form id="queryForm" action="${request.contextPath}/department/list" method="post">
+        	<ul>
+            	<li>
+                	<font>部门名称</font>
+                    <input type="text" class="input_txt" name="departmentName" value="${item.departmentName}"/>
+                </li>
+                <li>
+                	<div class="search_btn">
+                    	<a href="javascript:;" onclick="query();">
+                        	查询<i></i>
+                        </a>
+                    </div>
+                </li>
+            </ul>
+            </form>
+            <div class="clear"></div>
+        </div>
+        <div class="right_border">
+        	<div class="right_title_bg">
+            	<div class="right_title">查询列表</div>
+                <div class="right_btn_bg">
+                	<a href="${request.contextPath}/department/add">添加</a>&nbsp;|&nbsp;
+                	<a href="javascript:void(0);" onclick="dels();">删除</a>
+                </div>
+            </div>
+            <div class="clear"></div>
+            <table>
+            	<tr>
+            		<th class="b5"><input type="checkbox"  id="checkAll"/></th>
+                	<th>序号</th>
+                    <th>部门名称</th>
+                    <th>上级部门</th>
+                    <th>操作</th>
+                </tr>
+                <#if page && page.list>
+                	<#list page.list as department>
+		                <tr>
+		                	<td class="b5">
+                    			<input type="checkbox"  name="checkbox" id="${department.id}"/>
+                    		</td>
+		                    <td class="b10">${department.id}</td>
+		                    <td class="b10">${department.departmentName}</td>
+		                    <td class="b10">${department.parentId}</td>
+		                    <td class="b10">
+		                    	<a href="${request.contextPath}/department/edit/${department.id}">编辑</a>&nbsp;/&nbsp;
+		                    	<!--  <a href="${request.contextPath}/department/stafflist?departmentId=${department.id}" >查看员工列表</a>-->
+		                    	 <a href="${request.contextPath}/department/staff/${department.id}" >查看员工列表</a>
+		                    </td>
+                		</tr>
+	                </#list>
+                </#if>	
+            </table>
+            <div class="clear"></div>
+            <#if page>
+             <div class="page_box">
+            	<div class="pagging">
+            		<#if page.total &gt; 0>
+	                    <#if page.hasPreviousPage>
+						      <a href="javascript:void(0)" onclick="showPage(${page.prePage});" style=" margin-right:27px;">&lt;上页</a>
+					    </#if>
+					    <#list page.navigatepageNums as num>
+					    	<#if num == page.pageNum>
+					    		<a href="javascript:void(0)" class="cur">${num}</a>
+					    	<#else>
+					    		<a href="javascript:void(0)" onclick="showPage(${num});">${num}</a>
+					    	</#if>
+					    </#list>
+					    <#if page.hasNextPage>
+						    <a href="javascript:void(0)" onclick="showPage(${page.nextPage});" style="margin-left:27px;">下页&gt;</a>
+					    </#if>
+	                    <span>跳转</span>
+	                    <input type="text" class="input_page" />
+	                    <span class="span2">页</span>
+                    </#if>
+                </div>
+            </div>
+            </#if>
+        </div>
+</div>
+<script type="text/javascript">
+	function showPage(pageNum){
+		$("#queryForm").attr("action","${request.contextPath}/department/list?pageNum="+pageNum);
+		query();
+	}
+
+/* 	function dels(){
+		var ids = [];
+		$('input[name="checkbox"]:checked').each(function() {
+			ids.push(parseInt($(this).attr("id")));
+		});
+		if(ids.length == 0){
+			alert("请选择删除的记录");
+		}
+		var url = "${request.contextPath}/department/dels";
+		$.ajax({
+			type:"POST" ,
+			url:url,
+			cache: false,
+			data : {ids:ids},
+			dataType:"json",
+			success: function(result){
+				window.location.href = "${request.contextPath}/department/list";
+			}
+		});
+	} */
+	
+	function query(){
+		$("#queryForm").submit();
+	}
+	
+	function dels(){
+		var ids = [];
+		$('input[name="checkbox"]:checked').each(function() {
+			ids.push(parseInt($(this).attr("id")));
+		});
+		if(ids.length == 0){
+			swal("请选择删除的记录!")
+		}else{
+			swal({   title: "确定要删除部门吗?",   
+				text: "",   
+				type: "warning",   
+				showCancelButton: true,   
+				confirmButtonColor: "#DD6B55",   
+				confirmButtonText: "确定",   
+				cancelButtonText: "取消",   
+				closeOnConfirm: false   
+			}, 
+			function(isConfirm){
+				if (isConfirm){
+					deleteOper(ids);
+				}
+			});
+		}
+		return false;
+	}
+	function deleteOper(ids){
+		var url = "${request.contextPath}/department/dels";
+		$.ajax({
+			type:"POST" ,
+			url:url,
+			cache: false,
+			data : {ids:ids},
+			dataType:"json",
+			error: function(request) {
+		        swal("删除部门失败！", "" ,"error");
+		    },
+			success: function(data){
+				if(data.msg){
+		    		swal(data.msg, "" ,"error");
+		    	}else{
+		    		swal({   title: "删除部门成功！",   
+						text: "",   
+						type: "success",   
+						showCancelButton: true,   
+						confirmButtonText: "确定",   
+						closeOnConfirm: false,
+						showCancelButton: false
+					}, 
+					function(isConfirm){
+						if (isConfirm){
+							window.location.href = "${request.contextPath}/department/list";
+						}
+					});
+		    	}
+			}
+		});
+	}
+</script>
+</@common.html>

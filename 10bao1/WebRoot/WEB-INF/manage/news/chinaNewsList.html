@@ -1,0 +1,419 @@
+<#import "common/common.html" as common />
+<@common.html title="门户媒体">
+<script type="text/javascript" language="javascript" src="${request.contextPath}/static/main/js/echarts-plain-map.js"></script>
+<script type="text/javascript" language="javascript" src="${request.contextPath}/static/main/js/macarons.js"></script>
+<script type="text/javascript" language="javascript" src="${request.contextPath}/static/my97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" language="javascript" src="${request.contextPath}/static/HighCharts/js/highcharts.js"></script>
+<div class="right">
+    	<form name="searchForm">
+   		<div class="search_input_box">
+        	<input type="text" class="search_input" name="searchWord" id="searchWord" value="${searchWord}"/>
+        	<input type="hidden" id="date" value="${date}"/>
+        	<input type="hidden" id="timestamp" value="${timestamp}"/>
+            <div class="search_input_btn">
+            	<a href="javascript:;" onclick="searchNews(${timestamp})">搜索<i></i></a>
+            </div>
+             <div class="content_count_btn fourm_fixed">
+               	<a href="javascript:;">
+                   	报道内容统计<i></i>
+                </a>
+             </div>
+        </div>
+        </form>
+        <div class="right_border">
+        	<div class="right_title_bg">
+            	<div class="data_box" onclick="clickClander()">
+                	<font><font>${date?date("yyyyMMdd")}</font></font>
+                    <i></i>
+                </div>
+                <span class="date_title" id="demospan" style="display:none"></span>
+                <div class="time_list">
+       				<#if crawlTimeList>
+               			<#list crawlTimeList as crawlTime>
+               				<span onclick="clickDateTime(${crawlTime})" <#if timestamp == crawlTime >class="cur"</#if>>
+       						 	${crawlTime?substring(8,10)}:${crawlTime?substring(10,12)}
+       						 </span>
+       				 	</#list>
+               		</#if>
+                </div>
+            </div>
+            <div class="clear"></div>
+            <table>
+            	<tr>
+                	<th class="b10">排名</th>
+                    <th class="b10">新闻指数</th>
+                    <th class="b40">新闻标题</th>
+                    <th class="b10">新闻来源</th>
+                    <th class="b20">发布日期</th>
+                    <th class="b10">操作</th>
+                </tr>
+                <#if page && page.list>
+                	<#list page.list as news>
+		                <tr id="news_${news.id?c}_top">
+		                    <td class="b10">${news.sort}</td>
+		                    <td class="b10">${news.newsIndex}</td>
+		                    <td class="b40"><a href="${news.newsLink}" target="_blank">${news.title}</a></td>
+		                    <td class="b10">${news.publishMedia}</td>
+		                    <td class="b20">${news.publishTime}</td>
+		                    <td class="b10">
+		                    	<a id="btn_${news.id?c}" href="javascript:void(0);" onclick="unfold('${news.id?c}','${news.newsNum}')">展开</a>&nbsp;|&nbsp;
+		                    	<a name="trend" href="javascript:void(0);" onclick="trend('${catalog.catalogCode}','${news.newsNum}','${news.title}')">趋势</a>&nbsp;&nbsp;|&nbsp;
+		                    	<a name="source" href="javascript:void(0);"  onclick="source('${catalog.catalogCode}','${news.newsNum}')">溯源</a>
+		                    </td>
+                		</tr>
+	                </#list>
+                </#if>	
+            </table>
+            <div class="clear"></div>
+            <#if page>
+             <div class="page_box">
+            	<div class="pagging">
+                    <#if page.hasPreviousPage>
+					      <a href="?pageNum=${page.prePage}&date=${date}&timestamp=${timestamp}&searchWord=${searchWord}" style=" margin-right:27px;">&lt;上页</a>
+				    </#if>
+				    <#list page.navigatepageNums as num>
+				    	<#if num == page.pageNum>
+				    		<a href="javascript:void(0)" class="cur">${num}</a>
+				    	<#else>
+				    		<a href="?pageNum=${num}&date=${date}&timestamp=${timestamp}&searchWord=${searchWord}">${num}</a>
+				    	</#if>
+				    </#list>
+				    <#if page.hasNextPage>
+					    <a href="?pageNum=${page.nextPage}&date=${date}&timestamp=${timestamp}&searchWord=${searchWord}" style="margin-left:27px;">下页&gt;</a>
+				    </#if>
+                    <span>跳转</span>
+                    <input type="text" class="input_page" />
+                    <span class="span2">页</span>
+                </div>
+            </div>
+            </#if>
+        </div>
+</div>
+
+<!--弹出层-->
+<div class="pop_bg" style="display:none;">
+	<div id="sum_content" class="pop_content" style="display:none; margin-left:-350px; marign-top:270px;">
+    	<h2>
+        	<font>报道内容统计</font>
+            <a name="sum_close" href="javascript:;"></a>
+        </h2>
+        <div class="pop_chart2">
+            <div class="pop_chart_con">
+            	<div id="newsCount" style="width:750px;height:400px;"></div>
+            </div>
+            <div class="clear"></div>
+            <div class="pop_fot_btn">
+            	<span>
+                	<a name="sum_close" href="javascript:;">关闭</a>
+                </span>
+            </div>
+        </div>
+    </div>
+    
+    <!--新闻溯源-->
+    <div id="source_content" class="pop_content" style="display:none;">
+    	<h2>
+        	<font>新闻溯源</font>
+            <a name="source_close" href="javascript:;"></a>
+        </h2>
+        <div class="pop_info">
+        	<ul id="source_load">
+                <li>
+                	<img src="/static/topic/img/loading.jpg" alt="" />
+                </li>
+            </ul>
+            <div class="clear"></div>
+            <div class="pop_fot_btn">
+            	<span>
+                	<a name="source_close" href="javascript:;">关闭</a>
+                </span>
+            </div>
+        </div>
+    </div>
+    <!--新闻趋势-->
+    <div id="trend_content" class="pop_content" style="display:none; margin-left:-300px">
+    	<h2>
+        	<font>新闻趋势</font>
+            <a name="trend_close" href="javascript:;"></a>
+        </h2>
+        <div class="pop_chart">
+        	<h3 id="trend_title">山东平邑改口承认村民在家中被烧死因强拆引发</h3>
+            <div class="pop_chart_con">
+            	<div id="newsTrend" style="width:560px;height:300px;"></div>
+            </div>
+            <div class="clear"></div>
+            <div class="pop_fot_btn">
+            	<span>
+                	<a name="trend_close" href="javascript:;">关闭</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+	$(function(){ 
+		var mChart = echarts.init(document.getElementById('newsCount'),e_macarons);
+	    mChart.showLoading({
+			text: "图表数据正在努力加载..."
+		});
+	    var options = {
+		    tooltip : {
+		        trigger: 'item',
+		        formatter: "{a} <br/>{b} : {c} ({d}%)"
+		    },
+		    legend: {
+		        left: 'left',
+		        data: []
+		    },
+		    series : [
+		        {
+		            name: '访问来源',
+		            type: 'pie',
+		            radius : '55%',
+		            center: ['50%', '60%'],
+		            data:[],
+		            itemStyle: {
+		                emphasis: {
+		                    shadowBlur: 10,
+		                    shadowOffsetX: 0,
+		                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+		                }
+		            }
+		        }
+		    ]
+		};
+		var url = "${request.contextPath}/news/count";
+		$.ajax({
+			type:"POST" ,
+			url:url,
+			cache: false,
+			dataType:"json",
+			success: function(result){
+				options.legend.data = result.yList;
+				options.series[0].data = result.xList;
+				mChart.hideLoading();
+				mChart.setOption(options);
+			}
+		});
+		}); 
+	function searchNews(timestamp){
+		clickDateTime(timestamp);
+	}
+	function clickClander(){
+		var search = $("#searchWord").val();
+		if(search == null || "" == search){
+			WdatePicker({el:'demospan',skin:'twoer',onpicked:function(dp){location.href='?date='+dp.cal.getDateStr('yyyyMMdd')}});
+		}else{
+			WdatePicker({el:'demospan',skin:'twoer',onpicked:function(dp){location.href='?date='+dp.cal.getDateStr('yyyyMMdd')+'&searchWord='+search}});
+		}
+	}
+	function clickDateTime(timestamp){
+		var date = $("#date").val();
+		var searchWord = $("#searchWord").val();
+		var url = "?date="+date+"&timestamp="+timestamp+"&searchWord="+searchWord;
+		if(searchWord == null || "" == searchWord){
+			url =  "?date="+date+"&timestamp="+timestamp;
+		}
+		window.location.href=url;
+	}
+
+	function unfold(newsId,newsNum){
+		var flag = $("#news_"+newsId);
+		var btn = $("#btn_"+newsId);
+		if(!flag.html()){
+			var url = "${request.contextPath}/news/${catalog.catalogCode}/"+newsNum;
+			$.ajax({
+				type:"POST",
+				url:url,
+				cache: false,
+				dataType:"json",
+				success: function(result){
+					if(result && result.news && result.news.length > 0){
+						var htmlStr = "<tr style='display:' id='news_"+ newsId +"'>";
+						htmlStr += "<td colspan='6'><div class='sub_table'><table>";
+						for(var i=0;i<result.news[0].length;i++){
+							var item = result.news[0][i];
+							if(i==result.length-1){
+								htmlStr += "<tr>";
+								htmlStr += "<td class='b10' style='border-bottom:0px;'></td>";
+								htmlStr += "<td class='b10' style='border-bottom:0px;'></td>";
+								htmlStr += "<td class='b40' style='border-bottom:0px;'><a href='"+item.url+"' target='_blank'>"+item.title+"</a></td>";
+								htmlStr += "<td class='b10' style='border-bottom:0px;'>"+item.collectSource+"</td>";
+								htmlStr += "<td class='b20' style='border-bottom:0px;'>"+item.publishTime+"</td>";
+								htmlStr += "<td class='b10' style='border-bottom:0px;'></td>";
+								htmlStr += "</tr>";
+							}else{
+								htmlStr += "<tr>";
+								htmlStr += "<td class='b10'></td>";
+								htmlStr += "<td class='b10'></td>";
+								htmlStr += "<td class='b40'><a href='"+item.url+"' target='_blank'>"+item.title+"</a></td>";
+								htmlStr += "<td class='b10'>"+item.collectSource+"</td>";
+								htmlStr += "<td class='b20'>"+item.publishTime+"</td>";
+								htmlStr += "<td class='b10'></td>";
+								htmlStr += "</tr>";
+							}
+						}
+						if(!flag.html()){
+							htmlStr += "</table></div></td></tr>";
+							$("#news_"+newsId+"_top").after(htmlStr);
+							btn.text("折叠");
+							btn.addClass("cur");
+						}
+					}
+				}
+			});
+		}
+		var trClass = flag.css("display");
+		if(trClass == "none"){
+			btn.text("折叠");
+			flag.attr("style","display:");
+			btn.addClass("cur");
+		}else{
+			btn.text("展开");
+			flag.attr("style","display:none");
+			btn.removeClass("cur");
+		}
+		return false;
+	}
+	
+	function trend(catalogName,newsNum,title){
+		/* var myChart = echarts.init(document.getElementById('newsTrend'),e_macarons);
+	    myChart.showLoading({
+			text: "图表数据正在努力加载..."
+		});
+	    var ops = {
+	        title : {
+	        x: 'center'
+	    },
+	    tooltip : {
+	        trigger: 'axis'
+	    },
+	    dataZoom : {
+	        show : true,
+	        realtime : true,
+	        start : 0,
+	        end : 100
+	    },
+	    xAxis : [
+	        {
+	            type : 'category',
+	            boundaryGap : false,
+	            axisLine: {onZero: false},
+	            data :[]
+	        }
+	    ],
+	    yAxis : [
+	        {
+	            name : '新闻指数',
+	            type : 'value',
+	        }
+	    ],
+	    series : [
+	        {
+	            name:'新闻指数',
+	            type:'line',
+	            itemStyle: {normal: {areaStyle: {type: 'default'}}},
+	            data:[]
+	        }
+	    ]
+	
+	    };
+		$("#trend_title").text(title);
+		var url = "${request.contextPath}/news/trend/" +newsNum;
+		$.ajax({
+			type:"POST" ,
+			url:url,
+			cache: false,
+			dataType:"json",
+			success: function(result){
+				ops.xAxis[0].data = result.xList;
+				ops.series[0].data = result.yList;
+				myChart.hideLoading();
+				myChart.setOption(ops);
+			}
+		}); */
+	    $("#trend_title").text(title);
+		var url = "${request.contextPath}/news/trend/" +newsNum;
+		$.ajax({
+			type:"POST" ,
+			url:url,
+			cache: false,
+			dataType:"json",
+			success: function(result){
+			    $('#newsTrend').highcharts({
+			        chart: {
+			            type: 'line'
+			        },
+			        title: {
+			            text: ''
+			        },
+			        xAxis: {
+			            categories: result.xList
+			        },
+			        yAxis: {
+			            title: {
+			                text: '新闻指数'
+			            }
+			        },
+			        tooltip: {
+			            enabled: false,
+			            formatter: function() {
+			                return '<b>'+ this.series.name +'</b><br/>'+this.x +': '+ this.y +'°C';
+			            }
+			        },
+			        plotOptions: {
+			            line: {
+			                dataLabels: {
+			                    enabled: true
+			                },
+			                enableMouseTracking: false
+			            }
+			        },
+			        series: [{
+			        	name:'门户媒体',
+			            data: result.yList
+			        }]
+			    });
+			}
+		});
+		$(".pop_bg").show();
+		$("#trend_content").show();
+	}
+	function source(catalogName,newsNum){
+		var loading = 	"<li>"
+	                	+"<img src='${request.contextPath}/static/main/images/loading.jpg' alt='' />"
+	                	+"</li>"
+	    $("#source_load").html(loading);
+		var url = "${request.contextPath}/news/source/" + newsNum ;
+		$.ajax({
+			type:"POST" ,
+			url:url,
+			cache: false,
+			dataType:"json",
+			success: function(result){
+				if(result){
+					var htmlStr =  "<li>"
+					                +	"<div class='pop_info_title'>新闻标题：</div>"
+					                +    "<div id='source_title' class='pop_info_con'><a href='javascript:;' target='_blank'></a></div>"
+					                +"</li>"
+					                +"<li>"
+					                +	"<div class='pop_info_title'>新闻来源：</div>"
+					                +    "<div id='source_website' class='pop_info_con'></div>"
+					                +"</li>"
+					                +"<li>"
+					                +	"<div class='pop_info_title'>发布时间：</div>"
+					                +    "<div id='source_update_date' class='pop_info_con'></div>"
+					                +"</li>" 
+					$("#source_load").html(htmlStr);
+        			$("#source_title a").text(result.title);
+        			$("#source_title a").attr("href",result.newsLink);
+        			$("#source_website").text(result.publishMedia);
+        			$("#source_update_date").text(result.publishTime);
+				}
+			}
+		});
+		$(".pop_bg").show();
+		$("#source_content").show();	
+	}
+</script>
+</@common.html>

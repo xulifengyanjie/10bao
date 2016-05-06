@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.twsm.newstopic.dao.CatalogMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.twsm.newstopic.model.Catalog" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="CATALOG_NAME" property="catalogName" jdbcType="VARCHAR" />
+    <result column="CATALOG_TYPE" property="catalogType" jdbcType="VARCHAR" />
+    <result column="DEPART_ID" property="departId" jdbcType="INTEGER" />
+    <result column="CRAWL_TIME" property="crawlTime" jdbcType="VARCHAR" />
+    <result column="CATALOG_CODE" property="catalogCode" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, CATALOG_NAME, CATALOG_TYPE, DEPART_ID, CRAWL_TIME, CATALOG_CODE
+  </sql>
+   <sql id="whereCondition">
+      <if test="crawlTime != null" >
+        AND CATALOG_NAME = #{catalogName,jdbcType=VARCHAR}
+      </if>
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from catalog
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from catalog
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.com.twsm.newstopic.model.Catalog"  keyProperty="id" useGeneratedKeys="true">
+    insert into catalog (CATALOG_NAME, CATALOG_TYPE, 
+      DEPART_ID, CRAWL_TIME, CATALOG_CODE
+      )
+    values (#{catalogName,jdbcType=VARCHAR}, #{catalogType,jdbcType=VARCHAR}, 
+      #{departId,jdbcType=INTEGER}, #{crawlTime,jdbcType=VARCHAR}, #{catalogCode,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.com.twsm.newstopic.model.Catalog" >
+    insert into catalog
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="catalogName != null" >
+        CATALOG_NAME,
+      </if>
+      <if test="catalogType != null" >
+        CATALOG_TYPE,
+      </if>
+      <if test="departId != null" >
+        DEPART_ID,
+      </if>
+      <if test="crawlTime != null" >
+        CRAWL_TIME,
+      </if>
+      <if test="catalogCode != null" >
+        CATALOG_CODE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="catalogName != null" >
+        #{catalogName,jdbcType=VARCHAR},
+      </if>
+      <if test="catalogType != null" >
+        #{catalogType,jdbcType=VARCHAR},
+      </if>
+      <if test="departId != null" >
+        #{departId,jdbcType=INTEGER},
+      </if>
+      <if test="crawlTime != null" >
+        #{crawlTime,jdbcType=VARCHAR},
+      </if>
+      <if test="catalogCode != null" >
+        #{catalogCode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.com.twsm.newstopic.model.Catalog" >
+    update catalog
+    <set >
+      <if test="catalogName != null" >
+        CATALOG_NAME = #{catalogName,jdbcType=VARCHAR},
+      </if>
+      <if test="catalogType != null" >
+        CATALOG_TYPE = #{catalogType,jdbcType=VARCHAR},
+      </if>
+      <if test="departId != null" >
+        DEPART_ID = #{departId,jdbcType=INTEGER},
+      </if>
+      <if test="crawlTime != null" >
+        CRAWL_TIME = #{crawlTime,jdbcType=VARCHAR},
+      </if>
+      <if test="catalogCode != null" >
+        CATALOG_CODE = #{catalogCode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.com.twsm.newstopic.model.Catalog" >
+    update catalog
+    set CATALOG_NAME = #{catalogName,jdbcType=VARCHAR},
+      CATALOG_TYPE = #{catalogType,jdbcType=VARCHAR},
+      DEPART_ID = #{departId,jdbcType=INTEGER},
+      CRAWL_TIME = #{crawlTime,jdbcType=VARCHAR},
+      CATALOG_CODE = #{catalogCode,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <select id="getByWhere" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select 
+    <include refid="Base_Column_List" />
+    from catalog
+    where 1=1 <include refid="whereCondition" />
+  </select>
+  
+  <select id="getByCatalogName" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from catalog
+    where CATALOG_NAME = #{catalogName,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="getByCatalogCode" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from catalog
+    where CATALOG_CODE = #{catalogCode,jdbcType=VARCHAR}
+  </select>
+</mapper>

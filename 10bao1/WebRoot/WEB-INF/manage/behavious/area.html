@@ -1,0 +1,96 @@
+<#import "common/common.html" as common />
+<@common.html title="热点新闻">
+<script type="text/javascript" language="javascript" src="${request.contextPath}/static/main/js/hot_word.js"></script>
+<script type="text/javascript" language="javascript" src="${request.contextPath}/static/main/js/ECharts/echarts.js"></script>
+    <div class="right">
+        <div class="clear"></div>
+        <div class="search_box">
+        	<ul>
+            	<li>
+                	<font>开始时间</font>
+                    <input type="text" class="input_txt" />
+                </li>
+                <li>
+                	<font>结束时间</font>
+                    <input type="text" class="input_txt" />
+                </li>
+                <li>
+                	<font>关健词</font>
+                    <input type="text" class="input_txt" />
+                </li>
+                <li>
+                	<div class="search_btn">
+                    	<a href="javascript:;">
+                        	搜索<i></i>
+                        </a>
+                    </div>
+                </li>
+            </ul>
+            <div class="clear"></div>
+        </div>
+    </div>
+<div class="index_content">
+	<div class="index_left">
+	    <div class="index_title">
+        	<i></i>个人选题分布情况
+        </div>
+        <div class="index_chart_box">
+        	<div id="individualTopics" style="height:470px; border:1px; solid #ccc; padding:10px;"></div>
+        </div>	
+	
+	</div>
+</div>
+<script type="text/javascript">
+	/**饼状图
+			*/
+			var monChangeChart1;
+			require.config({paths : {echarts : '${request.contextPath}/static/main/js/ECharts'}});	
+			require(['echarts','echarts/chart/pie'],function(ec){
+				//初始化echarts图表
+				monChangeChart1 = ec.init(document.getElementById('individualTopics'));
+				//定义图表option
+				var option = option = {  
+		                        title : {  
+				                    text: '个人选题分布情况 ',  
+				                    x:'center'  
+                },  
+                tooltip : {  
+                    trigger: 'item',  
+                    formatter: "{a} <br/>{b} : {c} ({d}%)"  
+                },  
+                legend: {  
+                    orient : 'vertical',  
+                    x : 'left',  
+                    data:['股市','理财','金融','贸易']  
+                },  
+                toolbox: {  
+                    show : true,  
+                    feature : {  
+                        mark : {show: true},  
+                        dataView : {show: true, readOnly: false},  
+                        restore : {show: true},  
+                        saveAsImage : {show: true}  
+                    }  
+                },  
+                calculable : true,  
+                series : [  
+                    {  
+                        type:'pie',  
+                        radius : '55%',  
+                        center: ['50%', '60%'],  
+                        data:[  
+                            {value:335, name:'股市'},  
+                            {value:310, name:'理财'},  
+                            {value:234, name:'金融'},  
+                            {value:135, name:'贸易'},  
+                        ]  
+                    }  
+                ]  
+            };  
+			                    
+				monChangeChart1.setOption(option);
+				/* myChart.hideLoading(); */
+				/* getChartData(); */
+			});
+</script>
+</@common.html>

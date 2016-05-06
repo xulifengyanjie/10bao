@@ -1,0 +1,54 @@
+<#import "common/common.html" as common />
+<@common.html title="定向关注">
+
+<div class="weibo">
+    	<div class="weibo_content">
+            <div class="weibo_display" id="weibo_display">
+            	<div class="weibo_item">
+                    <div class="right_border">
+                        <div class="right_title_bg">
+                            <div class="right_title">查询列表</div>
+                            
+                        </div>
+                        <div class="clear"></div>
+                        <table id="tab">
+                            <tr>
+                                <th class="b10">新闻标题</th>
+			                    <th class="b10">新闻来源</th>
+			                    <th class="b10">发表时间</th>
+                            </tr>
+                             <#if page && page.list>
+			                	<#list page.list as chinaNews>
+					                <tr id="promotion_${promotion.id}_top">
+					                    <td class="b10">${chinaNews["title"]}</td>
+					                    <td class="b10">${chinaNews["name"]}</td>
+					                    <td class="b10">${chinaNews["publishTime"]}</td>
+			                		</tr>
+				                </#list>
+                            </#if>	
+                        </table>
+			                        <div class="clear"></div>
+			            <#if page>
+			             <div class="page_box">
+			            	<div class="pagging">
+			                    <#if page.hasPreviousPage>
+								      <a href="?pageNum=${page.prePage}&date=${date}&timestamp=${timestamp}&type=${type}" style=" margin-right:27px;">&lt;上页</a>
+							    </#if>
+							    <#list page.navigatepageNums as num>
+							    	<#if num == page.pageNum>
+							    		<a href="javascript:void(0)" class="cur">${num}</a>
+							    	<#else>
+							    		<a href="?pageNum=${num}&date=${date}&timestamp=${timestamp}&type=${type}">${num}</a>
+							    	</#if>
+							    </#list>
+							    <#if page.hasNextPage>
+								    <a href="?pageNum=${page.nextPage}&date=${date}&timestamp=${timestamp}&type=${type}" style="margin-left:27px;">下页&gt;</a>
+							    </#if>
+			                    <span>跳转</span>
+			                    <input type="text" class="input_page" />
+			                    <span class="span2">页</span>
+			                </div>
+			            </div>
+			            </#if>
+			        </div>
+</@common.html>

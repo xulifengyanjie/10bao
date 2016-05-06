@@ -1,0 +1,107 @@
+<#import "common/common.html" as common />
+<@common.html title="公告详情" menucode="0104">
+<script type="text/javascript" language="javascript" src="${request.contextPath}/static/my97DatePicker/WdatePicker.js"></script>
+<div class="right">	
+	<div class="search_box">
+	<form id="editForm" action="${request.contextPath}/note/doEdit" class="form-horizontal" method="post">
+		<ul>
+        	<li>
+            	<font>标题：</font>
+                <input class="input_txt" type="text" name="title" value="${note.title}"/>
+                <input  type="hidden" name="id" value="${note.id}"/>
+                <input  type="hidden" name="status" value="${note.status}"/>
+                <input  type="hidden" name="addTime" value="${note.addTime}"/>
+            </li>
+            <li>
+            	<font>所属类别：</font>
+                <div class="select_bg">
+                	<input type="hidden" class="input_txt" name="type" value="work"/>
+                    <#if note.type == null>
+                    	<div class="select_title"><font>工作任务</font><i></i></div>
+                    </#if>
+                    <#if note.type == 'work'>
+                    	<div class="select_title"><font>工作任务</font><i></i></div>
+                    </#if>
+                    <#if note.type == 'remind'>
+                    	<div class="select_title"><font>日程提醒</font><i></i></div>
+                    </#if>
+                    <#if note.type == 'oneself'>
+                    	<div class="select_title"><font>个人备忘</font><i></i></div>
+                    </#if>
+                    <div class="select_list">
+                    	<a href="javascript:;" onclick="selectItemType('work')">工作任务</a>
+                    	<a href="javascript:;" onclick="selectItemType('remind')">日程提醒</a>
+                    	<a href="javascript:;" onclick="selectItemType('oneself')">个人备忘</a>
+                    </div>
+                </div>
+            </li>
+            <li>
+            	<font>截止时间：</font>
+                <input type="text" class="input_txt" name="remindTime" value="${note.reminderTime}" readonly="readonly" onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'2008-01-01',maxDate:'2100-12-31'})"/>
+            </li>
+            <li>
+            	<font>提醒设置：</font>
+                <div class="select_bg">
+                	<input type="hidden" class="input_txt" name="remind" value="halfhour"/>
+                    <#if note.remind == 'halfhour'>
+                    	<div class="select_title"><font>提前30分钟</font><i></i></div>
+                    </#if>
+                    <#if note.remind == 'onehour'>
+                    	<div class="select_title"><font>提前1小时</font><i></i></div>
+                    </#if>
+                    <#if note.remind == 'twohour'>
+                    	<div class="select_title"><font>提前2小时</font><i></i></div>
+                    </#if>
+                    <#if note.remind == 'fourhour'>
+                    	<div class="select_title"><font>提前4小时</font><i></i></div>
+                    </#if>
+                    <#if note.remind == 'halfday'>
+                    	<div class="select_title"><font>提前12小时</font><i></i></div>
+                    </#if>
+                    <#if note.remind == 'oneday'>
+                    	<div class="select_title"><font>提前24小时</font><i></i></div>
+                    </#if>
+                    <div class="select_list">
+                    	<a href="javascript:;" onclick="selectRemindTime('halfhour')">提前30分钟</a>
+                    	<a href="javascript:;" onclick="selectRemindTime('onehour')">提前1小时</a>
+                    	<a href="javascript:;" onclick="selectRemindTime('twohour')">提前2小时</a>
+                    	<a href="javascript:;" onclick="selectRemindTime('fourhour')">提前4小时</a>
+                    	<a href="javascript:;" onclick="selectRemindTime('halfday')">提前12小时</a>
+                    	<a href="javascript:;" onclick="selectRemindTime('oneday')">提前24小时</a>
+                    </div>
+                </div>
+            </li>
+            <li>
+            	<font>公告内容：</font>
+                <textarea rows="4" cols="30" name="content">${note.content}</textarea>
+            </li>
+            <li>
+            	<div class="search_btn">
+                	<a href="javascript:;" onclick="edit();">
+                    	保存
+                    </a>
+                </div>
+            </li>
+            <li>
+            	<div class="search_btn">
+                	<a href="javascript:history.go(-1);">
+                    	返回
+                    </a>
+                </div>
+            </li>
+        </ul>
+	</form>
+	</div>
+</div>
+<script type="text/javascript">
+	function edit(){
+		$("#editForm").submit();
+	}
+	function selectItemType(value){
+		$("input[name='type']").val(value);
+	}
+	function selectRemindTime(value){
+		$("input[name='remind']").val(value);
+	}
+</script>
+</@common.html>

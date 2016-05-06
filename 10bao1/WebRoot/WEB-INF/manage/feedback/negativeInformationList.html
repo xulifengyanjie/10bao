@@ -1,0 +1,111 @@
+<#import "common/common.html" as common /> <@common.html title="媒体转载分析">
+<script type="text/javascript" language="javascript" src="${request.contextPath}/static/main/js/ECharts/echarts.js"></script>
+<script type="text/javascript" language="javascript" src="${request.contextPath}/static/my97DatePicker/WdatePicker.js"></script>	
+  <div class="weibo_item">
+                     
+                	<div class="search_box">
+  			<form id="queryForm" action="${request.contextPath}/user/list" method="post">
+        	<ul>
+            	<li>
+				    <font>开始时间:</font>
+					<input type="text" class="input_txt" name="startTime" value="${startTime}" onfocus="WdatePicker({skin:'twoer',dateFmt:'yyyy-MM-dd',minDate:'2008-01-01',maxDate:'2100-12-31'})"/>
+				</li>
+					<li>
+				    <font>结束时间:</font>
+					<input type="text" class="input_txt" name="startTime" value="${startTime}" onfocus="WdatePicker({skin:'twoer',dateFmt:'yyyy-MM-dd',minDate:'2008-01-01',maxDate:'2100-12-31'})"/>
+				</li>
+                <li>
+                	<font>部门</font>
+                    <div class="select_bg">
+                    	<input type="hidden" class="input_txt" name="roleIds"/>
+                        <div class="select_title"><font>请选择</font><i></i></div>
+                        <div class="select_list">
+                        	<a href="javascript:;">经济部</a>
+                            <a href="javascript:;">社会部</a>
+                            <a href="javascript:;">文化部</a>
+                            <a href="javascript:;">时政部</a>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                	<div class="search_btn">
+                    	<a href="javascript:;" onclick="query();">
+                        	搜索<i></i>
+                        </a>
+                    </div>
+                </li>
+            </ul>
+            </form>
+            <div class="clear"></div>
+        </div>
+                    <div class="right_border">
+                        <div class="clear"></div>
+                        <table>
+                            <tr>
+                                <th class="b10" id="xuhao">排序</th>
+                             	<th class="b10" id="xuhao">新闻标题</th>
+                                <th class="b10" id="attentionName">发布人</th>
+                                <th class="b10" id="attentionName">部门</th>
+                                <th class="b10" id="attentionName">负面信息数</th>
+                            </tr>
+                            <!--  
+                            <#if page && page.list>
+			                	<#list page.list as promotion>
+			                	     <#if promotion.type == "事件关注">
+
+					                <tr id="promotion_${promotion.id}_top">
+					                    <td class="b10">${promotion_index + 1}</td>
+					                    <td class="b10"><a href="${request.contextPath}/promotion/newsList?type=${promotion.keyWord}">${promotion.keyWord}</a></td>
+			                		</tr>
+									 </#if>
+				                </#list>
+                            </#if>	
+                            -->
+                            <tr >
+					                    <td class="b10">1</td>
+					                    <td class="b40"><a href="http://news.21cn.com/domestic/taihaijushi/a/2016/0503/22/30990912.shtml" target="_blank">遏止负面事件香港仍具吸引力 “五一”内地赴港游好于预期</a></td>
+					                    <td class="b10">李守信</td>
+					                    <td class="b10">经济部</td>
+					                    <td class="b10">4</td>
+			                </tr>
+			                
+			                   <tr >
+					                    <td class="b10">2</td>
+					                    <td class="b40"><a href="http://news.china.com/domestic/945/20160503/22572738.html" target="_blank">中源协和：公司停牌确因卷入魏则西事件负面报道(1)</a></td>
+					                    <td class="b10">刘策</td>
+					                    <td class="b10">经济部</td>
+					                    <td class="b10">4</td>
+			                </tr>
+			                   <tr >
+					                    <td class="b10">3</td>
+					                    <td class="b40"><a href="http://news.sina.com.cn/o/2016-05-02/doc-ifxruaee5341396.shtml" target="_blank">别让“天价”事件成为负面“标签”</a></td>
+					                    <td class="b10">李守信</td>
+					                    <td class="b10">经济部</td>
+					                    <td class="b10">4</td>
+			                </tr>
+			                
+                        </table>
+                        <div class="clear"></div>
+                        <#if page>
+			             <div class="page_box">
+			            	<div class="pagging">
+			                    <#if page.hasPreviousPage>
+								      <a href="?pageNum=${page.prePage}&date=${date}&timestamp=${timestamp}&searchWord=${searchWord}" style=" margin-right:27px;">&lt;上页</a>
+							    </#if>
+							    <#list page.navigatepageNums as num>
+							    	<#if num == page.pageNum>
+							    		<a href="javascript:void(0)" class="cur">${num}</a>
+							    	<#else>
+							    		<a href="?pageNum=${num}&date=${date}&timestamp=${timestamp}&searchWord=${searchWord}">${num}</a>
+							    	</#if>
+							    </#list>
+							    <#if page.hasNextPage>
+								    <a href="?pageNum=${page.nextPage}&date=${date}&timestamp=${timestamp}&searchWord=${searchWord}" style="margin-left:27px;">下页&gt;</a>
+							    </#if>
+			                    <span>跳转</span>
+			                    <input type="text" class="input_page" />
+			                    <span class="span2">页</span>
+			                </div>
+			            </div>
+			            </#if>
+</@common.html>

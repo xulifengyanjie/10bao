@@ -1,0 +1,300 @@
+<#import "common/common.html" as common />
+<@common.html title="定向关注">
+
+<div class="weibo">
+    	<div class="weibo_content">
+        	<div class="weibo_tab_bg">
+            	<div class="weibo_tab">
+                	<span class="cur">定向关注设定</span>
+                    <span>新闻关注</span>
+                    <span>事件关注</span>
+                </div>	
+            </div>
+            <div class="weibo_display" id="weibo_display">
+            	<div class="weibo_item">
+                	<div class="search_box">
+                        <ul>
+                            <li>
+                                 <div class="select_bg">
+			                        <div class="select_title" name="status" ><font id="type">${status}</font><i></i></div>
+			                        <div class="select_list">
+			                            <a href="javascript:;" value="境内">境内</a>
+			                            <a href="javascript:;" value="境外">境外</a>
+			                        </div>
+                    			</div>
+                            </li>
+                            
+                            <li>
+                                <div class="attention_btn">
+                                    <a href="${request.contextPath}/promotion/addAttention">
+                                        添加定向关注<i></i>
+                                    </a>
+                                </div>
+                            </li>
+                        </ul>
+                        <div class="clear"></div>
+                    </div>
+                    <div class="right_border">
+                        <div class="right_title_bg">
+                            <div class="right_title">查询列表</div>
+                            
+                        </div>
+                        <div class="clear"></div>
+                        <table id="tab">
+                            <tr>
+                                <th class="b10">专题名称</th>
+			                    <th class="b10">关键字</th>
+			                    <th class="b40">关注类别</th>
+			                    <th class="b10">发表日期</th>
+			                    <th class="b10">操作</th>
+                            </tr>
+                             <#if page && page.list>
+			                	<#list page.list as promotion>
+					                <tr id="promotion_${promotion.id}_top">
+					                    <td class="b10">${promotion.topic}</td>
+					                    <td class="b10">${promotion.keyWord}</td>
+					                    <td class="b40">${promotion.type}</td>
+					                    <td class="b10">${promotion.addTime}</td>
+					                    <td class="b10">
+					                    	<a  href="${request.contextPath}/promotion/editAttention/${promotion.id}">编辑</a>&nbsp;|&nbsp;
+					                    	<a href="javascript:void(0);" onclick="del('${promotion.id}');">删除</a>&nbsp;&nbsp;|&nbsp;
+					                    </td>
+			                		</tr>
+				                </#list>
+                            </#if>	
+                        </table>
+			                        <div class="clear"></div>
+			            <#if page>
+			             <div class="page_box">
+			            	<div class="pagging">
+			                    <#if page.hasPreviousPage>
+								      <a href="?pageNum=${page.prePage}&date=${date}&timestamp=${timestamp}&searchWord=${searchWord}" style=" margin-right:27px;">&lt;上页</a>
+							    </#if>
+							    <#list page.navigatepageNums as num>
+							    	<#if num == page.pageNum>
+							    		<a href="javascript:void(0)" class="cur">${num}</a>
+							    	<#else>
+							    		<a href="?pageNum=${num}&date=${date}&timestamp=${timestamp}&searchWord=${searchWord}">${num}</a>
+							    	</#if>
+							    </#list>
+							    <#if page.hasNextPage>
+								    <a href="?pageNum=${page.nextPage}&date=${date}&timestamp=${timestamp}&searchWord=${searchWord}" style="margin-left:27px;">下页&gt;</a>
+							    </#if>
+			                    <span>跳转</span>
+			                    <input type="text" class="input_page" />
+			                    <span class="span2">页</span>
+			                </div>
+			            </div>
+			            </#if>
+			        </div>
+                    <div class="clear"></div>
+                    
+                    <script type="text/javascript">
+                    	$(function(){
+							var liNum = $(".atten_fot_list ul li").length;//总个数
+							$(".atten_fot_list ul").css("width",liNum*166 + "px");//列表 ul 宽
+							
+						});
+                    </script>
+                </div>
+                <div class="weibo_item">
+                	<div class="search_input_box">
+                        <input type="text" class="search_input" />
+                        <div class="search_input_btn">
+                            <a href="javascript:;">搜索<i></i></a>
+                        </div>
+                    </div>
+                    <div class="clear"></div>
+                    <div class="right_border">
+                        <div class="clear"></div>
+                        <table id="tab1">
+                            <tr>
+                                <th class="b10" id="xuhao">序号</th>
+                                <th class="b10" id="attentionName">新闻关注名称</th>
+                            </tr>
+                         
+                             <#if page && page.list>
+			                	<#list page.list as promotion>
+			                	     <#if promotion.type == "新闻关注">
+
+					                <tr id="promotion_${promotion.id}_top">
+					                    <td class="b10">${promotion_index + 1}</td>
+					                    <td class="b10"><a href="${request.contextPath}/promotion/newsList?type=${promotion.keyWord}">${promotion.keyWord}</a></td>
+			                		</tr>
+									 </#if>
+				                </#list>
+                            </#if>	
+                        </table>
+                        <div class="clear"></div>
+                       <#if page>
+			             <div class="page_box">
+			            	<div class="pagging">
+			                    <#if page.hasPreviousPage>
+								      <a href="?pageNum=${page.prePage}&date=${date}&timestamp=${timestamp}&searchWord=${searchWord}" style=" margin-right:27px;">&lt;上页</a>
+							    </#if>
+							    <#list page.navigatepageNums as num>
+							    	<#if num == page.pageNum>
+							    		<a href="javascript:void(0)" class="cur">${num}</a>
+							    	<#else>
+							    		<a href="?pageNum=${num}&date=${date}&timestamp=${timestamp}&searchWord=${searchWord}">${num}</a>
+							    	</#if>
+							    </#list>
+							    <#if page.hasNextPage>
+								    <a href="?pageNum=${page.nextPage}&date=${date}&timestamp=${timestamp}&searchWord=${searchWord}" style="margin-left:27px;">下页&gt;</a>
+							    </#if>
+			                    <span>跳转</span>
+			                    <input type="text" class="input_page" />
+			                    <span class="span2">页</span>
+			                </div>
+			            </div>
+			            </#if>
+                    </div>
+                    
+                     <script type="text/javascript">
+                    	function getNews(title){
+                    	   $.ajax({
+                    	      url:'${request.contextPath}/promotion/newsList',
+                    	      data:{'type':title},
+					          method:'get',
+					          success:function(result){
+					          
+					             window.location.href="${request.contextPath}/promotion/newsList";
+					          }
+                    	   })
+                    	}
+                    </script>
+                </div>
+                <div class="weibo_item">
+                	<div class="search_input_box">
+                        <input type="text" class="search_input" />
+                        <div class="search_input_btn">
+                            <a href="javascript:;">搜索<i></i></a>
+                        </div>
+                    </div>
+                    <div class="clear"></div>
+                    <div class="right_border">
+                        <div class="clear"></div>
+                        <table>
+                            <tr>
+                             	<th class="b10" id="xuhao">序号</th>
+                                <th class="b10" id="attentionName">事件关注名称</th>
+                            </tr>
+                            <#if page && page.list>
+			                	<#list page.list as promotion>
+			                	     <#if promotion.type == "事件关注">
+
+					                <tr id="promotion_${promotion.id}_top">
+					                    <td class="b10">${promotion_index + 1}</td>
+					                    <td class="b10"><a href="${request.contextPath}/promotion/newsList?type=${promotion.keyWord}">${promotion.keyWord}</a></td>
+			                		</tr>
+									 </#if>
+				                </#list>
+                            </#if>	
+                        </table>
+                        <div class="clear"></div>
+                        <#if page>
+			             <div class="page_box">
+			            	<div class="pagging">
+			                    <#if page.hasPreviousPage>
+								      <a href="?pageNum=${page.prePage}&date=${date}&timestamp=${timestamp}&searchWord=${searchWord}" style=" margin-right:27px;">&lt;上页</a>
+							    </#if>
+							    <#list page.navigatepageNums as num>
+							    	<#if num == page.pageNum>
+							    		<a href="javascript:void(0)" class="cur">${num}</a>
+							    	<#else>
+							    		<a href="?pageNum=${num}&date=${date}&timestamp=${timestamp}&searchWord=${searchWord}">${num}</a>
+							    	</#if>
+							    </#list>
+							    <#if page.hasNextPage>
+								    <a href="?pageNum=${page.nextPage}&date=${date}&timestamp=${timestamp}&searchWord=${searchWord}" style="margin-left:27px;">下页&gt;</a>
+							    </#if>
+			                    <span>跳转</span>
+			                    <input type="text" class="input_page" />
+			                    <span class="span2">页</span>
+			                </div>
+			            </div>
+			            </#if>
+        </div>
+<script type="text/javascript">
+function del(id){
+	    var ids = [];
+	    ids.push(id);
+		swal({   title: "确定要删除定向关注吗?",   
+			text: "",   
+			type: "warning",   
+			showCancelButton: true,   
+			confirmButtonColor: "#DD6B55",   
+			confirmButtonText: "确定",   
+			cancelButtonText: "取消",   
+			closeOnConfirm: false   
+		}, 
+		function(isConfirm){
+			if (isConfirm){
+				deleteOper(ids);
+			}
+		});
+
+	return false;
+}
+$(function(){
+	if($("#type").html()==""){
+		$("#type").html("境内");
+	}
+	if(decodeURI(window.location.search.substring(window.location.search.lastIndexOf("=")+1))!=""){
+		$("#type").html(decodeURI(window.location.search.substring(window.location.search.lastIndexOf("=")+1)));
+	}
+
+	$(".select_list a").click(function(){
+		var thisValue = $(this).html();
+		  //获取项目路径
+	    var curWwwPath=window.document.location.href;
+	    var pathName=window.document.location.pathname;
+	    var pos=curWwwPath.indexOf(pathName);
+	    var localhostPaht=curWwwPath.substring(0,pos);
+	    var projectName=pathName.substring(0,pathName.substr(1).indexOf('/')+1);
+	    var basePath=localhostPaht+projectName;
+		if(window.location.href.indexOf("addAttention")==-1){
+			window.location=basePath+'/promotion/attentionList?type1='+thisValue;
+		}
+		if(thisValue !=""){
+			$(this).parent().parent().children().children("font").html(thisValue);	
+			$(this).parent(".select_list").hide();
+			$(".select_title").removeClass('cur');
+		}
+	});
+})
+
+function deleteOper(ids){
+	var url = "${request.contextPath}/promotion/dels";
+	$.ajax({
+		type:"POST" ,
+		url:url,
+		cache: false,
+		data : {ids:ids},
+		dataType:"json",
+		error: function(request) {
+	        swal("定向关注删除失败！", "" ,"error");
+	    },
+		success: function(data){
+			if(data.msg){
+	    		swal(data.msg, "" ,"error");
+	    	}else{
+	    		swal({   title: "定向关注删除成功！",   
+					text: "",   
+					type: "success",   
+					showCancelButton: true,   
+					confirmButtonText: "确定",   
+					closeOnConfirm: false,
+					showCancelButton: false
+				}, 
+				function(isConfirm){
+					if (isConfirm){
+						window.location.href = "${request.contextPath}/promotion/attentionList";
+					}
+				});
+	    	}
+		}
+	});
+}
+</script>
+</@common.html>

@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.twsm.newstopic.dao.WeiboInfoMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.twsm.newstopic.model.WeiboInfo" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="AUTHOR" property="author" jdbcType="VARCHAR" />
+    <result column="PUBLISH_TIME" property="publishTime" jdbcType="VARCHAR" />
+    <result column="CONTENT" property="content" jdbcType="VARCHAR" />
+    <result column="COMMENT_NUM" property="commentNum" jdbcType="INTEGER" />
+    <result column="REPOST_NUM" property="repostNum" jdbcType="INTEGER" />
+    <result column="COMMENTS" property="comments" jdbcType="VARCHAR" />
+    <result column="COMMENT_TIME" property="commentTime" jdbcType="VARCHAR" />
+    <result column="REPOST_TIME" property="repostTime" jdbcType="VARCHAR" />
+    <result column="FAN_NUM" property="fanNum" jdbcType="INTEGER" />
+    <result column="FOCUS_NUM" property="focusNum" jdbcType="INTEGER" />
+    <result column="RELEASE_NUM" property="releaseNum" jdbcType="INTEGER" />
+    <result column="SUMMARY" property="summary" jdbcType="VARCHAR" />
+    <result column="CRAWL_TIME" property="crawlTime" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, AUTHOR, PUBLISH_TIME, CONTENT, COMMENT_NUM, REPOST_NUM, COMMENTS, COMMENT_TIME, 
+    REPOST_TIME, FAN_NUM, FOCUS_NUM, RELEASE_NUM, SUMMARY, CRAWL_TIME
+  </sql>
+   <sql id="whereCondition">
+      <if test="id != null" >
+        AND ID = #{id,jdbcType=INTEGER}
+      </if>
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from weibo_info
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from weibo_info
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.com.twsm.newstopic.model.WeiboInfo" >
+    insert into weibo_info (ID, AUTHOR, PUBLISH_TIME, 
+      CONTENT, COMMENT_NUM, REPOST_NUM, 
+      COMMENTS, COMMENT_TIME, REPOST_TIME, 
+      FAN_NUM, FOCUS_NUM, RELEASE_NUM, 
+      SUMMARY, CRAWL_TIME)
+    values (#{id,jdbcType=INTEGER}, #{author,jdbcType=VARCHAR}, #{publishTime,jdbcType=VARCHAR}, 
+      #{content,jdbcType=VARCHAR}, #{commentNum,jdbcType=INTEGER}, #{repostNum,jdbcType=INTEGER}, 
+      #{comments,jdbcType=VARCHAR}, #{commentTime,jdbcType=VARCHAR}, #{repostTime,jdbcType=VARCHAR}, 
+      #{fanNum,jdbcType=INTEGER}, #{focusNum,jdbcType=INTEGER}, #{releaseNum,jdbcType=INTEGER}, 
+      #{summary,jdbcType=VARCHAR}, #{crawlTime,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.com.twsm.newstopic.model.WeiboInfo" >
+    insert into weibo_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="author != null" >
+        AUTHOR,
+      </if>
+      <if test="publishTime != null" >
+        PUBLISH_TIME,
+      </if>
+      <if test="content != null" >
+        CONTENT,
+      </if>
+      <if test="commentNum != null" >
+        COMMENT_NUM,
+      </if>
+      <if test="repostNum != null" >
+        REPOST_NUM,
+      </if>
+      <if test="comments != null" >
+        COMMENTS,
+      </if>
+      <if test="commentTime != null" >
+        COMMENT_TIME,
+      </if>
+      <if test="repostTime != null" >
+        REPOST_TIME,
+      </if>
+      <if test="fanNum != null" >
+        FAN_NUM,
+      </if>
+      <if test="focusNum != null" >
+        FOCUS_NUM,
+      </if>
+      <if test="releaseNum != null" >
+        RELEASE_NUM,
+      </if>
+      <if test="summary != null" >
+        SUMMARY,
+      </if>
+      <if test="crawlTime != null" >
+        CRAWL_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="author != null" >
+        #{author,jdbcType=VARCHAR},
+      </if>
+      <if test="publishTime != null" >
+        #{publishTime,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="commentNum != null" >
+        #{commentNum,jdbcType=INTEGER},
+      </if>
+      <if test="repostNum != null" >
+        #{repostNum,jdbcType=INTEGER},
+      </if>
+      <if test="comments != null" >
+        #{comments,jdbcType=VARCHAR},
+      </if>
+      <if test="commentTime != null" >
+        #{commentTime,jdbcType=VARCHAR},
+      </if>
+      <if test="repostTime != null" >
+        #{repostTime,jdbcType=VARCHAR},
+      </if>
+      <if test="fanNum != null" >
+        #{fanNum,jdbcType=INTEGER},
+      </if>
+      <if test="focusNum != null" >
+        #{focusNum,jdbcType=INTEGER},
+      </if>
+      <if test="releaseNum != null" >
+        #{releaseNum,jdbcType=INTEGER},
+      </if>
+      <if test="summary != null" >
+        #{summary,jdbcType=VARCHAR},
+      </if>
+      <if test="crawlTime != null" >
+        #{crawlTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.com.twsm.newstopic.model.WeiboInfo" >
+    update weibo_info
+    <set >
+      <if test="author != null" >
+        AUTHOR = #{author,jdbcType=VARCHAR},
+      </if>
+      <if test="publishTime != null" >
+        PUBLISH_TIME = #{publishTime,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        CONTENT = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="commentNum != null" >
+        COMMENT_NUM = #{commentNum,jdbcType=INTEGER},
+      </if>
+      <if test="repostNum != null" >
+        REPOST_NUM = #{repostNum,jdbcType=INTEGER},
+      </if>
+      <if test="comments != null" >
+        COMMENTS = #{comments,jdbcType=VARCHAR},
+      </if>
+      <if test="commentTime != null" >
+        COMMENT_TIME = #{commentTime,jdbcType=VARCHAR},
+      </if>
+      <if test="repostTime != null" >
+        REPOST_TIME = #{repostTime,jdbcType=VARCHAR},
+      </if>
+      <if test="fanNum != null" >
+        FAN_NUM = #{fanNum,jdbcType=INTEGER},
+      </if>
+      <if test="focusNum != null" >
+        FOCUS_NUM = #{focusNum,jdbcType=INTEGER},
+      </if>
+      <if test="releaseNum != null" >
+        RELEASE_NUM = #{releaseNum,jdbcType=INTEGER},
+      </if>
+      <if test="summary != null" >
+        SUMMARY = #{summary,jdbcType=VARCHAR},
+      </if>
+      <if test="crawlTime != null" >
+        CRAWL_TIME = #{crawlTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.com.twsm.newstopic.model.WeiboInfo" >
+    update weibo_info
+    set AUTHOR = #{author,jdbcType=VARCHAR},
+      PUBLISH_TIME = #{publishTime,jdbcType=VARCHAR},
+      CONTENT = #{content,jdbcType=VARCHAR},
+      COMMENT_NUM = #{commentNum,jdbcType=INTEGER},
+      REPOST_NUM = #{repostNum,jdbcType=INTEGER},
+      COMMENTS = #{comments,jdbcType=VARCHAR},
+      COMMENT_TIME = #{commentTime,jdbcType=VARCHAR},
+      REPOST_TIME = #{repostTime,jdbcType=VARCHAR},
+      FAN_NUM = #{fanNum,jdbcType=INTEGER},
+      FOCUS_NUM = #{focusNum,jdbcType=INTEGER},
+      RELEASE_NUM = #{releaseNum,jdbcType=INTEGER},
+      SUMMARY = #{summary,jdbcType=VARCHAR},
+      CRAWL_TIME = #{crawlTime,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <select id="getByWhere" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select 
+    <include refid="Base_Column_List" />
+    from weibo_info
+    where 1=1 <include refid="whereCondition" />
+  </select>
+</mapper>

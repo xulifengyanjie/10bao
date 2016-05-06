@@ -1,0 +1,206 @@
+<#import "common/common.html" as common />
+<@common.html title="专题管理" menucode="0101">
+ <link rel="stylesheet" href="${request.contextPath}/static/zTree/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <script type="text/javascript" src="${request.contextPath}/static/zTree/js/jquery.ztree.core.js"></script>
+  <script type="text/javascript" src="${request.contextPath}/static/zTree/js/jquery.ztree.excheck.js"></script>
+  <SCRIPT LANGUAGE="JavaScript">
+   	var setting = {
+			view: {
+				dblClickExpand: false
+			},
+			data: {
+				simpleData: {
+					enable: true
+				}
+			},
+			callback: {
+				onClick: onClick
+			}
+		};
+
+		/* function beforeClick(treeId, treeNode) {
+			var check = (treeNode && !treeNode.isParent);
+			//if (!check) alert("只能选择城市...");
+			return check;
+		} */
+		
+		function onClick(e, treeId, treeNode) {
+			if (treeNode) {
+	            $("#citySel").attr("value",treeNode.name);
+	            $("input[name='departmentId']").val(treeNode.id);
+	            hideMenu();
+	        }
+		}
+
+		function showMenu() {
+			var cityObj = $("#citySel");
+			var cityOffset = $("#citySel").offset();
+			$("#menuContent").css({left:cityOffset.left + "px", top:cityOffset.top + cityObj.outerHeight() + "px"}).slideDown("fast");
+
+			$("body").bind("mousedown", onBodyDown);
+		}
+		function hideMenu() {
+			$("#menuContent").fadeOut("fast");
+			$("body").unbind("mousedown", onBodyDown);
+		}
+		function onBodyDown(event) {
+			if (!(event.target.id == "menuBtn" || event.target.id == "menuContent" || $(event.target).parents("#menuContent").length>0)) {
+				hideMenu();
+			}
+		}
+
+		$(document).ready(function(){
+			$.fn.zTree.init($("#treeDemo"), setting, ${departmentTree});
+		});
+  </SCRIPT>
+<script type="text/javascript" language="javascript" src="${request.contextPath}/static/my97DatePicker/WdatePicker.js"></script>
+<div class="right">
+		<form name="searchForm" id="queryForm" action="${request.contextPath}/topic/topicList" method="post">
+  		<div class="search_box">
+        	<ul>
+            	<li>
+                	<font>开始时间</font>
+                    <input type="text" class="input_txt" name="startTime" value="${startTime}" readonly="readonly" onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd',minDate:'2008-01-01',maxDate:'2100-12-31'})"/>
+                </li>
+                <li>
+                	<font>结束时间</font>
+                    <input type="text" class="input_txt" name="endTime" value="${endTime}" readonly="readonly" onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd',minDate:'2008-01-01',maxDate:'2100-12-31'})"/>
+                </li>
+                <li>
+                	<font>关键词</font>
+                    <input type="text" class="input_txt" name="keyword" value="${keyword}"/>
+                </li>
+                <li>
+	           		<font>所属部门</font>
+	                <div class="select_bg">
+						<input id="citySel" type="text" readonly class="input_txt" />
+						<input type="hidden" class="input_txt" name="departmentId" value="0"/>
+	                    <div class="select_title" style="width:128px;"><i id="menuBtn" onclick="showMenu(); return false;"></i></div>
+	                </div>
+                </li>
+                <li>
+                	<div class="search_btn">
+                    	<a href="javascript:;" onclick="query();">
+                        	搜索<i></i>
+                        </a>
+                    </div>
+                </li>
+            </ul>
+            <div class="clear"></div>
+        </div>
+    	</form>
+        
+        <div class="right_border">
+        	<div class="right_title_bg">
+            	<div class="right_title">查询列表</div>
+                <div class="right_btn_bg">
+                	<a href="${request.contextPath}/topic/add" >新增</a>
+                </div>
+            </div>
+            <div class="clear"></div>
+            <table>
+            	<tr>
+                	<th class="b40">专题名称</th>
+                    <th class="b10">作者</th>
+                    <th class="b10">部门</th>
+                    <th class="b20">添加时间</th>
+                    <th class="b10">操作</th>
+                </tr>
+                <#if page && page.list>
+                	<#list page.list as topic>
+		                <tr id="topic_${topic.id}_top">
+		                    <td class="b40">${topic.topicName}</td>
+		                    <td class="b10">${topic.addUserId}</td>
+		                    <td class="b10">${topic.departmentId}</td>
+		                    <td class="b20">${topic.addTime}</td>
+		                    <td class="b10">
+		                    	<a href="${request.contextPath}/topic/topicDetail/${topic.id}">编辑</a>&nbsp;|&nbsp;
+		                    	<a href="${request.contextPath}/topic/delTopic/${topic.id}">删除</a>
+		                    </td>
+                		</tr>
+	                </#list>
+                </#if>	
+            </table>
+            <div class="clear"></div>
+             <div class="page_box">
+            	<div class="pagging">
+                    <#if page.hasPreviousPage>
+					      <a href="?pageNum=${page.prePage}" style=" margin-right:27px;">&lt;上页</a>
+				    </#if>
+				    <#list page.navigatepageNums as num>
+				    	<#if num == page.pageNum>
+				    		<a href="javascript:void(0)" class="cur">${num}</a>
+				    	<#else>
+				    		<a href="?pageNum=${num}">${num}</a>
+				    	</#if>
+				    </#list>
+				    <#if page.hasNextPage>
+					    <a href="?pageNum=${page.nextPage}" style="margin-left:27px;">下页&gt;</a>
+				    </#if>
+                    <span>跳转</span>
+                    <input type="text" class="input_page" />
+                    <span class="span2">页</span>
+                </div>
+            </div>
+        </div>
+</div>
+<div id="menuContent" class="menuContent" style="display:none; position: absolute;">
+	<ul id="treeDemo" class="ztree" style="margin-top:-60px; width:129px;border:1px solid #c6c6c6;overflow-y:scroll;overflow-x:auto;"></ul>
+</div>
+<script type="text/javascript">
+	function query(){
+		$("#queryForm").submit();
+	}
+	function del(id){
+		if(id!=null){
+			swal({   title: "确定要删除吗?",   
+				text: "",   
+				type: "warning",   
+				showCancelButton: true,   
+				confirmButtonColor: "#DD6B55",   
+				confirmButtonText: "确定",   
+				cancelButtonText: "取消",   
+				closeOnConfirm: false   
+			}, 
+			function(isConfirm){
+				if (isConfirm){
+					deleteOper(id);
+				}
+			});
+		}
+		return false;
+	}
+	function deleteOper(id){
+		var url = "${request.contextPath}/topic/delTopic";
+		$.ajax({
+			type:"POST" ,
+			url:url,
+			cache: false,
+			data : {id:id},
+			dataType:"json",
+			error: function(request) {
+		        swal("删除失败！", "" ,"error");
+		    },
+			success: function(data){
+				if(data.msg){
+		    		swal(data.msg, "" ,"error");
+		    	}else{
+		    		swal({   title: "删除成功！",   
+						text: "",   
+						type: "success",   
+						showCancelButton: true,   
+						confirmButtonText: "确定",   
+						closeOnConfirm: false,
+						showCancelButton: false
+					}, 
+					function(isConfirm){
+						if (isConfirm){
+							window.location.href = "${request.contextPath}/archive/archiveList";
+						}
+					});
+		    	}
+			}
+		});
+	}
+</script>
+</@common.html>

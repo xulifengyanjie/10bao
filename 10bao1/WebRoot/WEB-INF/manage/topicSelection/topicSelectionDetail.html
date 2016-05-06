@@ -1,0 +1,44 @@
+<#import "common/common.html" as common />
+<@common.html title="选题详情" menucode="0103">
+<div class="right">	
+<div class="search_box">
+<form id="editForm" action="${request.contextPath}/topicSelection/doEditSelect" class="form-horizontal" method="post">
+		<ul>
+			<li>
+				<font>选题标题：</font>
+				<input class="input_txt" type="text" name="title" value="${topicSelection.title}"/>
+				<input class="input_txt" type="hidden" name="id" value="${topicSelection.id}"/>
+				<input class="input_txt" type="hidden" name="topicId" value="${topicSelection.topicId}"/>
+				<input class="input_txt" type="hidden" name="approvalUserId" value="${topicSelection.approvalUserId}"/>
+				<input class="input_txt" type="hidden" name="addUserId" value="${topicSelection.addUserId}"/>
+				<input class="input_txt" type="hidden" name="status" value="${topicSelection.status}"/>
+				<input class="input_txt" type="hidden" name="addTime" value="${topicSelection.addTime}"/>
+			</li>
+			<li>
+				<font>选题内容：</font>
+				<textarea class="input_txt" rows="10" cols="30" name="content">${topicSelection.content}</textarea>
+			</li>
+			<li>
+	        	<div class="search_btn">
+	              	<a href="javascript:;" onclick="ajaxEdit();">
+	                  	保存
+	                </a>
+	        	</div>
+        	</li>
+        	<li>
+	          	<div class="search_btn">
+	              <a href="javascript:history.go(-1);">
+	                  	取消
+	              </a>
+	            </div>
+       		</li>
+		</ul>
+	</form>
+</div>
+</div>
+<script type="text/javascript">
+	function ajaxEdit() {
+		$("#editForm").submit();
+	}
+</script>
+</@common.html>

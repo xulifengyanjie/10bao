@@ -1,0 +1,105 @@
+<#import "common/common.html" as common />
+<@common.html title="报社发布内容检索">
+<div class="right">
+  		<div class="search_box">
+  			<form id="queryForm" action="${request.contextPath}/release/list" method="post">
+        	<ul>
+            	<li>
+                	<font>开始时间</font>
+                    <input type="text" class="input_txt" name="userName" value="${item.userName}"/>
+                </li>
+                <li>
+                	<font>结束时间</font>
+                    <input type="text" class="input_txt" name="loginName" value="${item.loginName}"/>
+                </li>
+                <li>
+                	<font>关键词</font>
+                    <input type="text" class="input_txt" name="userName" value="${item.userName}"/>
+                </li>
+                 <li>
+                	<font>栏目</font>
+                    <input type="text" class="input_txt" name="userName" value="${item.userName}"/>
+                </li>
+                <li>
+                	<font>版次</font>
+                    <input type="text" class="input_txt" name="userName" value="${item.userName}"/>
+                </li>
+                <li>
+                	<div class="search_btn">
+                    	<a href="javascript:;" onclick="query();">
+                        	搜索<i></i>
+                        </a>
+                    </div>
+                </li>
+            </ul>
+            </form>
+            <div class="clear"></div>
+        </div>
+        <div class="right_border">
+        	<div class="right_title_bg">
+            	<div class="right_title">查询列表</div>
+                <div class="right_btn_bg">
+                	<a href="javascrip:void(0);">导出Excel</a>
+                </div>
+            </div>
+            <div class="clear"></div>
+            <table>
+            	<tr>
+                	<th class="b10">序号</th>
+                    <th class="b30">新闻标题</th>
+                    <th class="b10">发表日期</th>
+                    <th class="b20">提交人</th>
+                    <th class="b20">处理人</th>
+                    <th class="b10">版次</th>
+                </tr>
+                <#if page && page.list>
+                	<#list page.list as release>
+		                <tr>
+		                    <td class="b10">${release.id}</td>
+		                    <td class="b10">${release.title}</td>
+		                    <td class="b10">${release.publishTime}</td>
+		                    <td class="b20">${release.author}</td>
+		                    <td class="b20">${release.author}</td>
+		                    <td class="b20">${release.version}</td>
+                		</tr>
+	                </#list>
+                </#if>	
+            </table>
+            <div class="clear"></div>
+            <#if page && page.total &gt; 0>
+             <div class="page_box">
+            	<div class="pagging">
+            		<#if page.total &gt; 0>
+	                    <#if page.hasPreviousPage>
+						      <a href="javascript:void(0)" onclick="showPage(${page.prePage});" style=" margin-right:27px;">&lt;上页</a>
+					    </#if>
+					    <#list page.navigatepageNums as num>
+					    	<#if num == page.pageNum>
+					    		<a href="javascript:void(0)" class="cur">${num}</a>
+					    	<#else>
+					    		<a href="javascript:void(0)" onclick="showPage(${num});">${num}</a>
+					    	</#if>
+					    </#list>
+					    <#if page.hasNextPage>
+						    <a href="javascript:void(0)" onclick="showPage(${page.nextPage});" style="margin-left:27px;">下页&gt;</a>
+					    </#if>
+	                    <span>跳转</span>
+	                    <input type="text" class="input_page" />
+	                    <span class="span2">页</span>
+                    </#if>
+                </div>
+            </div>
+            </#if>
+        </div>
+</div>
+
+<script type="text/javascript">
+	function showPage(pageNum){
+		$("#queryForm").attr("action","${request.contextPath}/release/list?pageNum="+pageNum);
+		query();
+	}
+	function query(){
+		$("#queryForm").submit();
+	}
+</script>
+</@common.html>

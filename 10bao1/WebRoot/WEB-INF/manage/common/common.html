@@ -1,0 +1,112 @@
+<#macro html title="" menucode="">
+<#setting url_escaping_charset='utf-8'>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>${title}</title>
+<link href="${request.contextPath}/static/bootstrap/css/bootstrap.css" type="text/css" rel="stylesheet" />
+<link href="${request.contextPath}/static/main/css/css.css" type="text/css" rel="stylesheet" />
+<link href="${request.contextPath}/static/sweetalert/sweetalert.css" type="text/css" rel="stylesheet" />
+<script type="text/javascript" language="javascript" src="${request.contextPath}/static/main/js/jquery-2.1.4.min.js"></script>
+<script type="text/javascript" language="javascript" src="${request.contextPath}/static/main/js/common.js"></script>
+<script type="text/javascript" language="javascript" src="${request.contextPath}/static/sweetalert/sweetalert.min.js"></script>
+<script type="text/javascript" language="javascript" src="${request.contextPath}/static/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+	
+	$(document).ready(function(){
+	});
+
+
+</script>
+
+</head>
+
+<body>
+<div class="header">
+	<div class="logo">
+    	<img src="${request.contextPath}/static/main/images/logo.png" />
+    </div>
+    <div class="menu">
+    	<ul>
+		  	<#if menus?exists>
+		  		<#list menus as menu>
+		             <#if (request.requestUri)?matches((request.contextPath + menu.permissionUrl)?replace("**",".*")) && menu.permissionLevel != 1 && menu.isLeaf == 1>
+		                <#assign curMenu=menu />
+		                	<!--  <li>
+		            			<a href="">${menu.permissionName}</a>
+		            		</li> -->
+		                <#break>
+		            </#if>
+		    	</#list>
+		    	<#if curMenu.permissionType == "button">
+			    	<#list menus as menu>
+			             <#if menu.permissionCodeChain + curMenu.permissionCode == curMenu.permissionCodeChain >
+			                <#assign curMenu=menu />
+			                <#break>
+			            </#if>
+			    	</#list>
+		    	</#if>
+				<#list menus as menu>
+					<#if menu.permissionLevel == 1>
+		            <li>
+		            	<a href="${request.contextPath}${menu.permissionUrl}" <#if menu.permissionCode == curMenu.permissionCodeChain?substring(0,6)>class="cur"</#if>>${menu.permissionName}</a>
+		            </li>
+		            </#if>
+		    	</#list>
+			</#if>
+        </ul>
+        <div class="user_box">
+        	<div class="user_name">
+            	${cur_user.userName}
+                <i></i>
+            </div>
+            <div class="user_link">
+            	<a href="javascript:;">修改密码</a><br />
+                <a href="${request.contextPath}/common/logout">注销</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="clear"></div>
+<div class="content">
+	<div class="left_menu">
+	<#if menus?exists && curMenu>
+	<ul>
+	<#list menus as menuSecond>
+        <#if menuSecond.permissionLevel == 2 && menuSecond.permissionCodeChain?substring(0,6) == curMenu.permissionCodeChain?substring(0,6)>
+        	<#if menuSecond.isLeaf == 1>
+	        	<li>
+	            	<div class="left_menu_link">
+	            		<a href="${request.contextPath}${menuSecond.permissionUrl}" <#if menuSecond.permissionCodeChain == curMenu.permissionCodeChain?substring(0,12)>class="cur"</#if>>${menuSecond.permissionName}</a>
+	                </div>
+	            </li>
+		     </#if>
+		     <#if menuSecond.isLeaf == 0>
+	        	<li>
+            		<div class="left_menu_list">
+	                	<h3>
+	            			<a href="javascript:void(0)">${menuSecond.permissionName}<i></i></a>
+	                    </h3>
+	                    <div class="sub_list" <#if menuSecond.permissionCodeChain + curMenu.permissionCode == curMenu.permissionCodeChain >style="display:block;"</#if>>
+	                    	<#list menus as menuThird>
+	                    		<#if menuThird.permissionLevel == 3 && menuSecond.permissionCodeChain + menuThird.permissionCode == menuThird.permissionCodeChain>
+			                        <a href="${request.contextPath}${menuThird.permissionUrl}" <#if menuThird.permissionCodeChain == curMenu.permissionCodeChain>class="cur"</#if>>
+			                        	${menuThird.permissionName}
+			                        </a>
+		                        </#if>
+	                        </#list>
+	                    </div>
+                	</div>
+           		</li>
+		     </#if>
+		     </#if>
+   	</#list>
+   	</ul>
+	</#if>
+    </div>
+    <#nested/>
+</div>
+</body>
+</html>
+</#macro>

@@ -1,0 +1,93 @@
+<#import "common/common.html" as common />
+<@common.html title="定向关注添加" menucode="0102">
+<div class="right">	
+	<form id="addForm" action="${request.contextPath}/promotion/doAttentionAdd"  method="post">
+		<div class="search_box">
+        	<ul>
+            	<li>
+                	<font>专题名称</font>
+                    <input type="text" class="input_txt" name="topic"/>
+                </li>
+               <li>
+                	<font>关键词</font>
+                    <input type="text" class="input_txt" name="keyWord"/>
+                    <input type="hidden" id="input_txt" name="type"/>
+                    <input type="hidden" id="input_txt1" name="type1"/>
+                </li>
+                <li>
+                	<font>关注类别</font>
+				 	   <div class="select_bg">
+                        <div class="select_title" name="status" ><font id="type">${status}</font><i></i></div>
+                        <div class="select_list">
+                            <a href="javascript:;" value="新闻关注">新闻关注</a>
+                            <a href="javascript:;" value="事件关注">事件关注</a>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                     <div class="select_bg">
+                        <div class="select_title" name="status" ><font id="type1">${status}</font><i></i></div>
+                        <div class="select_list">
+                            <a href="javascript:;" value="境内">境内</a>
+                            <a href="javascript:;" value="境外">境外</a>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                	<div class="search_btn">
+                    	<a href="javascript:;" onclick="ajaxAdd();">
+                        	保存
+                        </a>
+                    </div>
+                </li>
+                <li>
+                	<div class="search_btn">
+                    	<a href="javascript:history.go(-1);">
+                        	取消
+                        </a>
+                    </div>
+                </li>
+            </ul>
+            <div class="clear"></div>
+        </div>
+	</form>
+</div>
+<script type="text/javascript">
+
+	function ajaxAdd(){
+		$("#input_txt").val($("#type").text());
+		$("#input_txt1").val($("#type1").text());
+		var ajaxCallUrl = $("#addForm").attr("action");
+		$.ajax({
+			cache: true,
+			type: "POST",
+			url:ajaxCallUrl,
+			data:$('#addForm').serialize(),
+			async: false,
+		    error: function(request) {
+		        swal("添加定向关注失败！", "" ,"error");
+		    },
+		    success: function(data) {
+		    	if(data.msg){
+		    		swal(data.msg, "" ,"error");
+		    	}else{
+		    		swal({   
+		    			title: "添加定向关注成功！",   
+						text: "",   
+						type: "success",   
+						showCancelButton: true,   
+						confirmButtonText: "确定",   
+						closeOnConfirm: false,
+						showCancelButton: false
+					}, 
+					function(isConfirm){
+						if (isConfirm){
+							window.location.href = "${request.contextPath}/promotion/attentionList";
+						}
+					});
+		    	}
+		    }
+		});
+	}
+</script>
+</@common.html>

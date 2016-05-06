@@ -1,0 +1,111 @@
+<#import "common/common.html" as common />
+<@common.html title="专题详情" menucode="0104">
+<link rel="stylesheet" href="${request.contextPath}/static/zTree/css/zTreeStyle/zTreeStyle.css" type="text/css">
+<script type="text/javascript" src="${request.contextPath}/static/zTree/js/jquery.ztree.core.js"></script>
+<script type="text/javascript" src="${request.contextPath}/static/zTree/js/jquery.ztree.excheck.js"></script>
+<SCRIPT LANGUAGE="JavaScript">
+   	var setting = {
+			view: {
+				dblClickExpand: false
+			},
+			data: {
+				simpleData: {
+					enable: true
+				}
+			},
+			callback: {
+				onClick: onClick
+			}
+		};
+
+		/* function beforeClick(treeId, treeNode) {
+			var check = (treeNode && !treeNode.isParent);
+			//if (!check) alert("只能选择城市...");
+			return check;
+		} */
+		
+		function onClick(e, treeId, treeNode) {
+			if (treeNode) {
+	            $("#citySel").attr("value",treeNode.name);
+	            $("input[name='departmentId']").val(treeNode.id);
+	            hideMenu();
+	        }
+		}
+
+		function showMenu() {
+			var cityObj = $("#citySel");
+			var cityOffset = $("#citySel").offset();
+			$("#menuContent").css({left:cityOffset.left + "px", top:cityOffset.top + cityObj.outerHeight() + "px"}).slideDown("fast");
+
+			$("body").bind("mousedown", onBodyDown);
+		}
+		function hideMenu() {
+			$("#menuContent").fadeOut("fast");
+			$("body").unbind("mousedown", onBodyDown);
+		}
+		function onBodyDown(event) {
+			if (!(event.target.id == "menuBtn" || event.target.id == "menuContent" || $(event.target).parents("#menuContent").length>0)) {
+				hideMenu();
+			}
+		}
+
+		$(document).ready(function(){
+			$.fn.zTree.init($("#treeDemo"), setting, ${departmentTree});
+		});
+</SCRIPT>
+<div class="right">	
+<div class="search_box">
+	<form id="addForm" action="${request.contextPath}/topic/doEdit" class="form-horizontal" method="post">
+		<ul>
+        	<li>
+        		<font>专题名称：</font>
+        		<input class="input_txt" type="text" name="topicName" value="${topic.topicName}"/>
+				<input class="form-control" type="hidden" name="topicType" value="${topic.topicType}"/>
+				<input class="form-control" type="hidden" name="addUserId" value="${topic.addUserId}"/>
+        	</li>
+        	<li>
+        		<font>所属部门</font>
+                    <div class="select_bg">
+                    	<#if departmentList>
+                       		<#list departmentList as d>
+                       			<#if d.id == item.departmentId>
+                       				<#assign flag = "1" />
+                       				<input id="citySel" type="text" readonly class="input_txt" value="${d.departmentName}"/>
+                       				<#break>
+                       			</#if>
+                       		</#list>
+                       		<#if flag != "1">
+                       			<input id="citySel" type="text" readonly class="input_txt"/>
+                       		</#if>
+                       	</#if>
+						<input type="hidden" class="input_txt" name="departmentId" value="${topic.departmentId}"/>
+                        <div class="select_title" style="width:128px;"><i id="menuBtn" onclick="showMenu(); return false;"></i></div>
+                    </div>
+        	</li>
+        	<li>
+            	<div class="search_btn">
+                	<a href="javascript:;" onclick="add();">
+                    	保存
+                    </a>
+                </div>
+            </li>
+            <li>
+            	<div class="search_btn">
+                	<a href="javascript:history.go(-1);">
+                    	返回
+                    </a>
+                </div>
+            </li>
+		</ul>
+	</form>
+</div>
+</div>
+<div id="menuContent" class="menuContent" style="display:none; position: absolute;">
+	<ul id="treeDemo" class="ztree" style="margin-top:-60px; width:129px;border:1px solid #c6c6c6;overflow-y:scroll;overflow-x:auto;"></ul>
+</div>
+<script type="text/javascript">
+	function add(){
+		$("#addForm").submit();
+	}
+</script>
+</@common.html>

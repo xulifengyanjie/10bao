@@ -1,0 +1,149 @@
+<#import "common/common.html" as common /> <@common.html title="媒体转载分析">
+<script type="text/javascript" language="javascript" src="${request.contextPath}/static/main/js/ECharts/echarts.js"></script>
+<script type="text/javascript" language="javascript" src="${request.contextPath}/static/my97DatePicker/WdatePicker.js"></script>	
+  <div class="weibo_item">
+                     
+                	<div class="search_box">
+  			<form id="queryForm" action="${request.contextPath}/user/list" method="post">
+        	<ul>
+            	<li>
+				    <font>开始时间:</font>
+					<input type="text" class="input_txt" name="startTime" value="${startTime}" onfocus="WdatePicker({skin:'twoer',dateFmt:'yyyy-MM-dd',minDate:'2008-01-01',maxDate:'2100-12-31'})"/>
+				</li>
+					<li>
+				    <font>结束时间:</font>
+					<input type="text" class="input_txt" name="startTime" value="${startTime}" onfocus="WdatePicker({skin:'twoer',dateFmt:'yyyy-MM-dd',minDate:'2008-01-01',maxDate:'2100-12-31'})"/>
+				</li>
+                <li>
+                    <font>关键词</font>
+                    <input type="text" class="input_txt" name="userName" value="${item.userName}"/>
+                </li>
+                <li>
+                	<div class="search_btn">
+                    	<a href="javascript:;" onclick="query();">
+                        	搜索<i></i>
+                        </a>
+                    </div>
+                </li>
+            </ul>
+            </form>
+            <div class="clear"></div>
+        </div>
+                    <div class="right_border">
+                        <div class="clear"></div>
+                        <table>
+                            <tr>
+                                <th class="b10" id="xuhao">序号</th>
+                             	<th class="b10" id="xuhao">指数</th>
+                                <th class="b10" id="attentionName">新闻标题</th>
+                                <th class="b10" id="attentionName">操作</th>
+                                <th class="b10" id="attentionName">转发详情</th>
+                            </tr>
+                            <!--  
+                            <#if page && page.list>
+			                	<#list page.list as promotion>
+			                	     <#if promotion.type == "事件关注">
+
+					                <tr id="promotion_${promotion.id}_top">
+					                    <td class="b10">${promotion_index + 1}</td>
+					                    <td class="b10"><a href="${request.contextPath}/promotion/newsList?type=${promotion.keyWord}">${promotion.keyWord}</a></td>
+			                		</tr>
+									 </#if>
+				                </#list>
+                            </#if>
+                            -->	
+                             <tr id="promotion_${promotion.id}_top">
+					                    <td class="b10">1</td>
+					                    <td class="b10">8.0</td>
+					                    <td class="b10"><a href="http://news.163.com/16/0503/16/BM5H00A100011229.html" target="_blank">新郎迎亲叩不开门掌掴小姨子</a></td>
+					                    <td class="b10">趋势图</td>
+					                    <td class="b10">展开</td>
+			                </tr>
+			                <tr id="promotion_${promotion.id}_top">
+					                    <td class="b10">2</td>
+					                    <td class="b10">7.89</td>
+					                    <td class="b10"><a href="http://news.163.com/16/0503/10/BM4S3UBN0001124J.html" target="_blank">多名患者到武警二院要求退款</a></td>
+					                    <td class="b10">趋势图</td>
+					                    <td class="b10">展开</td>
+			                </tr>
+			                <tr id="promotion_${promotion.id}_top">
+					                    <td class="b10">3</td>
+					                    <td class="b10">7.7</td>
+					                    <td class="b10"><a href="http://help.3g.163.com/16/0503/20/BM5SPMRL00963VRO.html" target="_blank">河南一男孩失踪 奶奶爷爷自杀</a></td>
+					                    <td class="b10">趋势图</td>
+					                    <td class="b10">展开</td>
+			                </tr>
+			                <tr id="promotion_${promotion.id}_top">
+					                    <td class="b10">4</td>
+					                    <td class="b10">7.56</td>
+					                    <td class="b10"><a href="http://news.163.com/16/0503/20/BM5U9M3G0001124J.html" target="_blank">军媒:让"魏则西"净化生命环境</a></td>
+					                    <td class="b10">趋势图</td>
+					                    <td class="b10">展开</td>
+			                </tr>
+			                <tr id="promotion_${promotion.id}_top">
+					                    <td class="b10">5</td>
+					                    <td class="b10">6.3</td>
+					                    <td class="b10"><a href="http://dy.163.com/wemedia/article/detail/BM4OJ7P7052192CR.html" target="_blank">竞价排名就叫做恶？小看百度!</a></td>
+					                    <td class="b10">趋势图</td>
+					                    <td class="b10">展开</td>
+			                </tr>
+			                <tr id="promotion_${promotion.id}_top">
+					                    <td class="b10">6</td>
+					                    <td class="b10">6.2</td>
+					                    <td class="b10"><a href="http://tech.163.com/16/0503/13/BM57FSR3000915BF.html" target="_blank">环球时报：只有谷歌才能抑制百度的主张欠妥</a></td>
+					                    <td class="b10">趋势图</td>
+					                    <td class="b10">展开</td>
+			                </tr>
+			                <tr id="promotion_${promotion.id}_top">
+					                    <td class="b10">7</td>
+					                    <td class="b10">6.0</td>
+					                    <td class="b10"><a href="http://news.163.com/photoview/00AP0001/117442.html#p=BM4RHP8F00AP0001" target="_blank">杭州西湖成"放生池" 市民无奈直摇头</a></td>
+					                    <td class="b10">趋势图</td>
+					                    <td class="b10">展开</td>
+			                </tr>
+			                <tr id="promotion_${promotion.id}_top">
+					                    <td class="b10">8</td>
+					                    <td class="b10">5.9</td>
+					                    <td class="b10"><a href="http://news.163.com/photoview/00AP0001/117472.html#p=BM58CMD400AP0001" target="_blank">探访漩涡中的“武警二院”</a></td>
+					                    <td class="b10">趋势图</td>
+					                    <td class="b10">展开</td>
+			                </tr>
+			                <tr id="promotion_${promotion.id}_top">
+					                    <td class="b10">9</td>
+					                    <td class="b10">5.3</td>
+					                    <td class="b10"><a href="http://auto.163.com/16/0427/06/BLKUK8B100084TUO.html" target="_blank">25万贵?要是标配高呢? 国产讴歌CDX辣评</a></td>
+					                    <td class="b10">趋势图</td>
+					                    <td class="b10">展开</td>
+			                </tr>
+			                <tr id="promotion_${promotion.id}_top">
+					                    <td class="b10">10</td>
+					                    <td class="b10">4</td>
+					                    <td class="b10"><a href="http://news.163.com/16/0504/00/BM6B2DNI00014AEE.html" target="_blank">人类发现最适宜移居星球 大小温度与地球相似</a></td>
+					                    <td class="b10">趋势图</td>
+					                    <td class="b10">展开</td>
+			                </tr>
+                        </table>
+                        <div class="clear"></div>
+                        <#if page>
+			             <div class="page_box">
+			            	<div class="pagging">
+			                    <#if page.hasPreviousPage>
+								      <a href="?pageNum=${page.prePage}&date=${date}&timestamp=${timestamp}&searchWord=${searchWord}" style=" margin-right:27px;">&lt;上页</a>
+							    </#if>
+							    <#list page.navigatepageNums as num>
+							    	<#if num == page.pageNum>
+							    		<a href="javascript:void(0)" class="cur">${num}</a>
+							    	<#else>
+							    		<a href="?pageNum=${num}&date=${date}&timestamp=${timestamp}&searchWord=${searchWord}">${num}</a>
+							    	</#if>
+							    </#list>
+							    <#if page.hasNextPage>
+								    <a href="?pageNum=${page.nextPage}&date=${date}&timestamp=${timestamp}&searchWord=${searchWord}" style="margin-left:27px;">下页&gt;</a>
+							    </#if>
+			                    <span>跳转</span>
+			                    <input type="text" class="input_page" />
+			                    <span class="span2">页</span>
+			                </div>
+			            </div>
+			            </#if>
+</@common.html>

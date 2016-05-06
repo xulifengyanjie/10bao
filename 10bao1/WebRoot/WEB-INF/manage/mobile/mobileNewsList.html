@@ -1,0 +1,466 @@
+<#import "common/common.html" as common /> <@common.html title="移动客户端">
+<link href="${request.contextPath}/static/main/css/mobile.css"
+	type="text/css" rel="stylesheet" />
+<script type="text/javascript" language="javascript"
+	src="${request.contextPath}/static/main/js/mobile.js"></script>
+<script type="text/javascript" language="javascript" src="${request.contextPath}/static/my97DatePicker/WdatePicker.js"></script>	
+<div class="weibo">
+	<div class="weibo_content" style="min-height: 727px;">
+		<div class="weibo_tab_bg">
+			<div class="weibo_tab">
+				<span class="cur" onclick="showApps()">移动新闻客户端</span>
+				<span onclick="searchAppNews()">搜索</span>
+			</div>
+		</div>
+		<div class="weibo_display">
+			<div class="weibo_item">
+				<div class="mobile_box">
+					<div class="mobile_pre">
+						<a href="javascript:;"></a>
+					</div>
+					<div class="mobile_con">
+						<ul style="left: 0px; width: 2160px;">
+							<li>
+								<input type="hidden" value="腾讯新闻">
+								<div class="mo_item">
+									<!--腾讯新闻-->
+									<div class="mo_qq_bg">
+										<div id="tengxun" class="mo_qq_menu">
+											<a href="javascript:void(0)"
+												onclick="showAppNews('要闻','腾讯新闻')" class="mo_menu_cur">要闻</a>
+											<a href="javascript:void(0)"
+												onclick="showAppNews('财经','腾讯新闻')">财经</a>
+											<a href="javascript:void(0)"
+												onclick="showAppNews('科技','腾讯新闻')">科技</a>
+											<a href="javascript:void(0)"
+												onclick="showAppNews('社会','腾讯新闻')">社会</a>
+										</div>
+										<div class="clear"></div>
+										<div id="tcontent" class="m_pub">
+											<div id="tmpub" class="m_pub_list">
+
+												<#if page && page.list> <#list page.list as mobile> <#if
+												mobile_index == 0>
+												<div class="m_pub_banner">
+													<a href="${mobile.surl}" target="_blank"> <img
+															src="${mobile.imgsrc}">
+														<div class="m_pub_banner_txt">
+															${mobile.title}
+														</div> </a>
+												</div>
+												<#else>
+												<div class="m_list_item">
+													<div class="m_list_pic">
+														<a href="javascript:void(0)"><img
+																src="${mobile.imgsrc}">
+														</a>
+													</div>
+													<div class="m_list_txt">
+														<div class="m_list_txt_name">
+															<a href="${mobile.surl}" target="_blank">${mobile.title}</a>
+														</div>
+														<p>
+															${mobile.news_text}
+															<font></font>
+														</p>
+													</div>
+												</div>
+
+												</#if> </#list> </#if>
+
+
+
+											</div>
+										</div>
+									</div>
+								</div>
+							</li>
+							<li>
+								<input type="hidden" value="网易新闻">
+								<div class="mo_item">
+									<!--网易新闻-->
+									<div class="mo_tom_bg">
+										<div id="netesase" class="mo_tom_menu">
+											<a href="javascript:void(0)"
+												onclick="showAppNews('头条','网易新闻')" class="mo_menu_cur">头条</a>
+											<a href="javascript:void(0)"
+												onclick="showAppNews('财经','网易新闻')">财经</a>
+											<a href="javascript:void(0)"
+												onclick="showAppNews('科技','网易新闻')">科技</a>
+											<a href="javascript:void(0)"
+												onclick="showAppNews('军事','网易新闻')">军事</a>
+										</div>
+										<div class="clear"></div>
+										<div id="ncontent" class="m_pub">
+											<div id="nmpub" class="m_pub_list">
+
+												<#if page1 && page1.list> <#list page1.list as mobile> <#if
+												mobile_index == 0>
+												<div class="m_pub_banner">
+													<a href="${mobile.surl}" target="_blank"> <img
+															src="${mobile.imgsrc}">
+														<div class="m_pub_banner_txt">
+															${mobile.title}
+														</div> </a>
+												</div>
+												<#else>
+												<div class="m_list_item">
+													<div class="m_list_pic">
+														<a href="javascript:void(0)"><img
+																src="${mobile.imgsrc}">
+														</a>
+													</div>
+													<div class="m_list_txt">
+														<div class="m_list_txt_name">
+															<a href="${mobile.surl}" target="_blank">${mobile.title}</a>
+														</div>
+														<p>
+															${mobile.news_text}
+															<font></font>
+														</p>
+													</div>
+												</div>
+
+												</#if> </#list> </#if>
+
+
+
+
+
+											</div>
+										</div>
+									</div>
+								</div>
+							</li>
+							<li>
+								<input type="hidden" value="经济日报">
+								<div class="mo_item">
+									<div class="m_jingji_bg">
+										<!--经济日报-->
+										<div id="jingjiribao" class="m_jingji_bg_menu">
+											<a href="javascript:void(0)"
+												onclick="showAppNews('头条','经济日报')" class="mo_menu_cur">头条</a>
+											<a href="javascript:void(0)"
+												onclick="showAppNews('政务','经济日报')">政务</a>
+											<a href="javascript:void(0)"
+												onclick="showAppNews('观点','经济日报')">观点</a>
+											<a href="javascript:void(0)"
+												onclick="showAppNews('数据','经济日报')">数据</a>
+										</div>
+										<div class="clear"></div>
+										<div id="jjrcontent" class="m_pub">
+											<div id="jjrmpub" class="m_pub_list">
+
+
+
+											<#if page2 && page2.list> <#list page2.list as mobile> <#if
+												mobile_index == 0>
+												<div class="m_pub_banner">
+													<a href="${mobile.surl}" target="_blank"> <img
+															src="${mobile.imgsrc}">
+														<div class="m_pub_banner_txt">
+															${mobile.title}
+														</div> </a>
+												</div>
+												<#else>
+												<div class="m_list_item">
+													<div class="m_list_pic">
+														<a href="javascript:void(0)"><img
+																src="${mobile.imgsrc}">
+														</a>
+													</div>
+													<div class="m_list_txt">
+														<div class="m_list_txt_name">
+															<a href="${mobile.surl}" target="_blank">${mobile.title}</a>
+														</div>
+														<p>
+															${mobile.news_text}
+															<font></font>
+														</p>
+													</div>
+												</div>
+
+												</#if> </#list> </#if>
+
+
+
+
+											</div>
+										</div>
+									</div>
+								</div>
+							</li>
+							<li>
+								<input type="hidden" value="凤凰新闻">
+								<div class="mo_item">
+									<!--凤凰新闻-->
+									<div class="mo_fh_bg">
+										<div id="fenghuang" class="mo_fh_menu">
+											<a href="javascript:void(0)"
+												onclick="showAppNews('头条','凤凰新闻')" class="mo_menu_cur">头条</a>
+											<a href="javascript:void(0)"
+												onclick="showAppNews('时政','凤凰新闻')">时政</a>
+											<a href="javascript:void(0)"
+												onclick="showAppNews('财经','凤凰新闻')">财经</a>
+											<a href="javascript:void(0)"
+												onclick="showAppNews('军事','凤凰新闻')">军事</a>
+										</div>
+										<div class="clear"></div>
+										<div id="fcontent" class="m_pub">
+											<div id="fmpub" class="m_pub_list">
+
+											</div>
+										</div>
+									</div>
+								</div>
+							</li>
+							<li>
+								<input type="hidden" value="今日头条">
+								<div class="mo_item">
+									<div class="m_toutiao_bg">
+										<!--今日头条-->
+										<div id="jinri" class="m_toutiao_bg_menu">
+											<a href="javascript:void(0)"
+												onclick="showAppNews('社会','今日头条')" class="mo_menu_cur">社会</a>
+											<a href="javascript:void(0)"
+												onclick="showAppNews('财经','今日头条')">财经</a>
+											<a href="javascript:void(0)"
+												onclick="showAppNews('军事','今日头条')">军事</a>
+											<a href="javascript:void(0)" onclick="showAppNews('国际', '今日头条')">国际</a>
+												
+
+										</div>
+										<div class="clear"></div>
+										<div id="jrcontent" class="m_pub">
+											<div id="jrmpub" class="m_pub_list">
+
+
+											</div>
+										</div>
+									</div>
+								</div>
+							</li>
+						</ul>
+					</div>
+					<div class="mobile_next">
+						<a href="javascript:;"></a>
+					</div>
+				</div>
+				<div class="atten_fot">
+					<div class="atten_prep preNext" style="display: none;">
+						<a href="javascript:;"></a>
+					</div>
+					<div class="atten_fot_list" style="width: 864px;">
+						<ul style="width: 864px;">
+							<li class="cur">
+								<div class="one">
+									腾讯新闻
+								</div>
+							</li>
+							<li>
+								<div class="one">
+									网易新闻
+								</div>
+							</li>
+							<li>
+								<div class="one">
+									经济日报
+								</div>
+							</li>
+							<li>
+								<div class="one">
+									凤凰新闻
+								</div>
+							</li>
+							<li>
+								<div class="one">
+									今日头条
+								</div>
+							</li>
+						</ul>
+					</div>
+					<div class="atten_next preNext" style="display: none;">
+						<a href="javascript:;"></a>
+					</div>
+				</div>
+				<script type="text/javascript">
+	$(function() {
+		var attenW = $(".atten_fot").width();//总宽度
+		var defaultLiNum = parseInt(attenW / 108); //理想个数 
+		var attenListW = defaultLiNum * 108;
+		var liNum = $(".atten_fot_list ul li").length;//总个数
+		$(".atten_fot_list").css("width", (attenListW - 8) + "px");//列表宽
+		$(".atten_fot_list ul").css("width", liNum * 108 + "px");//列表 ul 宽
+		var sAttenW = 108;
+		var num = liNum - defaultLiNum;
+		var count = 0;
+		if (num <= 0) {
+			$(".atten_fot_list").css("width", (liNum * 108) + "px");//列表宽
+			$(".preNext").hide();
+		}
+		//上一页按钮
+		$(".atten_prep").click(function() {
+			count -= 1;
+			if (count == -1) {
+				count = 0
+			}
+			showAtten(count);
+		});
+		//下一页按钮
+		$(".atten_next").click(function() {
+			count += 1;
+			if (count >= num + 1) {
+				count = num;
+				$(this).hide();
+			}
+			showAtten(count);
+		});
+		function showAtten(count) { //普通切换
+			var nowLeft = -count * sAttenW; //根据index值计算ul元素的left值
+			$(".atten_fot_list ul").stop(true, false).animate( {
+				"marginLeft" : nowLeft
+			}, 300); //通过animate()调整ul元素滚动到计算出的position
+		}
+
+	});
+</script>
+
+			</div>
+			<div class="weibo_item">
+			        <form name="searchForm" id="queryForm" action="${request.contextPath}/mobile/searchList" method="post">
+                	<div class="search_box">
+                        <ul>
+                            <li>
+                                <font>检索开始时间</font>
+                                <input type="text" class="input_txt" name="startTime" value="${startTime}" onfocus="WdatePicker({skin:'twoer',dateFmt:'yyyy-MM-dd',minDate:'2008-01-01',maxDate:'2100-12-31'})"/>
+                            </li>
+                            <li>
+                                <font>检索结束时间</font>
+                                <input type="text" class="input_txt" name="endTime" value="${endTime}" onfocus="WdatePicker({skin:'twoer',dateFmt:'yyyy-MM-dd',minDate:'2008-01-01',maxDate:'2100-12-31'})"/>
+                            </li>
+                              <li>
+                                <font>关键词</font>
+                                <input type="text" class="input_txt" name="keyWord" value="${keyWord}"/>
+                            </li>
+                            <li>
+                                <div class="search_btn">
+                                    <a href="javascript:;" onclick="searchMobileNews();">
+                                        搜索<i></i>
+                                    </a>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="reset_btn">
+                                    <a href="javascript:;">
+                                        重置<i></i>
+                                    </a>
+                                </div>
+                            </li>
+                        </ul>
+                        <div class="clear"></div>
+                    </div>
+                    </form>
+                    <div class="right_border">
+                        <div class="right_title_bg">
+                            <div class="right_title">查询列表</div>
+                            <!-- 
+                            <div class="content_count_btn">
+                                报道内容统计<i></i>
+                            </div>
+                             -->
+                            <div class="content_count_pop">
+                                <i></i>
+                                <!--这里插入所需要的图表-->
+                                <img src="img/demo_pic.png" />
+                            </div>
+                            <!--  
+                            <div class="weibo_export_btn">
+                            	<a href="javascript:;" onclick="test();">导出Excel</a>
+                            </div>
+                            -->
+                        </div>
+                        <div class="clear"></div>
+                        <table id="mobileTab">
+                            <tr>
+                                <th class="b10">排名</th>
+                                <th class="b40">新闻标题</th>
+                                <th class="b10">新闻来源</th>
+                                <th class="b20">发布日期</th>
+                            </tr>
+                            <#if pageSearchMobileNewsList && pageSearchMobileNewsList.list>
+			                	<#list pageSearchMobileNewsList.list as mobile>
+					                <tr id="mobile_${mobile.id}_mobile">
+					                    <td class="b40">${mobile_index+1}</td>
+					                    <td class="b10">${mobile.title}</td>
+					                    <td class="b10">${mobile.appName}</td>
+					                    <td class="b20">${mobile.addTime}</td>
+			                		</tr>
+				                </#list>
+               				 </#if>	
+                
+                        </table>
+                        <div class="clear"></div>
+                        <div class="page_box">
+                            <div class="pagging">
+                                <#if pageSearchMobileNewsList.hasPreviousPage>
+					      <a href="?pageNum=${pageSearchMobileNewsList.prePage}" style=" margin-right:27px;">&lt;上页</a>
+				    </#if>
+				    <#list pageSearchMobileNewsList.navigatepageNums as num>
+				    	<#if num == pageSearchMobileNewsList.pageNum>
+				    		<a href="javascript:void(0)" class="cur">${num}</a>
+				    	<#else>
+				    		<a href="?pageNum=${num}">${num}</a>
+				    	</#if>
+				    </#list>
+				    <#if pageSearchMobileNewsList.hasNextPage>
+					    <a href="?pageNum=${page.nextPage}" style="margin-left:27px;">下页&gt;</a>
+				    </#if>
+				    <!--  
+                                <span>跳转至#</span>
+                                <input type="text" class="input_page" />
+                                -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+		</div>
+	</div>
+</div>
+<script>
+  function searchMobileNews(){
+	  var ajaxCallUrl = $("#queryForm").attr("action");
+	  $.ajax({
+          cache: true,
+          type: "POST",
+          url:ajaxCallUrl,
+          data:$('#queryForm').serialize(),
+          async: false,
+          error: function(request) {
+              alert("Connection error");
+          },
+          success: function(data) {
+              var html="";
+              for(var i=0;i<data.length;i++){
+                   html+=
+                  "					                <tr id=\"mobile_14,728_mobile\" class=\"\">\n" +
+                  "					                    <td class=\"b40\">"+(i+1)+"</td>\n" +
+                  "					                    <td class=\"b10\">"+data[i].title+"</td>\n" +
+                  "					                    <td class=\"b10\">"+data[i].appName+"</td>\n" +
+                  "					                    <td class=\"b20 last_border\">"+data[i].addTime+"</td>\n" +
+                  "			                		</tr>\n" +
+                  "                \n" +
+                  "                        \n" +
+                  "                        <div class=\"clear\"></div>\n" +
+                  "                        <div class=\"page_box\">\n" +
+                  "                            <div class=\"pagging\">\n" +
+                  "				    		<a class=\"cur\" href=\"javascript:void(0)\">1</a>\n" +
+                  "                            </div>\n" +
+                  "                        </div>\n" +
+                  "                    </div>"
+              }
+              $("#mobileTab").append(html);
+          }
+      });
+  }
+</script>
+</@common.html>

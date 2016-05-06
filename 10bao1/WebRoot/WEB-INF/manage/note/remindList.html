@@ -1,0 +1,106 @@
+<#import "common/common.html" as common />
+<@common.html title="日程提醒" menucode="0118">
+<div class="right">
+        <div class="right_border">
+        	<div class="right_title_bg">
+            	<div class="right_title">查询列表</div>
+            </div>
+            <div class="clear"></div>
+            <table>
+            	<tr>
+            		<th class="b5"><input type="checkbox"  id="checkAll"/></th>
+					<th class="b20">类型</th> 
+                    <th class="b40">标题</th>
+                    <th class="b20">状态</th>
+                    <th class="b20">操作</th>
+                </tr>
+                <#if page && page.list>
+                	<#list page.list as note>
+		                <tr id="note_${note.id}_top">
+		               		<td class="b5">
+                    			<input type="checkbox"  name="checkbox" id="${note.id}"/>
+                    		</td>
+                   			<td class="b20">${note.type}</td> 
+		                    <td class="b40">${note.title}</td>
+		                    <td class="b20">
+							<#if note.status != ""&&note.status =="over">已完成</#if>
+		                    <#if note.status != ""&&note.status =="playing">进行中</#if>
+							</td>
+		                    <td class="b20">
+		                    	<a href="${request.contextPath}/note/complete/${note.id}">完成</a>&nbsp;|&nbsp;
+		                    	<a href="${request.contextPath}/note/edit/${note.id}">编辑</a>
+		                    </td>
+                		</tr>
+	                </#list>
+                </#if>	
+            </table>
+            <div class="clear"></div>
+             <div class="page_box">
+            	<div class="pagging">
+                    <#if page.hasPreviousPage>
+					      <a href="?pageNum=${page.prePage}" style=" margin-right:27px;">&lt;上页</a>
+				    </#if>
+				    <#list page.navigatepageNums as num>
+				    	<#if num == page.pageNum>
+				    		<a href="javascript:void(0)" class="cur">${num}</a>
+				    	<#else>
+				    		<a href="?pageNum=${num}">${num}</a>
+				    	</#if>
+				    </#list>
+				    <#if page.hasNextPage>
+					    <a href="?pageNum=${page.nextPage}" style="margin-left:27px;">下页&gt;</a>
+				    </#if>
+                    <span>跳转</span>
+                    <input type="text" class="input_page" />
+                    <span class="span2">页</span>
+                </div>
+            </div>
+        </div>
+</div>
+
+<script type="text/javascript">
+	function dels(){
+		var ids = [];
+		$('input[name="checkbox"]:checked').each(function() {
+			ids.push(parseInt($(this).attr("id")));
+		});
+		if(ids.length == 0){
+			alert("请选择删除的记录");
+		}
+		var url = "${request.contextPath}/note/deleteAll";
+		$.ajax({
+			type:"POST" ,
+			url:url,
+			cache: false,
+			data : {ids:ids},
+			dataType:"json",
+			success: function(result){
+				window.location.href = "${request.contextPath}/note/noteList";
+			}
+		});
+	}
+	function coll(){
+		var ids = [];
+		$('input[name="checkbox"]:checked').each(function() {
+			ids.push(parseInt($(this).attr("id")));
+		});
+		if(ids.length == 0){
+			alert("请选择收藏的记录");
+		}
+		var url = "${request.contextPath}/note/collectNote";
+		$.ajax({
+			type:"POST" ,
+			url:url,
+			cache: false,
+			data : {ids:ids},
+			dataType:"json",
+			success: function(result){
+				window.location.href = "${request.contextPath}/collection/list";
+			}
+		});
+	}
+	function query(){
+		$("#queryForm").submit();
+	}
+</script>
+</@common.html>

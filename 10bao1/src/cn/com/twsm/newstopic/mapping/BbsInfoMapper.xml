@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.twsm.newstopic.dao.BbsInfoMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.twsm.newstopic.model.BbsInfo" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="BBS_NUM" property="bbsNum" jdbcType="INTEGER" />
+    <result column="PUBLISH_TIME" property="publishTime" jdbcType="VARCHAR" />
+    <result column="TITLE" property="title" jdbcType="VARCHAR" />
+    <result column="AUTHOR" property="author" jdbcType="VARCHAR" />
+    <result column="BBS_LINK" property="bbsLink" jdbcType="VARCHAR" />
+    <result column="REPLIES_NUM" property="repliesNum" jdbcType="INTEGER" />
+    <result column="REPLIES_TIME" property="repliesTime" jdbcType="VARCHAR" />
+    <result column="REPLIES_CONTENT" property="repliesContent" jdbcType="VARCHAR" />
+    <result column="CRAWL_TIME" property="crawlTime" jdbcType="VARCHAR" />
+    <result column="NEWS_INDEX" property="newsIndex" jdbcType="DECIMAL" />
+    <result column="NEWS_LEVEL" property="newsLevel" jdbcType="INTEGER" />
+    <result column="CATALOG_ID" property="catalogId" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, BBS_NUM, PUBLISH_TIME, TITLE, AUTHOR, BBS_LINK, REPLIES_NUM, REPLIES_TIME, REPLIES_CONTENT, 
+    CRAWL_TIME, NEWS_INDEX, NEWS_LEVEL, CATALOG_ID
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from bbs_info
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from bbs_info
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.com.twsm.newstopic.model.BbsInfo" >
+    insert into bbs_info (ID, BBS_NUM, PUBLISH_TIME, 
+      TITLE, AUTHOR, BBS_LINK, 
+      REPLIES_NUM, REPLIES_TIME, REPLIES_CONTENT, 
+      CRAWL_TIME, NEWS_INDEX, NEWS_LEVEL, 
+      CATALOG_ID)
+    values (#{id,jdbcType=INTEGER}, #{bbsNum,jdbcType=INTEGER}, #{publishTime,jdbcType=VARCHAR}, 
+      #{title,jdbcType=VARCHAR}, #{author,jdbcType=VARCHAR}, #{bbsLink,jdbcType=VARCHAR}, 
+      #{repliesNum,jdbcType=INTEGER}, #{repliesTime,jdbcType=VARCHAR}, #{repliesContent,jdbcType=VARCHAR}, 
+      #{crawlTime,jdbcType=VARCHAR}, #{newsIndex,jdbcType=DECIMAL}, #{newsLevel,jdbcType=INTEGER}, 
+      #{catalogId,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.com.twsm.newstopic.model.BbsInfo" >
+    insert into bbs_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="bbsNum != null" >
+        BBS_NUM,
+      </if>
+      <if test="publishTime != null" >
+        PUBLISH_TIME,
+      </if>
+      <if test="title != null" >
+        TITLE,
+      </if>
+      <if test="author != null" >
+        AUTHOR,
+      </if>
+      <if test="bbsLink != null" >
+        BBS_LINK,
+      </if>
+      <if test="repliesNum != null" >
+        REPLIES_NUM,
+      </if>
+      <if test="repliesTime != null" >
+        REPLIES_TIME,
+      </if>
+      <if test="repliesContent != null" >
+        REPLIES_CONTENT,
+      </if>
+      <if test="crawlTime != null" >
+        CRAWL_TIME,
+      </if>
+      <if test="newsIndex != null" >
+        NEWS_INDEX,
+      </if>
+      <if test="newsLevel != null" >
+        NEWS_LEVEL,
+      </if>
+      <if test="catalogId != null" >
+        CATALOG_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="bbsNum != null" >
+        #{bbsNum,jdbcType=INTEGER},
+      </if>
+      <if test="publishTime != null" >
+        #{publishTime,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="author != null" >
+        #{author,jdbcType=VARCHAR},
+      </if>
+      <if test="bbsLink != null" >
+        #{bbsLink,jdbcType=VARCHAR},
+      </if>
+      <if test="repliesNum != null" >
+        #{repliesNum,jdbcType=INTEGER},
+      </if>
+      <if test="repliesTime != null" >
+        #{repliesTime,jdbcType=VARCHAR},
+      </if>
+      <if test="repliesContent != null" >
+        #{repliesContent,jdbcType=VARCHAR},
+      </if>
+      <if test="crawlTime != null" >
+        #{crawlTime,jdbcType=VARCHAR},
+      </if>
+      <if test="newsIndex != null" >
+        #{newsIndex,jdbcType=DECIMAL},
+      </if>
+      <if test="newsLevel != null" >
+        #{newsLevel,jdbcType=INTEGER},
+      </if>
+      <if test="catalogId != null" >
+        #{catalogId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.com.twsm.newstopic.model.BbsInfo" >
+    update bbs_info
+    <set >
+      <if test="bbsNum != null" >
+        BBS_NUM = #{bbsNum,jdbcType=INTEGER},
+      </if>
+      <if test="publishTime != null" >
+        PUBLISH_TIME = #{publishTime,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        TITLE = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="author != null" >
+        AUTHOR = #{author,jdbcType=VARCHAR},
+      </if>
+      <if test="bbsLink != null" >
+        BBS_LINK = #{bbsLink,jdbcType=VARCHAR},
+      </if>
+      <if test="repliesNum != null" >
+        REPLIES_NUM = #{repliesNum,jdbcType=INTEGER},
+      </if>
+      <if test="repliesTime != null" >
+        REPLIES_TIME = #{repliesTime,jdbcType=VARCHAR},
+      </if>
+      <if test="repliesContent != null" >
+        REPLIES_CONTENT = #{repliesContent,jdbcType=VARCHAR},
+      </if>
+      <if test="crawlTime != null" >
+        CRAWL_TIME = #{crawlTime,jdbcType=VARCHAR},
+      </if>
+      <if test="newsIndex != null" >
+        NEWS_INDEX = #{newsIndex,jdbcType=DECIMAL},
+      </if>
+      <if test="newsLevel != null" >
+        NEWS_LEVEL = #{newsLevel,jdbcType=INTEGER},
+      </if>
+      <if test="catalogId != null" >
+        CATALOG_ID = #{catalogId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.com.twsm.newstopic.model.BbsInfo" >
+    update bbs_info
+    set BBS_NUM = #{bbsNum,jdbcType=INTEGER},
+      PUBLISH_TIME = #{publishTime,jdbcType=VARCHAR},
+      TITLE = #{title,jdbcType=VARCHAR},
+      AUTHOR = #{author,jdbcType=VARCHAR},
+      BBS_LINK = #{bbsLink,jdbcType=VARCHAR},
+      REPLIES_NUM = #{repliesNum,jdbcType=INTEGER},
+      REPLIES_TIME = #{repliesTime,jdbcType=VARCHAR},
+      REPLIES_CONTENT = #{repliesContent,jdbcType=VARCHAR},
+      CRAWL_TIME = #{crawlTime,jdbcType=VARCHAR},
+      NEWS_INDEX = #{newsIndex,jdbcType=DECIMAL},
+      NEWS_LEVEL = #{newsLevel,jdbcType=INTEGER},
+      CATALOG_ID = #{catalogId,jdbcType=INTEGER}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

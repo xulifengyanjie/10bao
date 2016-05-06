@@ -1,0 +1,43 @@
+<#import "common/common.html" as common />
+<@common.html title="采访详情" menucode="0103">
+<div class="right">	
+<div class="search_box">
+	<form id="addForm" action="${request.contextPath}/interview/doEditInter" class="form-horizontal" method="post">
+		<ul>
+			<li>
+				<font>采访主题：</font>
+				<input class="input_txt" type="text" name="title" value="${interview.title}"/>
+				<input class="input_txt" type="hidden" name="topicId" value="${interview.topicId}"/>
+				<input class="input_txt" type="hidden" name="approvalUserId" value="${interview.approvalUserId}"/>
+				<input class="input_txt" type="hidden" name="addUserId" value="${interview.addUserId}"/>
+				<input class="input_txt" type="hidden" name="status" value="${interview.status}"/>
+				<input class="input_txt" type="hidden" name="interviewObject" value="${interview.interviewObject}"/>
+				<input class="input_txt" type="hidden" name="addTime" value="${interview.addTime}"/>
+			</li>
+			<li>
+				<font>采访计划：</font>
+				<textarea rows="5" cols="30" name="content">${interview.content}</textarea>
+			</li>
+			<li>
+            	<div class="search_btn">
+                	<a href="javascript:;" onclick="add();">
+                    	保存
+                    </a>
+                </div>
+            </li>
+            <li>
+            	<div class="search_btn">
+                	<a href="javascript:history.go(-1);">
+                    	返回
+                    </a>
+                </div>
+            </li>
+		</ul>
+	</form>
+</div>
+<script type="text/javascript">
+	function add(){
+		$("#addForm").submit();
+	}
+</script>
+</@common.html>

@@ -1,0 +1,184 @@
+<#import "common/common.html" as common />
+<@common.html title="论坛">
+<div class="weibo">
+    	<div class="weibo_content">
+        	<div class="weibo_tab_bg">
+            	<div class="weibo_tab">
+                	<span class="cur">热门贴文</span>
+                    <span>热门话题</span>
+                </div>	
+            </div>
+            <div class="weibo_display">
+            	<div class="weibo_item">
+                	<div class="search_box">
+                        <ul>
+                            <li>
+                                <font>开始时间</font>
+                                <input type="text" class="input_txt" />
+                            </li>
+                            <li>
+                                <font>结束时间</font>
+                                <input type="text" class="input_txt" />
+                            </li>
+                            <li>
+                                <font>论坛</font>
+                                <div class="select_bg">
+                                	<div class="select_title"><font>论坛1</font><i></i></div>
+                                    <div class="select_list">
+                                    	<a href="javascript:;">论坛2</a>
+                                        <a href="javascript:;">论坛3</a>
+                                        <a href="javascript:;">论坛3</a>
+                                        <a href="javascript:;">论坛4</a>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <font>关键词 </font>
+                                <input type="text" class="input_txt" />
+                            </li>
+                            <li>
+                                <div class="search_btn">
+                                    <a href="javascript:;">
+                                        搜索<i></i>
+                                    </a>
+                                </div>
+                            </li>
+                        </ul>
+                        <div class="clear"></div>	
+                    </div>
+                    <div class="right_border">
+                        <div class="right_title_bg">
+                            <div class="right_title">论坛列表</div>
+                            <div class="content_count_btn fourm_fixed">
+                                报道内容统计<i></i>
+                            </div>
+                            <div class="content_count_pop ">
+                                <i></i>
+                                <!--这里插入所需要的图表-->
+                                <img src="img/demo_pic.png" />
+                            </div>
+                        </div>
+                        <div class="clear"></div>
+                        <table>
+                            <tr>
+                                <th class="b10">排名</th>
+                                <th class="b10">指数</th>
+                                <th class="b30">标题</th>
+                                <th class="b10">来源</th>
+                                <th class="b10">浏览</th>
+                                <th class="b10">评论</th>
+                                <th class="b20">发布日期</th>
+                                
+                            </tr>
+                            <tr>
+                                <td class="b10">1</td>
+                                <td class="b10">3.77</td>
+                                <td class="b30"><a href="javascript:;">山东平邑改口承认村民在家中被烧死因强…</a></td>
+                                <td class="b10">中国经济网</td>
+                                <td class="b10">56456</td>
+                                <td class="b10">234</td>
+                                <td class="b20">2015-12-11 09:30:50</td>
+                            </tr>
+                        </table>
+                        <div class="clear"></div>
+                        <div class="page_box">
+                            <div class="pagging">
+                                <a href="javascript:;" style=" margin-right:27px;">&lt;上页</a>
+                                <a href="javascript:;" class="cur">1</a>
+                                <a href="javascript:;">2</a>
+                                <a href="javascript:;">3</a>
+                                <a href="javascript:;">4</a>
+                                <a href="javascript:;">5</a>
+                                <a href="javascript:;">6</a>
+                                <a href="javascript:;">7</a>
+                                <a href="javascript:;">8</a>
+                                <a href="javascript:;">9</a>
+                                <a href="javascript:;">10</a>
+                                <a href="javascript:;">...</a>
+                                <a href="javascript:;" style="margin-left:27px;">下页&gt;</a>
+                                <span>跳转至#</span>
+                                <input type="text" class="input_page" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="weibo_item">
+                	<div class="search_box">
+                        <ul>
+                            <li>
+			                	<font>论坛</font>
+			                    <div class="select_bg">
+			                    	<input type="hidden" class="input_txt" name="roleIds"/>
+			                        <div class="select_title"><font>--请选择--</font><i></i></div>
+			                        <div class="select_list">
+			                        	<a href="javascript:;" onclick="selectRole(0)">--全部--</a>
+			                        </div>
+			                    </div>
+			                </li>
+                            <li>
+                                <font>关键词</font>
+                                <input type="text" class="input_txt" />
+                            </li>
+                            <li>
+                                <div class="search_btn">
+                                    <a href="javascript:;">
+                                        搜索<i></i>
+                                    </a>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="reset_btn">
+                                    <a href="javascript:;">
+                                        重置<i></i>
+                                    </a>
+                                </div>
+                            </li>
+                        </ul>
+                        <div class="clear"></div>
+                    </div>
+                    <div class="right_border">
+                        <div class="right_title_bg">
+                            <div class="right_title">查询列表</div>
+                            <div class="weibo_export_btn">
+                            	<a href="javascript:;">导出Excel</a>
+                            </div>
+                        </div>
+                        <div class="clear"></div>
+                        <table>
+                            <tr>
+                                <th class="b10">排名</th>
+                                <th class="b10">指数</th>
+                                <th class="b40">热门话题</th>
+                            </tr>
+                            <tr>
+                                <td class="b10">1</td>
+                                <td class="b10">3.77</td>
+                                <td class="b40"><a href="javascript:;">山东平邑改口承认村民在家中被烧死因强…</a></td>
+                            </tr>
+                        </table>
+                        <div class="clear"></div>
+                        <div class="page_box">
+                            <div class="pagging">
+                                <a href="javascript:;" style=" margin-right:27px;">&lt;上页</a>
+                                <a href="javascript:;" class="cur">1</a>
+                                <a href="javascript:;">2</a>
+                                <a href="javascript:;">3</a>
+                                <a href="javascript:;">4</a>
+                                <a href="javascript:;">5</a>
+                                <a href="javascript:;">6</a>
+                                <a href="javascript:;">7</a>
+                                <a href="javascript:;">8</a>
+                                <a href="javascript:;">9</a>
+                                <a href="javascript:;">10</a>
+                                <a href="javascript:;">...</a>
+                                <a href="javascript:;" style="margin-left:27px;">下页&gt;</a>
+                                <span>跳转至#</span>
+                                <input type="text" class="input_page" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</@common.html>

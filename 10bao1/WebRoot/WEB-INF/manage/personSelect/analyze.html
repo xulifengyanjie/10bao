@@ -1,0 +1,175 @@
+<#import "common/common.html" as common />
+<@common.html title="重大选题报告分析" menucode="0101">
+<div class="right">
+		<form id="searchForm" action="${request.contextPath}/person/recommend" method="post">
+  		<div class="search_box">
+        	<ul>
+                <li>
+                	<font>关键词</font>
+                    <input type="text" class="input_txt" name="keyword" value="${keyword}"/>
+                </li>
+                <li>
+	           		<font>所属类别</font>
+	                <div class="select_bg">
+                        <div class="select_title"><font>
+                        <#if type == "">全部</#if>
+                        <#if type != ""&&type=="yes">可预见</#if>
+                        <#if type != ""&&type=="no">非可预见</#if>
+                        </font><i></i></div>
+                        <div class="select_list">
+                        	<input type="hidden" name="type"  class="input_txt" >
+                            <a href="javascript:;" onclick="selectType('yes')">可预见</a>
+                            <a href="javascript:;" onclick="selectType('no')">非可预见</a>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                	<div class="search_btn">
+                    	<a href="javascript:;" onclick="query();">
+                        	搜索<i></i>
+                        </a>
+                    </div>
+                </li>
+            </ul>
+            <div class="clear"></div>
+        </div>
+    	</form>
+        
+        <div class="right_border">
+        	<div class="right_title_bg">
+            	<div class="right_title"><a href="javascript:;">报道历史</a>列表</div>
+            </div>
+            <div class="clear"></div>
+            <table>
+            	<tr>
+                	<th class="b5">序号</th>
+                	<th class="b5">指数</th>
+                	<th class="b20">标题</th>
+                    <th class="b10">所属类别</th>
+                    <th class="b10"><a href="javascript:;">报道角度分析</a></th>
+                    <th class="b10"><a href="javascript:;">报道历史</a></th>
+                    <th class="b10">详细信息</th>
+                </tr>
+                <tr>
+                    <td class="b5">1</td>
+                    <td class="b5">5.9</td>
+                    <td class="b20">香港民众愤怒了 痛打“反水客”成员</td>
+                    <td class="b10">可预见</td>
+                    <td class="b10"><a href="javascript:;">报道角度分析</a></td>
+                    <td class="b10"><a href="javascript:;">报道历史</a></td>
+                    <td class="b10"><a href="javascript:;">深度检索</a></td>
+              	</tr>
+                <tr>
+                    <td class="b5">2</td>
+                    <td class="b5">5.8</td>
+                    <td class="b20">公安部A级通缉令逃犯文龙坚落网(图)</td>
+                    <td class="b10">可预见</td>
+                    <td class="b10"><a href="javascript:;">报道角度分析</a></td>
+                    <td class="b10"><a href="javascript:;">报道历史</a></td>
+                    <td class="b10"><a href="javascript:;">深度检索</a></td>
+              	</tr>
+                <tr>
+                    <td class="b5">3</td>
+                    <td class="b5">5.7</td>
+                    <td class="b20">军媒就“魏则西事件”发声：驼鸟政策无助问题解决</td>
+                    <td class="b10">可预见</td>
+                    <td class="b10"><a href="javascript:;">报道角度分析</a></td>
+                    <td class="b10"><a href="javascript:;">报道历史</a></td>
+                    <td class="b10"><a href="javascript:;">深度检索</a></td>
+              	</tr>
+                <tr>
+                    <td class="b5">4</td>
+                    <td class="b5">5.6</td>
+                    <td class="b20">32名台籍诈骗嫌犯被遣送大陆 蔡英文方面表态</td>
+                    <td class="b10">可预见</td>
+                    <td class="b10"><a href="javascript:;">报道角度分析</a></td>
+                    <td class="b10"><a href="javascript:;">报道历史</a></td>
+                    <td class="b10"><a href="javascript:;">深度检索</a></td>
+              	</tr>
+                <tr>
+                    <td class="b5">5</td>
+                    <td class="b5">5.5</td>
+                    <td class="b20">朴槿惠访问伊朗全程戴伊斯兰头巾(组图)</td>
+                    <td class="b10">可预见</td>
+                    <td class="b10"><a href="javascript:;">报道角度分析</a></td>
+                    <td class="b10"><a href="javascript:;">报道历史</a></td>
+                    <td class="b10"><a href="javascript:;">深度检索</a></td>
+              	</tr>
+                <tr>
+                    <td class="b5">6</td>
+                    <td class="b5">5.4</td>
+                    <td class="b20">女房客称洗澡中被服务员带人参观：脱干净曝光了(图)</td>
+                    <td class="b10">可预见</td>
+                    <td class="b10"><a href="javascript:;">报道角度分析</a></td>
+                    <td class="b10"><a href="javascript:;">报道历史</a></td>
+                    <td class="b10"><a href="javascript:;">深度检索</a></td>
+              	</tr>
+                <tr>
+                    <td class="b5">7</td>
+                    <td class="b5">5.3</td>
+                    <td class="b20">西安市长：渣土车那么疯狂 我们的队伍混进了坏人</td>
+                    <td class="b10">可预见</td>
+                    <td class="b10"><a href="javascript:;">报道角度分析</a></td>
+                    <td class="b10"><a href="javascript:;">报道历史</a></td>
+                    <td class="b10"><a href="javascript:;">深度检索</a></td>
+              	</tr>
+                <tr>
+                    <td class="b5">8</td>
+                    <td class="b5">5.2</td>
+                    <td class="b20">西安电子科大(211高校)2名副校长被查(图)</td>
+                    <td class="b10">可预见</td>
+                    <td class="b10"><a href="javascript:;">报道角度分析</a></td>
+                    <td class="b10"><a href="javascript:;">报道历史</a></td>
+                    <td class="b10"><a href="javascript:;">深度检索</a></td>
+              	</tr>
+                <tr>
+                    <td class="b5">9</td>
+                    <td class="b5">5.1</td>
+                    <td class="b20">解放军2万吨级登陆舰停靠在南沙永暑礁(图)</td>
+                    <td class="b10">可预见</td>
+                    <td class="b10"><a href="javascript:;">报道角度分析</a></td>
+                    <td class="b10"><a href="javascript:;">报道历史</a></td>
+                    <td class="b10"><a href="javascript:;">深度检索</a></td>
+              	</tr>
+                <tr>
+                    <td class="b5">10</td>
+                    <td class="b5">5.0</td>
+                    <td class="b20">揭秘莆田医帮带头大哥陈德良：80年代月入上万(图)</td>
+                    <td class="b10">可预见</td>
+                    <td class="b10"><a href="javascript:;">报道角度分析</a></td>
+                    <td class="b10"><a href="javascript:;">报道历史</a></td>
+                    <td class="b10"><a href="javascript:;">深度检索</a></td>
+              	</tr>
+            </table>
+            <div class="clear"></div>
+             <div class="page_box">
+            	<div class="pagging">
+                    <#if page.hasPreviousPage>
+					      <a href="?pageNum=${page.prePage}" style=" margin-right:27px;">&lt;上页</a>
+				    </#if>
+				    <#list page.navigatepageNums as num>
+				    	<#if num == page.pageNum>
+				    		<a href="javascript:void(0)" class="cur">${num}</a>
+				    	<#else>
+				    		<a href="?pageNum=${num}">${num}</a>
+				    	</#if>
+				    </#list>
+				    <#if page.hasNextPage>
+					    <a href="?pageNum=${page.nextPage}" style="margin-left:27px;">下页&gt;</a>
+				    </#if>
+                    <span>跳转</span>
+                    <input type="text" class="input_page" />
+                    <span class="span2">页</span>
+                </div>
+            </div>
+        </div>
+</div>
+<script type="text/javascript">
+	function query(value){
+		$("#searchForm").submit();
+	}
+	function selectType(value){
+		$("input[name='type']").val(value);
+	}
+</script>
+</@common.html>
